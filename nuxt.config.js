@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 export default defineNuxtConfig({
   app: {
     head: {
@@ -39,9 +41,11 @@ export default defineNuxtConfig({
       },
     ],
   ],
-  publicRuntimeConfig: {
-    XRAPIDAPIKEY: process.env.XRAPIDAPIKEY,
-    XRAPIDAPIHOST: process.env.XRAPIDAPIHOST,
-    XRAPIDAPIHOSTTTS: process.env.XRAPIDAPIHOSTTTS,
+  runtimeConfig: {
+    public: {
+      XRAPIDAPIKEY: process.env.XRAPIDAPIKEY,
+      XRAPIDAPIHOST: process.env.XRAPIDAPIHOST,
+      XRAPIDAPIHOSTTTS: process.env.XRAPIDAPIHOSTTTS,
+    },
   },
 });
