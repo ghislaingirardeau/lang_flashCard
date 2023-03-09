@@ -15,6 +15,13 @@
       <el-button type="primary" @click="speechStart">talk</el-button>
       <el-button type="primary" @click="speechStop">stop</el-button>
     </div>
+    <Icon
+      name="mdi:microphone"
+      size="64px"
+      color="red"
+      @touchStart="speechStart"
+      @touchend="speechStop"
+    />
   </div>
 </template>
 
@@ -55,7 +62,7 @@ export default {
       );
       let blobUrl = URL.createObjectURL(data.value);
       const audioElement = new Audio(blobUrl);
-      audioElement.playbackRate = 0.6;
+      audioElement.playbackRate = 0.8;
       audioElement.play();
     };
 
