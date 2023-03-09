@@ -29,7 +29,7 @@ export default defineNuxtConfig({
   modules: [
     "@vueuse/nuxt",
     "nuxt-icon",
-    /* "@nuxtjs/tailwindcss", */
+    "@vite-pwa/nuxt",
     "@element-plus/nuxt",
     [
       "@pinia/nuxt",
@@ -46,6 +46,23 @@ export default defineNuxtConfig({
       XRAPIDAPIKEY: process.env.XRAPIDAPIKEY,
       XRAPIDAPIHOST: process.env.XRAPIDAPIHOST,
       XRAPIDAPIHOSTTTS: process.env.XRAPIDAPIHOSTTTS,
+    },
+  },
+  pwa: {
+    meta: {
+      title: "FlashCard Language",
+      author: "gg web dev",
+    },
+    manifest: {
+      name: "FlashCard Language",
+      short_name: "FlashCard Lang",
+      lang: "en",
+      description: "FlashCard Language",
+      theme_color: "#30bdc7",
+    },
+    icon: {
+      fileName: "android-chrome-192x192.png",
+      sizes: [64, 120, 144, 152, 192], //, 384, 512
     },
   },
 });
