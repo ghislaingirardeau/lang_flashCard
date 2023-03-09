@@ -1,0 +1,17 @@
+$primary: #0e15de;
+$secondary: #e4a79d;
+$btnColor: #0ea7de;
+$asidebg: #0ede5e;
+
+button {
+  border: 2px solid $primary;
+  background-color: $btnColor;
+  padding: 5px;
+  margin: 5px;
+}
+
+input {
+  background-color: $secondary;
+  padding: 5px;
+  margin: 5px;
+}
