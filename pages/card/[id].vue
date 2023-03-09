@@ -15,12 +15,13 @@
       <el-button type="primary" @click="speechStart">talk</el-button>
       <el-button type="primary" @click="speechStop">stop</el-button>
     </div>
+    <div>{{ record }}</div>
     <Icon
       name="mdi:microphone"
       size="64px"
       color="red"
-      @touchStart="speechStart"
-      @touchend="speechStop"
+      @touchStart="record = true"
+      @touchend="record = false"
     />
   </div>
 </template>
@@ -31,6 +32,8 @@ export default {
   setup() {
     const route = useRoute();
     const cardsStore = useCardsStore();
+
+    const record = ref(false);
 
     const loadCard = computed(() => {
       return cardsStore.cardItems[route.params.id];
@@ -99,6 +102,7 @@ export default {
       playTranslation,
       speechStart,
       speechStop,
+      record,
     };
   },
 };
