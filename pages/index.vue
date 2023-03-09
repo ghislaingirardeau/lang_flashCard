@@ -1,11 +1,13 @@
 <template>
   <div>
-    <h1>lang App</h1>
-    <div v-for="card in loadCards" :key="card.id">
-      <NuxtLink :to="{ name: 'card-id', params: { id: card.title } }"
-        >{{ card.title }} {{ card.id }}
-      </NuxtLink>
+    <div class="cards-container">
+      <div v-for="card in loadCards" :key="card.id" class="cards-block">
+        <NuxtLink :to="{ name: 'card-id', params: { id: card.title } }"
+          >{{ card.title }}
+        </NuxtLink>
+      </div>
     </div>
+
     <div>
       <Icon
         name="mdi:plus"
@@ -14,21 +16,21 @@
         @click="dialogVisible = true"
       />
     </div>
-    <el-dialog v-model="dialogVisible" title="Shipping address" align-center>
-      <el-form :model="form">
-        <el-form-item label="Promotion name">
-          <el-input v-model="form.name" autocomplete="off" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="dialogVisible = false">
-            Confirm
-          </el-button>
-        </span>
-      </template>
-    </el-dialog>
+    <client-only>
+      <el-dialog v-model="dialogVisible" :fullscreen="true" title="New Card">
+        <el-form>
+          <el-form-item label="Card name">
+            <el-input v-model="cardForm.name" autocomplete="off" />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogVisible = false">Cancel</el-button>
+            <el-button type="primary" @click="saveNewCard"> Confirm </el-button>
+          </span>
+        </template>
+      </el-dialog>
+    </client-only>
   </div>
 </template>
 
@@ -36,16 +38,43 @@
 export default {
   setup() {
     const cardsStore = useCardsStore();
+    const dialogVisible = ref(false);
+    const cardForm = reactive({
+      name: "",
+    });
+
     const loadCards = computed(() => {
       return cardsStore.cards;
     });
-    const dialogVisible = ref(false);
-    const form = reactive({
-      name: "",
-    });
-    return { loadCards, dialogVisible, form };
+
+    const saveNewCard = () => {
+      const newCard = {
+        id: Date.now(),
+        title: cardForm.name,
+        lastUpdate: "xxx",
+        createOn: Date.now(),
+      };
+      cardsStore.addNewCard(newCard);
+      dialogVisible.value = false;
+    };
+
+    const openModal = () => {
+      dialogVisible.value = true;
+    };
+    return { loadCards, dialogVisible, openModal, cardForm, saveNewCard };
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 5px;
+}
+.cards-block {
+  padding: 10px;
+  border: 2px solid grey;
+}
+</style>

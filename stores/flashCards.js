@@ -42,7 +42,8 @@ export const useCardsStore = defineStore("cards", {
   }),
   actions: {
     addNewCard(card) {
-      this.cards.push(item);
+      this.cards.push(card);
+      this.cardItems[card.title] = [];
     },
     addNewItem(category, item) {
       this.cardItems[category].push(item);
