@@ -1,6 +1,6 @@
 <template>
   <div class="common-layout">
-    <el-container>
+    <el-container :style="{ height: containerHeight }">
       <el-header class="header-container">
         <span class="text-large font-800 ml-5"> Nuxt 3 </span>
         <Icon
@@ -12,9 +12,10 @@
           class="goBack"
         />
       </el-header>
-      <el-container>
+      <el-container class="main-container">
         <el-main><slot /></el-main>
       </el-container>
+      <el-footer class="footer-container"> gg </el-footer>
     </el-container>
   </div>
 </template>
@@ -23,28 +24,43 @@
 export default {
   setup() {
     const route = useRoute();
+    const { height } = useWindowSize();
+
+    const containerHeight = computed(() => {
+      return height.value + "px";
+    });
+
     const showGoBack = computed(() => {
       return route.name;
     });
 
     return {
       showGoBack,
+      containerHeight,
     };
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 a {
   text-decoration: none;
 }
+
 .header-container {
   background-color: $btnColor;
   padding-top: 10px;
   position: relative;
+  height: 10%;
 }
-.common-layout {
-  width: 375px;
+.main-container {
+  height: 80%;
+}
+.footer-container {
+  background-color: $btnColor;
+  padding-top: 10px;
+  position: relative;
+  height: 10%;
 }
 .goBack {
   position: absolute;
