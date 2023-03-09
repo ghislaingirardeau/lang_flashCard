@@ -16,13 +16,10 @@
       <el-button type="primary" @click="speechStop">stop</el-button>
     </div>
     <div>{{ record }}</div>
-    <Icon
-      name="mdi:microphone"
-      size="64px"
-      color="red"
-      @touchStart="record = true"
-      @touchend="record = false"
-    />
+    <Icon name="mdi:microphone" size="64px" color="red" />
+    <button @touchStart="record = true" @touchend="record = false">
+      touch
+    </button>
   </div>
 </template>
 
@@ -108,4 +105,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+button {
+  padding: 10px;
+}
+</style>
