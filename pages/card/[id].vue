@@ -7,7 +7,7 @@
         name="mdi:volume-high"
         size="34px"
         color="red"
-        @click="playTranslation(item.to)"
+        @click="usePlayTranslation(item.to, langTo)"
       />
       <span> to {{ item.to }} </span>
     </div>
@@ -16,15 +16,14 @@
       <el-button type="primary" @click="speechStop">stop</el-button>
     </div>
     <div>{{ record }}</div>
-    <Icon name="mdi:microphone" size="64px" color="red" />
-    <button @touchStart="record = true" @touchend="record = false">
-      touch
-    </button>
+
+    <Icon name="mdi:microphone" size="64px" color="red" id="mic-element" />
   </div>
 </template>
 
 <script>
 import { useTranslation } from "../../composables/translation";
+import { usePlayTranslation } from "../../composables/listenTranslation";
 export default {
   setup() {
     const route = useRoute();
@@ -36,35 +35,9 @@ export default {
       return cardsStore.cardItems[route.params.id];
     });
 
-    const playTranslation = async (to) => {
-      /* const { speak, status, isPlaying, isSupported, error } =
-        useSpeechSynthesis(to, {
-          lang: cardsStore.languages.to,
-          pitch: 1,
-          rate: 0.5,
-          volume: 1,
-        });
-      speak(); */
-      const config = useRuntimeConfig();
-      const { data } = await useFetch(
-        `https://text-to-speech-api3.p.rapidapi.com/speak?text=${to}&lang=${cardsStore.languages.to.slice(
-          0,
-          2
-        )}`,
-        {
-          method: "GET",
-          key: `${to}`,
-          headers: {
-            "X-RapidAPI-Key": config.XRAPIDAPIKEY,
-            "X-RapidAPI-Host": config.XRAPIDAPIHOSTTTS,
-          },
-        }
-      );
-      let blobUrl = URL.createObjectURL(data.value);
-      const audioElement = new Audio(blobUrl);
-      audioElement.playbackRate = 0.8;
-      audioElement.play();
-    };
+    const langTo = computed(() => {
+      return cardsStore.languages.to;
+    });
 
     const { isSupported, isListening, isFinal, result, start, stop } =
       useSpeechRecognition({
@@ -75,8 +48,10 @@ export default {
 
     const speechStart = () => {
       start();
+      record.value = true;
     };
     const speechStop = async () => {
+      record.value = false;
       stop();
       if (result) {
         const { text } = await useTranslation(
@@ -92,6 +67,12 @@ export default {
         });
       }
     };
+    onMounted(() => {
+      const elt = document.getElementById("mic-element");
+      console.log(elt);
+      /* elt.addEventListener("touchstart", speechStart);
+      elt.addEventListener("touchend", speechStop); */
+    });
 
     return {
       route,
@@ -100,6 +81,8 @@ export default {
       speechStart,
       speechStop,
       record,
+      langTo,
+      usePlayTranslation,
     };
   },
 };
