@@ -62,19 +62,19 @@ export default defineNuxtConfig({
       lang: "en",
       description: "FlashCard Language",
       theme_color: "#30bdc7",
-      icon: [
+      icons: [
         {
-          src: "/pwa-144x144.png",
+          src: "icons/pwa-144x144.png",
           sizes: "144x144",
           type: "image/png",
         },
         {
-          src: "/pwa-192x192.png",
+          src: "icons/pwa-192x192.png",
           sizes: "192x192",
           type: "image/png",
         },
         {
-          src: "pwa-512x512.png",
+          src: "icons/pwa-512x512.png",
           sizes: "512x512",
           type: "image/png",
         },
@@ -84,6 +84,7 @@ export default defineNuxtConfig({
     workbox: {
       navigateFallback: "/",
     },
+    // TO TEST PWA ON DEV
     /* devOptions: {
       enabled: true,
       type: "module",
