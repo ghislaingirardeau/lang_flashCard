@@ -1,7 +1,10 @@
 <template>
-  <NuxtLayout name="default">
-    <NuxtPage />
-  </NuxtLayout>
+  <div>
+    <VitePwaManifest />
+    <NuxtLayout name="default">
+      <NuxtPage />
+    </NuxtLayout>
+  </div>
 </template>
 
 <style lang="scss">

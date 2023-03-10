@@ -2,10 +2,12 @@ require("dotenv").config();
 
 export default defineNuxtConfig({
   ssr: false,
+  target: "static",
   app: {
     head: {
       charset: "utf-16",
-      viewport: "width=500, initial-scale=1",
+      viewport:
+        "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
       title: "My flashCard Lang",
       meta: [{ name: "description", content: "My amazing site." }],
       script: [],
@@ -60,15 +62,31 @@ export default defineNuxtConfig({
       lang: "en",
       description: "FlashCard Language",
       theme_color: "#30bdc7",
-      start_url: "https://my-flashcard-lang.netlify.app",
-      display: "standalone",
+      icon: [
+        {
+          src: "/pwa-144x144.png",
+          sizes: "144x144",
+          type: "image/png",
+        },
+        {
+          src: "/pwa-192x192.png",
+          sizes: "192x192",
+          type: "image/png",
+        },
+        {
+          src: "pwa-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+        },
+      ],
     },
-    icon: {
-      fileName: "android-chrome-192x192.png",
-      sizes: [64, 120, 144, 152, 192], //, 384, 512
+
+    workbox: {
+      navigateFallback: "/",
     },
-    workboxOptions: {
-      exclude: ["_redirects"],
-    },
+    /* devOptions: {
+      enabled: true,
+      type: "module",
+    }, */
   },
 });
