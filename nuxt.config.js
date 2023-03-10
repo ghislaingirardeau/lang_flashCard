@@ -60,6 +60,8 @@ export default defineNuxtConfig({
       lang: "en",
       description: "FlashCard Language",
       theme_color: "#30bdc7",
+      start_url: "https://my-flashcard-lang.netlify.app/",
+      display: "standalone",
     },
     icon: {
       fileName: "android-chrome-192x192.png",
