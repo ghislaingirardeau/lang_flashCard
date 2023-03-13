@@ -1,29 +1,54 @@
 <template>
   <div>
-    {{ route.params.id }}
-    <div v-for="item in loadCard" :key="item.id">
-      <span> from {{ item.from }} </span>
+    <el-row
+      v-for="item in loadCard"
+      :key="item.id"
+      justify="space-between"
+      align="center"
+    >
+      <el-col :span="7">
+        <span class="loadCard-text"> {{ item.from }} </span></el-col
+      >
+      <el-col :span="7">
+        <Icon
+          name="mdi:volume-high"
+          size="34px"
+          color="red"
+          @click="usePlayTranslation(item.to, langTo)"
+      /></el-col>
+      <el-col :span="7">
+        <span> {{ item.to }} </span></el-col
+      >
+    </el-row>
+    <!-- <div v-for="item in loadCard" :key="item.id">
+      <span> {{ item.from }} </span>
       <Icon
         name="mdi:volume-high"
         size="34px"
         color="red"
         @click="usePlayTranslation(item.to, langTo)"
       />
-      <span> to {{ item.to }} </span>
-    </div>
-    <div>
-      <el-button type="primary" @click="speechStart">talk</el-button>
-      <el-button type="primary" @click="speechStop">stop</el-button>
-    </div>
+      <span> {{ item.to }} </span>
+    </div> -->
     <div>{{ record }}</div>
 
-    <Icon name="mdi:microphone" size="64px" color="red" id="mic-element" />
+    <div>
+      <Icon
+        @touchstart="startDrag"
+        @touchend="endDrag"
+        name="mdi:microphone"
+        size="64px"
+        color="red"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import { useTranslation } from "../../composables/translation";
 import { usePlayTranslation } from "../../composables/listenTranslation";
+import soundStart from "@/assets/sound/start.wav";
+import soundStop from "@/assets/sound/stop.wav";
 export default {
   setup() {
     const route = useRoute();
@@ -49,9 +74,13 @@ export default {
     const speechStart = () => {
       start();
       record.value = true;
+      let audio = new Audio(soundStart);
+      audio.play();
     };
     const speechStop = async () => {
       record.value = false;
+      let audio = new Audio(soundStop);
+      audio.play();
       stop();
       if (result) {
         const { text } = await useTranslation(
@@ -67,17 +96,10 @@ export default {
         });
       }
     };
-    onMounted(() => {
-      const elt = document.getElementById("mic-element");
-      console.log(elt);
-      /* elt.addEventListener("touchstart", speechStart);
-      elt.addEventListener("touchend", speechStop); */
-    });
 
     return {
       route,
       loadCard,
-      playTranslation,
       speechStart,
       speechStop,
       record,
@@ -85,11 +107,28 @@ export default {
       usePlayTranslation,
     };
   },
+  methods: {
+    startDrag() {
+      this.speechStart();
+    },
+    endDrag() {
+      this.speechStop();
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 button {
+  padding: 10px;
+}
+.el-row {
+  margin-bottom: 10px;
+  align-items: center;
+  border: 2px solid red;
+}
+.el-col {
+  text-align: center;
   padding: 10px;
 }
 </style>

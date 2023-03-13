@@ -2,7 +2,7 @@
   <div class="common-layout">
     <el-container :style="{ height: containerHeight }">
       <el-header class="header-container">
-        <span class="text-large font-800 ml-5"> Nuxt 3 </span>
+        <span class="text-large font-800 ml-5"> {{ title }} </span>
         <Icon
           v-if="showGoBack === 'card-id'"
           name="mdi:arrow-left-drop-circle-outline"
@@ -31,10 +31,16 @@ export default {
     });
 
     const showGoBack = computed(() => {
+      console.log(route.params);
       return route.name;
     });
 
+    const title = computed(() => {
+      return route.params.id ? route.params.id : "Home";
+    });
+
     return {
+      title,
       showGoBack,
       containerHeight,
     };
