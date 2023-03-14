@@ -7,7 +7,6 @@
         </NuxtLink>
       </div>
     </div>
-    <NuxtLink :to="{ name: 'test' }">test </NuxtLink>
     <div>
       <Icon
         name="mdi:plus"

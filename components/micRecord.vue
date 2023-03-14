@@ -88,7 +88,7 @@ export default {
 .mic-block {
   text-align: center;
 }
-.mic-circle {
+/* .mic-circle {
   display: inline-block;
   width: 90px;
   height: 90px;
@@ -112,7 +112,7 @@ export default {
 .mic-circle:active::after {
   transform: scaleX(1.3) scaleY(1.3);
   opacity: 0.5;
-}
+} */
 .loader {
   display: inline-block;
   width: 90px;
