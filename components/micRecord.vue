@@ -1,6 +1,10 @@
 <template>
   <div class="mic-block">
-    <div class="mic-circle">
+    <!-- <el-button v-if="loading" type="primary" :loading="loading"
+      >Loading</el-button
+    > -->
+    <div v-if="loading" class="loader" v-loading="loading"></div>
+    <div v-else class="mic-circle">
       <Icon
         @touchstart="startDrag"
         @touchend="endDrag"
@@ -20,6 +24,7 @@ export default {
   setup() {
     const cardsStore = useCardsStore();
     const record = ref(false);
+    const loading = ref(false);
     const route = useRoute();
 
     const { isSupported, isListening, isFinal, result, start, stop } =
@@ -43,6 +48,7 @@ export default {
     const speechStop = async () => {
       playSound(false, soundStop);
       stop();
+      loading.value = true;
       if (result._value) {
         console.log(result._value);
         const { text } = await useTranslation(
@@ -50,18 +56,22 @@ export default {
           cardsStore.languages.from,
           cardsStore.languages.to
         );
-        cardsStore.addNewItem(route.params.id, {
-          id: Date.now(),
-          from: result._value,
-          to: text,
-          pronouce: "xxx",
-        });
+        if (text) {
+          cardsStore.addNewItem(route.params.id, {
+            id: Date.now(),
+            from: result._value,
+            to: text,
+            pronouce: "xxx",
+          });
+        }
+        loading.value = false;
       }
     };
     return {
       speechStart,
       speechStop,
       record,
+      loading,
     };
   },
   methods: {
@@ -103,5 +113,10 @@ export default {
 .mic-circle:active::after {
   transform: scaleX(1.3) scaleY(1.3);
   opacity: 0.5;
+}
+.loader {
+  display: inline-block;
+  width: 90px;
+  height: 90px;
 }
 </style>
