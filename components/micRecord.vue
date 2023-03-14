@@ -1,13 +1,14 @@
 <template>
-  <div>
-    {{ record }}
-    <Icon
-      @touchstart="startDrag"
-      @touchend="endDrag"
-      name="mdi:microphone"
-      size="64px"
-      color="red"
-    />
+  <div class="mic-block">
+    <div class="mic-circle">
+      <Icon
+        @touchstart="startDrag"
+        @touchend="endDrag"
+        name="mdi:microphone"
+        size="84px"
+        color="red"
+      />
+    </div>
   </div>
 </template>
 
@@ -42,7 +43,7 @@ export default {
     const speechStop = async () => {
       playSound(false, soundStop);
       /* stop(); */
-      if (result) {
+      if (result._value) {
         console.log(result._value);
         const { text } = await useTranslation(
           result._value,
@@ -74,4 +75,33 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.mic-block {
+  text-align: center;
+}
+.mic-circle {
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  position: relative;
+  border: 2px solid red;
+}
+.mic-circle::after {
+  content: "";
+  opacity: 0;
+  position: absolute;
+  left: 0px;
+  z-index: -1;
+  background-color: #ce9504;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  transform: scaleX(1) scaleY(1);
+  transition: all 0.5s ease-in-out;
+}
+.mic-circle:active::after {
+  transform: scaleX(1.3) scaleY(1.3);
+  opacity: 0.5;
+}
+</style>

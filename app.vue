@@ -8,6 +8,9 @@
 </template>
 
 <style lang="scss">
+body {
+  margin: 0px;
+}
 .page-enter-active,
 .page-leave-active {
   transition: all 0.4s;

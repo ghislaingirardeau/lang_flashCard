@@ -2,20 +2,28 @@
   <div class="common-layout">
     <el-container :style="{ height: containerHeight }">
       <el-header class="header-container">
-        <span class="text-large font-800 ml-5"> {{ title }} </span>
-        <Icon
-          v-if="showGoBack === 'card-id'"
-          name="mdi:arrow-left-drop-circle-outline"
-          size="34px"
-          color="white"
-          @click="$router.back()"
-          class="goBack"
-        />
+        <span class="header-container-title">
+          {{ $route.params.id ? $route.params.id : "Home" }}
+        </span>
+        <Transition name="fade">
+          <Icon
+            v-if="$route.name === 'card-id'"
+            name="mdi:arrow-left-drop-circle-outline"
+            size="34px"
+            color="white"
+            @click="$router.back()"
+            class="goBack"
+          />
+        </Transition>
       </el-header>
       <el-container class="main-container">
         <el-main><slot /></el-main>
       </el-container>
-      <el-footer class="footer-container"> gg </el-footer>
+      <Transition name="fade">
+        <el-footer v-if="$route.params.id" class="footer-container">
+          <MicRecord />
+        </el-footer>
+      </Transition>
     </el-container>
   </div>
 </template>
@@ -30,18 +38,7 @@ export default {
       return height.value + "px";
     });
 
-    const showGoBack = computed(() => {
-      console.log(route.params);
-      return route.name;
-    });
-
-    const title = computed(() => {
-      return route.params.id ? route.params.id : "Home";
-    });
-
     return {
-      title,
-      showGoBack,
       containerHeight,
     };
   },
@@ -57,20 +54,33 @@ a {
   background-color: $btnColor;
   padding-top: 10px;
   position: relative;
-  height: 10%;
+  height: 55px;
+  &-title {
+    font-size: 24px;
+    padding-left: 10px;
+  }
 }
 .main-container {
-  height: 80%;
+  height: 70%;
 }
 .footer-container {
-  background-color: $btnColor;
-  padding-top: 10px;
   position: relative;
-  height: 10%;
+  padding-top: 15px;
+  border-top: 2px solid grey;
+  height: 130px;
 }
 .goBack {
   position: absolute;
   right: 20px;
   z-index: 9999;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

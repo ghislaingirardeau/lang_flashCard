@@ -35,7 +35,6 @@
         color="red"
       />
     </div> -->
-    <MicRecord />
   </div>
 </template>
 
