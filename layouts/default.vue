@@ -31,8 +31,9 @@
 <script>
 export default {
   setup() {
-    const route = useRoute();
     const { height } = useWindowSize();
+    /* const cardsStore = useCardsStore();
+    cardsStore.nuxtServerInit(); */
 
     const containerHeight = computed(() => {
       return height.value + "px";

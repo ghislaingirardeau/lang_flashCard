@@ -1,52 +1,49 @@
+const save = (cards, cardItems, languages) => {
+  localStorage.setItem(
+    "myFlashCards",
+    JSON.stringify({
+      cards,
+      cardItems,
+      languages,
+    })
+  );
+};
+
 export const useCardsStore = defineStore("cards", {
   state: () => ({
     languages: { from: "fr-FR", to: "km-KM" },
-    cards: [
-      {
-        id: 1,
-        title: "fruit",
-        lastUpdate: "xxx",
-        createOn: "xxx",
-      },
-      {
-        id: 2,
-        title: "veget",
-        lastUpdate: "xxx",
-        createOn: "xxx",
-      },
-    ],
-    cardItems: {
-      fruit: [
-        {
-          id: 123,
-          from: "pomme",
-          to: "apple",
-          pronouce: "xxx",
-        },
-        {
-          id: 1234,
-          from: "banane",
-          to: "banana",
-          pronouce: "xxx",
-        },
-      ],
-      veget: [
-        {
-          id: 1234,
-          from: "cocombre",
-          to: "ត្រសក់",
-          pronouce: "xxx",
-        },
-      ],
-    },
+    cards: [],
+    cardItems: {},
   }),
   actions: {
+    nuxtServerInit() {
+      return new Promise((resolve, reject) => {
+        const datas = localStorage.getItem("myFlashCards");
+        if (datas) {
+          const { languages, cards, cardItems } = JSON.parse(datas);
+          this.languages = languages;
+          this.cards = cards;
+          this.cardItems = cardItems;
+        }
+        resolve(true);
+      });
+    },
     addNewCard(card) {
       this.cards.push(card);
       this.cardItems[card.title] = [];
+      save(this.cards, this.cardItems, this.languages);
+      /* localStorage.setItem(
+        "myFlashCards",
+        JSON.stringify({
+          cards: this.cards,
+          cardItems: this.cardItems,
+          languages: this.languages,
+        })
+      ); */
     },
     addNewItem(category, item) {
       this.cardItems[category].push(item);
+      save(this.cards, this.cardItems, this.languages);
     },
   },
 });

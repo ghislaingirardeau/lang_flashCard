@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="cards-main">
     <div class="cards-container">
       <div v-for="card in loadCards" :key="card.id" class="cards-block">
         <NuxtLink :to="{ name: 'card-id', params: { id: card.title } }"
@@ -7,7 +7,7 @@
         </NuxtLink>
       </div>
     </div>
-
+    <NuxtLink :to="{ name: 'test' }">test </NuxtLink>
     <div>
       <Icon
         name="mdi:plus"
@@ -43,6 +43,10 @@ export default {
       name: "",
     });
 
+    onBeforeMount(async () => {
+      await cardsStore.nuxtServerInit();
+    });
+
     const loadCards = computed(() => {
       return cardsStore.cards;
     });
@@ -67,6 +71,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cards-main {
+  padding: 20px;
+}
 .cards-container {
   display: flex;
   flex-wrap: wrap;
