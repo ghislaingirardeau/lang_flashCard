@@ -3,6 +3,7 @@
     <!-- <el-button v-if="loading" type="primary" :loading="loading"
       >Loading</el-button
     > -->
+    {{ recordTemp }} {{ resultRecordTemp }}
     <div v-if="loading" class="loader" v-loading="loading"></div>
     <div v-else class="mic-circle">
       <Icon
@@ -18,13 +19,12 @@
 
 <script>
 import { useTranslation } from "@/composables/translation";
-import soundStart from "@/assets/sound/start.wav";
-import soundStop from "@/assets/sound/stop.wav";
 export default {
   setup() {
     const cardsStore = useCardsStore();
-    const record = ref(false);
+    const recordTemp = ref(false);
     const loading = ref(false);
+    const resultRecordTemp = ref("");
     const route = useRoute();
 
     const { isSupported, isListening, isFinal, result, start, stop } =
@@ -34,24 +34,19 @@ export default {
         continuous: true,
       });
 
-    const playSound = (param, sound) => {
-      record.value = param;
-      let audio = new Audio(sound);
-      audio.play();
-    };
-
     const speechStart = () => {
-      /* playSound(true, soundStart); */
+      recordTemp.value = true;
       start();
     };
 
     const speechStop = async () => {
-      /* playSound(false, soundStop); */
+      recordTemp.value = false;
       stop();
       loading.value = true;
-      if (result._value) {
+      resultRecordTemp.value = result.value;
+      if (result.value) {
         const { text } = await useTranslation(
-          result._value,
+          result.value,
           cardsStore.languages.from,
           cardsStore.languages.to
         );
@@ -62,14 +57,20 @@ export default {
             to: text,
             pronouce: "xxx",
           });
-          loading.value = false;
+        } else {
+          alert("translation does not work");
         }
+        loading.value = false;
+      } else {
+        alert("pas de valeur enregistrer");
+        loading.value = false;
       }
     };
     return {
       speechStart,
       speechStop,
-      record,
+      recordTemp,
+      resultRecordTemp,
       loading,
     };
   },

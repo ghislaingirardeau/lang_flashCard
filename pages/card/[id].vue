@@ -56,7 +56,6 @@ button {
 }
 .el-row {
   align-items: center;
-  border-top: 2px solid red;
   border-bottom: 2px solid red;
 }
 .el-col {
