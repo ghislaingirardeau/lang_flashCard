@@ -41,16 +41,15 @@ export default {
     };
 
     const speechStart = () => {
-      playSound(true, soundStart);
+      /* playSound(true, soundStart); */
       start();
     };
 
     const speechStop = async () => {
-      playSound(false, soundStop);
+      /* playSound(false, soundStop); */
       stop();
       loading.value = true;
       if (result._value) {
-        console.log(result._value);
         const { text } = await useTranslation(
           result._value,
           cardsStore.languages.from,
@@ -63,8 +62,8 @@ export default {
             to: text,
             pronouce: "xxx",
           });
+          loading.value = false;
         }
-        loading.value = false;
       }
     };
     return {
