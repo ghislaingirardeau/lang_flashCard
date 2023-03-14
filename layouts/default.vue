@@ -63,6 +63,9 @@ a {
 .main-container {
   height: 70%;
 }
+.el-main {
+  padding: 0px;
+}
 .footer-container {
   position: relative;
   padding-top: 15px;

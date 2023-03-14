@@ -69,9 +69,9 @@ button {
   padding: 10px;
 }
 .el-row {
-  margin-bottom: 10px;
   align-items: center;
-  border: 2px solid red;
+  border-top: 2px solid red;
+  border-bottom: 2px solid red;
 }
 .el-col {
   text-align: center;

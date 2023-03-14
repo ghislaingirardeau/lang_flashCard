@@ -37,12 +37,12 @@ export default {
 
     const speechStart = () => {
       playSound(true, soundStart);
-      /* start(); */
+      start();
     };
 
     const speechStop = async () => {
       playSound(false, soundStop);
-      /* stop(); */
+      stop();
       if (result._value) {
         console.log(result._value);
         const { text } = await useTranslation(
