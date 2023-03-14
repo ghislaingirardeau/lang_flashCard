@@ -5,6 +5,8 @@
         <span class="header-container-title">
           {{ $route.params.id ? $route.params.id : "Home" }}
         </span>
+        <el-divider direction="vertical" />
+        <NuxtLink class="ml-5" :to="{ name: 'test' }">test </NuxtLink>
         <Transition name="fade">
           <Icon
             v-if="$route.name === 'card-id'"
