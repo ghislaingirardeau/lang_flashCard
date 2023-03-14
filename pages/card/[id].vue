@@ -1,11 +1,6 @@
 <template>
   <div>
-    <el-row
-      v-for="item in loadCard"
-      :key="item.id"
-      justify="space-between"
-      align="center"
-    >
+    <el-row v-for="item in loadCard" :key="item.id" justify="space-between">
       <el-col :span="7">
         <span class="loadCard-text"> {{ item.from }} </span></el-col
       >
@@ -30,9 +25,8 @@
       />
       <span> {{ item.to }} </span>
     </div> -->
-    <div>{{ record }}</div>
 
-    <div>
+    <!-- <div>
       <Icon
         @touchstart="startDrag"
         @touchend="endDrag"
@@ -40,21 +34,18 @@
         size="64px"
         color="red"
       />
-    </div>
+    </div> -->
+    <MicRecord />
   </div>
 </template>
 
 <script>
-import { useTranslation } from "../../composables/translation";
 import { usePlayTranslation } from "../../composables/listenTranslation";
-import soundStart from "@/assets/sound/start.wav";
-import soundStop from "@/assets/sound/stop.wav";
+
 export default {
   setup() {
     const route = useRoute();
     const cardsStore = useCardsStore();
-
-    const record = ref(false);
 
     const loadCard = computed(() => {
       return cardsStore.cardItems[route.params.id];
@@ -64,56 +55,12 @@ export default {
       return cardsStore.languages.to;
     });
 
-    const { isSupported, isListening, isFinal, result, start, stop } =
-      useSpeechRecognition({
-        lang: cardsStore.languages.from,
-        interimResults: true,
-        continuous: true,
-      });
-
-    const speechStart = () => {
-      start();
-      record.value = true;
-      let audio = new Audio(soundStart);
-      audio.play();
-    };
-    const speechStop = async () => {
-      record.value = false;
-      let audio = new Audio(soundStop);
-      audio.play();
-      stop();
-      if (result) {
-        const { text } = await useTranslation(
-          result._value,
-          cardsStore.languages.from,
-          cardsStore.languages.to
-        );
-        cardsStore.addNewItem(route.params.id, {
-          id: Date.now(),
-          from: result._value,
-          to: text,
-          pronouce: "xxx",
-        });
-      }
-    };
-
     return {
       route,
       loadCard,
-      speechStart,
-      speechStop,
-      record,
       langTo,
       usePlayTranslation,
     };
-  },
-  methods: {
-    startDrag() {
-      this.speechStart();
-    },
-    endDrag() {
-      this.speechStop();
-    },
   },
 };
 </script>
