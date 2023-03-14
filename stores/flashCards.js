@@ -32,14 +32,6 @@ export const useCardsStore = defineStore("cards", {
       this.cards.push(card);
       this.cardItems[card.title] = [];
       save(this.cards, this.cardItems, this.languages);
-      /* localStorage.setItem(
-        "myFlashCards",
-        JSON.stringify({
-          cards: this.cards,
-          cardItems: this.cardItems,
-          languages: this.languages,
-        })
-      ); */
     },
     addNewItem(category, item) {
       this.cardItems[category].push(item);

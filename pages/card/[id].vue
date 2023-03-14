@@ -5,60 +5,46 @@
         <span class="loadCard-text"> {{ item.from }} </span></el-col
       >
       <el-col :span="7">
+        <div v-if="loader === item.id" class="loader" v-loading="true"></div>
         <Icon
+          v-else
           name="mdi:volume-high"
           size="34px"
           color="red"
-          @click="usePlayTranslation(item.to, langTo)"
+          @click="playSound(item.to, item.id)"
       /></el-col>
       <el-col :span="7">
-        <span> {{ item.to }} </span></el-col
+        <span> {{ item.to }}</span></el-col
       >
     </el-row>
-    <!-- <div v-for="item in loadCard" :key="item.id">
-      <span> {{ item.from }} </span>
-      <Icon
-        name="mdi:volume-high"
-        size="34px"
-        color="red"
-        @click="usePlayTranslation(item.to, langTo)"
-      />
-      <span> {{ item.to }} </span>
-    </div> -->
-
-    <!-- <div>
-      <Icon
-        @touchstart="startDrag"
-        @touchend="endDrag"
-        name="mdi:microphone"
-        size="64px"
-        color="red"
-      />
-    </div> -->
   </div>
 </template>
 
 <script>
-import { usePlayTranslation } from "../../composables/listenTranslation";
+import { usePlayTranslation } from "@/composables/listenTranslation";
 
 export default {
   setup() {
     const route = useRoute();
     const cardsStore = useCardsStore();
 
+    const loader = ref(0);
+
     const loadCard = computed(() => {
       return cardsStore.cardItems[route.params.id];
     });
 
-    const langTo = computed(() => {
-      return cardsStore.languages.to;
-    });
+    const playSound = async (to, id) => {
+      loader.value = id;
+      const { play } = await usePlayTranslation(to, cardsStore.languages.to);
+      play ? (loader.value = 0) : null;
+    };
 
     return {
       route,
       loadCard,
-      langTo,
-      usePlayTranslation,
+      playSound,
+      loader,
     };
   },
 };
@@ -76,5 +62,10 @@ button {
 .el-col {
   text-align: center;
   padding: 10px;
+}
+.loader {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
 }
 </style>

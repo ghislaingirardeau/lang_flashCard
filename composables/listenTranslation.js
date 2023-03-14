@@ -26,4 +26,5 @@ export async function usePlayTranslation(to, lang) {
   const audioElement = new Audio(blobUrl);
   audioElement.playbackRate = 0.8;
   audioElement.play();
+  return { play: true };
 }
