@@ -22,9 +22,10 @@
         <el-main><slot /></el-main>
       </el-container>
       <Transition name="fade">
-        <el-footer v-if="$route.params.id" class="footer-container">
+        <el-footer class="footer-container">
           <!-- <MicRecord /> -->
-          <InputRecord />
+          <InputRecord v-if="$route.params.id" />
+          <SetLanguage v-else />
         </el-footer>
       </Transition>
     </el-container>

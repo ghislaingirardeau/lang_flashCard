@@ -43,5 +43,9 @@ export const useCardsStore = defineStore("cards", {
       );
       save(this.cards, this.cardItems, this.languages);
     },
+    setLang(from, lang) {
+      from ? (this.languages.from = lang) : (this.languages.to = lang);
+      save(this.cards, this.cardItems, this.languages);
+    },
   },
 });
