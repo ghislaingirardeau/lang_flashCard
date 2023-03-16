@@ -37,5 +37,11 @@ export const useCardsStore = defineStore("cards", {
       this.cardItems[category].push(item);
       save(this.cards, this.cardItems, this.languages);
     },
+    removeItem(category, id) {
+      this.cardItems[category] = this.cardItems[category].filter(
+        (e) => e.id != id
+      );
+      save(this.cards, this.cardItems, this.languages);
+    },
   },
 });

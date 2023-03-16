@@ -44,6 +44,7 @@ export default {
         alert("translation does not work");
       }
       loading.value = false;
+      TextToTranslate.value = "";
     };
     return {
       TextToTranslate,
