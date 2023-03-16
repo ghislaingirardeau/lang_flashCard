@@ -74,7 +74,7 @@ a {
   position: relative;
   padding-top: 15px;
   border-top: 2px solid grey;
-  height: 130px;
+  height: 80px;
 }
 .goBack {
   position: absolute;

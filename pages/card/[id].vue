@@ -7,7 +7,7 @@
             <Icon
               name="mdi:trash-can"
               size="34px"
-              color="red"
+              color="#0ea7de"
               @click="removeItems(item.id)"
           /></el-col>
         </Transition>
@@ -20,7 +20,7 @@
             v-else
             name="mdi:volume-high"
             size="34px"
-            color="red"
+            color="#0ea7de"
             @click="playSound(item.to, item.id)"
         /></el-col>
         <el-col :span="10">
@@ -85,7 +85,7 @@ button {
 }
 .el-row {
   align-items: center;
-  border-bottom: 2px solid red;
+  border-bottom: 2px solid $btnColor;
 }
 .el-col {
   text-align: center;

@@ -2,16 +2,21 @@
   <div class="mic-block">
     <div v-if="loading" class="loader" v-loading="loading"></div>
     <el-row v-else justify="space-between">
-      <el-col :span="18">
-        <el-input v-model="TextToTranslate" placeholder="Translate" />
-      </el-col>
-      <el-col :span="4">
-        <Icon
-          @click="translate"
-          name="mdi:check-underline-circle-outline"
-          size="38px"
-          color="red"
-        />
+      <el-col :span="24">
+        <el-input
+          v-model="TextToTranslate"
+          label="text-to-translate"
+          placeholder="Translate"
+        >
+          <template #append>
+            <Icon
+              @click="translate"
+              name="mdi:check-underline-circle-outline"
+              size="34px"
+              color="#0ea7de"
+            />
+          </template>
+        </el-input>
       </el-col>
     </el-row>
   </div>
@@ -61,7 +66,11 @@ export default {
 }
 .loader {
   display: inline-block;
-  width: 90px;
-  height: 90px;
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+}
+.el-input {
+  border: 1px solid $btnColor;
 }
 </style>

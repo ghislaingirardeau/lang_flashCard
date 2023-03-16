@@ -11,7 +11,7 @@
         @touchend="endDrag"
         name="mdi:microphone"
         size="84px"
-        color="red"
+        color="#0ea7de"
       />
     </div>
   </div>
@@ -33,6 +33,8 @@ export default {
         interimResults: true,
         continuous: true,
       });
+
+    /* DEBUG MIC ON MOBILE, DISABLE SELECT TEXT */
 
     const speechStart = () => {
       recordTemp.value = true;
@@ -95,7 +97,7 @@ export default {
   height: 90px;
   border-radius: 50%;
   position: relative;
-  border: 2px solid red;
+  border: 2px solid $btnColor;
 }
 .mic-circle::after {
   content: "";
