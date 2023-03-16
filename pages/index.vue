@@ -1,19 +1,28 @@
 <template>
   <div class="cards-main">
     <div class="cards-container">
-      <div v-for="card in loadCards" :key="card.id" class="cards-block">
-        <NuxtLink :to="{ name: 'card-id', params: { id: card.title } }"
-          >{{ card.title }}
-        </NuxtLink>
-      </div>
-    </div>
-    <div>
-      <Icon
-        name="mdi:plus"
-        size="34px"
-        color="red"
-        @click="dialogVisible = true"
-      />
+      <el-row
+        v-for="card in loadCards"
+        :key="card.id"
+        class="cards-block"
+        @click="$router.push({ name: 'card-id', params: { id: card.title } })"
+      >
+        <el-col :span="14">
+          <span> {{ card.title }}</span></el-col
+        >
+        <!-- <el-col :span="14">
+          <span> {{ getDate(card.createOn) }} cardNumberItems</span></el-col
+        > -->
+        <el-col :span="10">
+          <span> {{ cardNumberItems(card.title) }} tradutions </span></el-col
+        >
+      </el-row>
+      <el-row @click="dialogVisible = true" class="cards-block">
+        <el-col :span="4">
+          <Icon name="mdi:plus" size="34px" color="red"
+        /></el-col>
+        <el-col :span="20"> <span> Create new card</span></el-col>
+      </el-row>
     </div>
     <client-only>
       <el-dialog v-model="dialogVisible" :fullscreen="true" title="New Card">
@@ -50,6 +59,15 @@ export default {
       return cardsStore.cards;
     });
 
+    const getDate = (params) => {
+      let d = new Date(params);
+      return d.toString();
+    };
+
+    const cardNumberItems = (params) => {
+      return cardsStore.cardItems[params].length;
+    };
+
     const saveNewCard = () => {
       const newCard = {
         id: Date.now(),
@@ -64,23 +82,24 @@ export default {
     const openModal = () => {
       dialogVisible.value = true;
     };
-    return { loadCards, dialogVisible, openModal, cardForm, saveNewCard };
+    return {
+      loadCards,
+      dialogVisible,
+      openModal,
+      cardForm,
+      saveNewCard,
+      getDate,
+      cardNumberItems,
+    };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.cards-main {
-  padding: 20px;
-}
-.cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  padding: 5px;
-}
 .cards-block {
   padding: 10px;
-  border: 2px solid grey;
+  border-bottom: 2px solid grey;
+  align-items: center;
+  min-height: 60px;
 }
 </style>
