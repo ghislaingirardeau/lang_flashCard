@@ -23,7 +23,8 @@
       </el-container>
       <Transition name="fade">
         <el-footer v-if="$route.params.id" class="footer-container">
-          <MicRecord />
+          <!-- <MicRecord /> -->
+          <InputRecord />
         </el-footer>
       </Transition>
     </el-container>

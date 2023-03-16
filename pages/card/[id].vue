@@ -1,10 +1,10 @@
 <template>
   <div>
     <el-row v-for="item in loadCard" :key="item.id" justify="space-between">
-      <el-col :span="7">
+      <el-col :span="10">
         <span class="loadCard-text"> {{ item.from }} </span></el-col
       >
-      <el-col :span="7">
+      <el-col :span="4">
         <div v-if="loader === item.id" class="loader" v-loading="true"></div>
         <Icon
           v-else
@@ -13,8 +13,8 @@
           color="red"
           @click="playSound(item.to, item.id)"
       /></el-col>
-      <el-col :span="7">
-        <span> {{ item.to }}</span></el-col
+      <el-col :span="10">
+        <span class="loadCard-text"> {{ item.to }}</span></el-col
       >
     </el-row>
   </div>
@@ -61,6 +61,11 @@ button {
 .el-col {
   text-align: center;
   padding: 10px;
+}
+
+.loadCard-text {
+  font-size: 16px;
+  font-weight: bold;
 }
 .loader {
   display: inline-block;
