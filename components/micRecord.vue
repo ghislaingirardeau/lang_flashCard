@@ -1,14 +1,10 @@
 <template>
   <div class="mic-block">
-    <!-- <el-button v-if="loading" type="primary" :loading="loading"
-      >Loading</el-button
-    > -->
-    {{ recordTemp }} {{ resultRecordTemp }}
     <div v-if="loading" class="loader" v-loading="loading"></div>
     <div v-else class="mic-circle">
       <Icon
-        @touchstart="startDrag"
-        @touchend="endDrag"
+        @touchstart.prevent="startDrag"
+        @touchend.prevent="endDrag"
         name="mdi:microphone"
         size="84px"
         color="#0ea7de"
@@ -22,66 +18,72 @@ import { useTranslation } from "@/composables/translation";
 export default {
   setup() {
     const cardsStore = useCardsStore();
-    const recordTemp = ref(false);
+    const recognition = reactive({});
     const loading = ref(false);
-    const resultRecordTemp = ref("");
     const route = useRoute();
 
-    const { isSupported, isListening, isFinal, result, start, stop } =
-      useSpeechRecognition({
-        lang: cardsStore.languages.from,
-        interimResults: true,
-        continuous: true,
-      });
-
-    /* DEBUG MIC ON MOBILE, DISABLE SELECT TEXT */
-
-    const speechStart = () => {
-      recordTemp.value = true;
-      start();
-    };
-
-    const speechStop = async () => {
-      recordTemp.value = false;
-      stop();
+    /* const speechStop = async () => {
+      console.log(transcriptResult.value);
       loading.value = true;
-      resultRecordTemp.value = result.value;
-      if (result.value) {
-        const { text } = await useTranslation(
-          result.value,
-          cardsStore.languages.from,
-          cardsStore.languages.to
+      const { text } = await useTranslation(
+        transcriptResult.value,
+        cardsStore.languages.from,
+        cardsStore.languages.to
+      );
+      if (text) {
+        cardsStore.addNewItem(route.params.id, {
+          id: Date.now(),
+          from: transcriptResult.value,
+          to: text,
+          pronouce: "xxx",
+        });
+      } else {
+        alert("translation does not work");
+      }
+      loading.value = false;
+    }; */
+    return {
+      loading,
+      recognition,
+      cardsStore,
+      useTranslation,
+      route,
+    };
+  },
+  methods: {
+    startDrag() {
+      const SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+      this.recognition = new SpeechRecognition();
+      this.recognition.continuous = false;
+      this.recognition.lang = this.cardsStore.languages.from;
+      this.recognition.interimResults = false;
+      this.recognition.maxAlternatives = 1;
+      this.recognition.start();
+      this.recognition.onresult = async (event) => {
+        this.recognition.stop();
+        let transcriptResult = event.results[0][0].transcript;
+        this.loading = true;
+        const { text } = await this.useTranslation(
+          transcriptResult,
+          this.cardsStore.languages.from,
+          this.cardsStore.languages.to
         );
         if (text) {
-          cardsStore.addNewItem(route.params.id, {
+          this.cardsStore.addNewItem(this.route.params.id, {
             id: Date.now(),
-            from: result._value,
+            from: transcriptResult,
             to: text,
             pronouce: "xxx",
           });
         } else {
           alert("translation does not work");
         }
-        loading.value = false;
-      } else {
-        alert("pas de valeur enregistrer");
-        loading.value = false;
-      }
-    };
-    return {
-      speechStart,
-      speechStop,
-      recordTemp,
-      resultRecordTemp,
-      loading,
-    };
-  },
-  methods: {
-    startDrag() {
-      this.speechStart();
+        this.loading = false;
+      };
     },
     endDrag() {
-      this.speechStop();
+      this.recognition.stop();
     },
   },
 };

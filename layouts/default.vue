@@ -23,8 +23,8 @@
       </el-container>
       <Transition name="fade">
         <el-footer class="footer-container">
-          <!-- <MicRecord /> -->
-          <InputRecord v-if="$route.params.id" />
+          <MicRecord v-if="$route.params.id" />
+          <!-- <InputRecord v-if="$route.params.id" /> -->
           <SetLanguage v-else />
         </el-footer>
       </Transition>
@@ -75,7 +75,7 @@ a {
   position: relative;
   padding-top: 15px;
   border-top: 2px solid grey;
-  height: 80px;
+  height: 120px;
 }
 .goBack {
   position: absolute;
