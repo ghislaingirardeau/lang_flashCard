@@ -6,7 +6,7 @@
           {{ $route.params.id ? $route.params.id : "Home" }}
         </span>
         <el-divider direction="vertical" />
-        <NuxtLink class="ml-5" :to="{ name: 'test' }">test </NuxtLink>
+        <NuxtLink class="ml-5" :to="{ name: 'test' }">te</NuxtLink>
         <Transition name="fade">
           <Icon
             v-if="$route.name === 'card-id'"
@@ -21,13 +21,13 @@
       <el-container class="main-container">
         <el-main><slot /></el-main>
       </el-container>
-      <Transition name="fade">
-        <el-footer class="footer-container">
+      <el-footer class="footer-container">
+        <Transition name="fade" mode="out-in">
           <MicRecord v-if="$route.params.id" />
           <!-- <InputRecord v-if="$route.params.id" /> -->
           <SetLanguage v-else />
-        </el-footer>
-      </Transition>
+        </Transition>
+      </el-footer>
     </el-container>
   </div>
 </template>
@@ -46,6 +46,36 @@ export default {
     return {
       containerHeight,
     };
+  },
+  mounted() {
+    window.isUpdateAvailable = new Promise(function (resolve, reject) {
+      // lazy way of disabling service workers while developing
+      if ("serviceWorker" in navigator) {
+        // register service worker file
+        navigator.serviceWorker.ready
+          .then((reg) => {
+            reg.onupdatefound = () => {
+              const installingWorker = reg.installing;
+              installingWorker.onstatechange = () => {
+                switch (installingWorker.state) {
+                  case "installed":
+                    if (navigator.serviceWorker.controller) {
+                      // new update available
+                      alert("new update available");
+                      resolve(true);
+                    } else {
+                      // no update available
+                      alert("no update available");
+                      resolve(false);
+                    }
+                    break;
+                }
+              };
+            };
+          })
+          .catch((err) => console.error("[SW ERROR]", err));
+      }
+    });
   },
 };
 </script>
