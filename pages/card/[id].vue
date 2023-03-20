@@ -1,19 +1,23 @@
 <template>
-  <div ref="el">
+  <div>
     <TransitionGroup name="slide">
       <el-row v-for="item in loadCard" :key="item.id" justify="space-between">
-        <Transition name="slide">
-          <el-col v-if="showDelete === 2" :span="2">
-            <Icon
-              name="mdi:trash-can"
-              size="34px"
-              color="#0ea7de"
-              @click="removeItems(item.id)"
-          /></el-col>
-        </Transition>
-        <el-col :span="10">
+        <div class="display-trash" :id="item.id">
+          <Icon
+            name="mdi:trash-can"
+            size="34px"
+            color="#0ea7de"
+            @click="removeItems(item.id)"
+          />
+        </div>
+        <el-col
+          :span="10"
+          @touchstart.prevent="startDrag($event)"
+          @touchend.prevent="endDrag(item.id, $event)"
+        >
           <span class="loadCard-text"> {{ item.from }} </span></el-col
         >
+
         <el-col :span="2">
           <div v-if="loader === item.id" class="loader" v-loading="true"></div>
           <Icon
@@ -23,7 +27,11 @@
             color="#0ea7de"
             @click="playSound(item.to, item.id)"
         /></el-col>
-        <el-col :span="10">
+        <el-col
+          :span="10"
+          @touchstart.prevent="startDrag($event)"
+          @touchend.prevent="endDrag(item.id, $event)"
+        >
           <span class="loadCard-text"> {{ item.to }}</span></el-col
         >
       </el-row>
@@ -40,14 +48,11 @@ export default {
     const cardsStore = useCardsStore();
 
     const loader = ref(0);
-    const showDelete = ref(0);
+    const touchBeg = ref(null);
 
     const loadCard = computed(() => {
       return cardsStore.cardItems[route.params.id];
     });
-
-    const el = ref(null);
-    const { lengthX } = useSwipe(el);
 
     const playSound = async (to, id) => {
       loader.value = id;
@@ -60,20 +65,26 @@ export default {
     };
 
     return {
-      el,
       route,
       loadCard,
       playSound,
       loader,
       removeItems,
-      showDelete,
-      lengthX,
+      touchBeg,
     };
   },
-  watch: {
-    lengthX(from, to) {
-      if (to < -40) return (this.showDelete = 2);
-      if (to > 40) return (this.showDelete = 0);
+  methods: {
+    startDrag($event) {
+      this.touchBeg = $event.changedTouches[0].clientX;
+    },
+    endDrag(id, $event) {
+      if ($event.changedTouches[0].clientX - this.touchBeg > 30) {
+        document.getElementById(id).style.width = "30px";
+        document.getElementById(id).style.opacity = "1";
+      } else {
+        document.getElementById(id).style.width = "0px";
+        document.getElementById(id).style.opacity = "0";
+      }
     },
   },
 };
@@ -101,6 +112,15 @@ button {
   width: 30px;
   height: 30px;
 }
+.display-trash {
+  width: 0px;
+  opacity: 0;
+  -webkit-transition: width 0.4s ease-in-out;
+  -moz-transition: width 0.4s ease-in-out;
+  -o-transition: width 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
 .slide-move,
 .slide-enter-active,
 .slide-leave-active {
