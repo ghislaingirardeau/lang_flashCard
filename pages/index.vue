@@ -17,28 +17,22 @@
           <span> {{ cardNumberItems(card.title) }} tradutions </span></el-col
         >
       </el-row>
-      <el-row @click="dialogVisible = true" class="cards-block">
+      <el-row @click="dialogAddCard = true" class="cards-block">
         <el-col :span="4">
           <Icon name="mdi:plus" size="34px" color="#0ea7de"
         /></el-col>
         <el-col :span="20"> <span> Create new card</span></el-col>
       </el-row>
     </div>
-    <client-only>
-      <el-dialog v-model="dialogVisible" :fullscreen="true" title="New Card">
-        <el-form>
-          <el-form-item label="Card name">
-            <el-input v-model="cardForm.name" autocomplete="off" />
-          </el-form-item>
-        </el-form>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="dialogVisible = false">Cancel</el-button>
-            <el-button type="primary" @click="saveNewCard"> Confirm </el-button>
-          </span>
-        </template>
-      </el-dialog>
-    </client-only>
+    <FormDialog
+      v-model:value="dialogAddCard"
+      :doOnConfirm="saveNewCard"
+      title="New card"
+    >
+      <el-form-item label="Card name">
+        <el-input v-model="cardForm.name" autocomplete="off" />
+      </el-form-item>
+    </FormDialog>
   </div>
 </template>
 
@@ -46,7 +40,7 @@
 export default {
   setup() {
     const cardsStore = useCardsStore();
-    const dialogVisible = ref(false);
+    const dialogAddCard = ref(false);
     const cardForm = reactive({
       name: "",
     });
@@ -76,15 +70,16 @@ export default {
         createOn: Date.now(),
       };
       cardsStore.addNewCard(newCard);
-      dialogVisible.value = false;
+      dialogAddCard.value = false;
+      cardForm.name = "";
     };
 
     const openModal = () => {
-      dialogVisible.value = true;
+      dialogAddCard.value = true;
     };
     return {
       loadCards,
-      dialogVisible,
+      dialogAddCard,
       openModal,
       cardForm,
       saveNewCard,

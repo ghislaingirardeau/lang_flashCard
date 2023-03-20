@@ -16,35 +16,67 @@
             @click="$router.back()"
             class="goBack"
           />
+          <Icon
+            v-else
+            name="mdi:cog-outline"
+            size="34px"
+            color="white"
+            class="goBack"
+            @click="dialogSettings = true"
+          />
         </Transition>
       </el-header>
       <el-container class="main-container">
         <el-main><slot /></el-main>
       </el-container>
-      <el-footer class="footer-container">
-        <Transition name="fade" mode="out-in">
-          <MicRecord v-if="$route.params.id" />
-          <!-- <InputRecord v-if="$route.params.id" /> -->
-          <SetLanguage v-else />
-        </Transition>
-      </el-footer>
+      <Transition name="fade" mode="out-in">
+        <el-footer class="footer-container" v-if="$route.params.id">
+          <MicRecord v-if="settings.recorder" />
+          <InputRecord v-else />
+        </el-footer>
+      </Transition>
     </el-container>
+    <FormDialog
+      v-model:value="dialogSettings"
+      :doOnConfirm="registerSettings"
+      title="Settings"
+    >
+      <SetLanguage />
+      <el-switch
+        v-model="settings.recorder"
+        size="large"
+        active-text="Voice recorder"
+        inactive-text="Text"
+      />
+    </FormDialog>
   </div>
 </template>
 
 <script>
 export default {
   setup() {
+    const dialogSettings = ref(false);
     const { height } = useWindowSize();
-    /* const cardsStore = useCardsStore();
-    cardsStore.nuxtServerInit(); */
+    const settings = reactive({
+      recorder: false,
+    });
 
     const containerHeight = computed(() => {
       return height.value + "px";
     });
 
+    const registerSettings = () => {
+      let r = document.querySelector(":root");
+      settings.recorder
+        ? r.style.setProperty("--footer-height", "130px")
+        : r.style.setProperty("--footer-height", "75px");
+    };
+
     return {
       containerHeight,
+      settings,
+      dialogSettings,
+      registerSettings,
     };
   },
   mounted() {
@@ -81,6 +113,10 @@ export default {
 </script>
 
 <style lang="scss">
+:root {
+  --footer-height: 75px;
+}
+
 a {
   text-decoration: none;
 }
@@ -105,7 +141,7 @@ a {
   position: relative;
   padding-top: 15px;
   border-top: 2px solid grey;
-  height: 120px;
+  height: var(--footer-height);
 }
 .goBack {
   position: absolute;

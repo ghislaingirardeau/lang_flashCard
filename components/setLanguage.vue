@@ -1,5 +1,5 @@
 <template>
-  <div class="mic-block">
+  <div class="center-block">
     <el-row justify="space-between" align="middle">
       <el-col :span="10">
         <el-select
@@ -81,7 +81,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.mic-block {
+.center-block {
   text-align: center;
 }
 </style>
