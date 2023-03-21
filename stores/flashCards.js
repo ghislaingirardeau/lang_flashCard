@@ -33,7 +33,7 @@ export const useCardsStore = defineStore("cards", {
       this.cardItems[card.title] = [];
       save(this.cards, this.cardItems, this.languages);
     },
-    removeCard(id, category) {
+    removeCard(category, id) {
       const newCardArray = this.cards.filter((e) => e.id != id);
       this.cards = newCardArray;
       delete this.cardItems[category];

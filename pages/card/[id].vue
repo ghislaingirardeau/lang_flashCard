@@ -2,14 +2,11 @@
   <div>
     <TransitionGroup name="slide">
       <el-row v-for="item in loadCard" :key="item.id" justify="space-between">
-        <div class="display-trash" :id="item.id">
-          <Icon
-            name="mdi:trash-can"
-            size="34px"
-            color="#0ea7de"
-            @click="removeItems(item.id)"
-          />
-        </div>
+        <SlideIconDeleteItem
+          :id="item.id"
+          :category="$route.params.id ? $route.params.id : ''"
+        />
+
         <el-col
           :span="10"
           @touchstart.prevent="startDrag($event)"
@@ -60,16 +57,12 @@ export default {
       play ? (loader.value = 0) : null;
     };
 
-    const removeItems = (id) => {
-      cardsStore.removeItem(route.params.id, id);
-    };
-
     return {
       route,
+      cardsStore,
       loadCard,
       playSound,
       loader,
-      removeItems,
       touchBeg,
     };
   },
@@ -111,14 +104,6 @@ button {
   display: inline-block;
   width: 30px;
   height: 30px;
-}
-.display-trash {
-  width: 0px;
-  opacity: 0;
-  -webkit-transition: width 0.4s ease-in-out;
-  -moz-transition: width 0.4s ease-in-out;
-  -o-transition: width 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;
 }
 
 .slide-move,

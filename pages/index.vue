@@ -1,22 +1,32 @@
 <template>
   <div class="cards-main">
     <div class="cards-container">
-      <el-row
-        v-for="card in loadCards"
-        :key="card.id"
-        class="cards-block"
-        @click="$router.push({ name: 'card-id', params: { id: card.title } })"
-      >
-        <el-col :span="14">
-          <span> {{ card.title }}</span></el-col
-        >
-        <!-- <el-col :span="14">
+      <TransitionGroup name="slide">
+        <el-row v-for="card in loadCards" :key="card.id" class="cards-block">
+          <LazySlideIconDeleteItem
+            :id="card.id"
+            :category="card.title"
+            :card="true"
+          />
+          <el-col
+            :span="12"
+            @touchstart.prevent="startDrag($event)"
+            @touchend.prevent="endDrag(card.id, card.title, $event)"
+          >
+            <span> {{ card.title }}</span></el-col
+          >
+          <!-- <el-col :span="14">
           <span> {{ getDate(card.createOn) }} cardNumberItems</span></el-col
         > -->
-        <el-col :span="10">
-          <span> {{ cardNumberItems(card.title) }} tradutions </span></el-col
-        >
-      </el-row>
+          <el-col
+            :span="8"
+            @touchstart.prevent="startDrag($event)"
+            @touchend.prevent="endDrag(card.id, card.title, $event)"
+          >
+            <span> {{ cardNumberItems(card.title) }} tradutions </span></el-col
+          >
+        </el-row>
+      </TransitionGroup>
       <el-row @click="dialogAddCard = true" class="cards-block">
         <el-col :span="4">
           <Icon name="mdi:plus" size="34px" color="#0ea7de"
@@ -44,6 +54,7 @@ export default {
     const cardForm = reactive({
       name: "",
     });
+    const touchBeg = ref(null);
 
     onBeforeMount(async () => {
       await cardsStore.nuxtServerInit();
@@ -85,7 +96,29 @@ export default {
       saveNewCard,
       getDate,
       cardNumberItems,
+      touchBeg,
     };
+  },
+  methods: {
+    startDrag($event) {
+      this.touchBeg = $event.changedTouches[0].clientX;
+    },
+    endDrag(id, category, $event) {
+      const defineTouch = $event.changedTouches[0].clientX - this.touchBeg;
+
+      if (defineTouch > 30) {
+        document.getElementById(id).style.width = "30px";
+        document.getElementById(id).style.opacity = "1";
+        return;
+      }
+      if (defineTouch < -30) {
+        document.getElementById(id).style.width = "0px";
+        document.getElementById(id).style.opacity = "0";
+        return;
+      } else {
+        this.$router.push({ name: "card-id", params: { id: category } });
+      }
+    },
   },
 };
 </script>
@@ -96,5 +129,20 @@ export default {
   border-bottom: 2px solid grey;
   align-items: center;
   min-height: 60px;
+  text-align: center;
+}
+.slide-move,
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.4s ease;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  opacity: 0;
+  transform: translateX(-40px);
+}
+.slide-leave-active {
+  position: absolute;
 }
 </style>
