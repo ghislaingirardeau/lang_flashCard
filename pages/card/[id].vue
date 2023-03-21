@@ -90,6 +90,7 @@ button {
 .el-row {
   align-items: center;
   border-bottom: 2px solid $btnColor;
+  width: 100%;
 }
 .el-col {
   text-align: center;

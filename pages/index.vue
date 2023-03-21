@@ -1,8 +1,8 @@
 <template>
-  <div class="cards-main">
-    <div class="cards-container">
+  <div>
+    <div>
       <TransitionGroup name="slide">
-        <el-row v-for="card in loadCards" :key="card.id" class="cards-block">
+        <el-row v-for="card in loadCards" :key="card.id">
           <LazySlideIconDeleteItem
             :id="card.id"
             :category="card.title"
@@ -124,12 +124,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.cards-block {
+.el-row {
   padding: 10px;
   border-bottom: 2px solid grey;
   align-items: center;
   min-height: 60px;
   text-align: center;
+  width: 100%;
 }
 .slide-move,
 .slide-enter-active,
