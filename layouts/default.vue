@@ -31,8 +31,8 @@
       </el-container>
       <Transition name="fade" mode="out-in">
         <el-footer class="footer-container" v-if="$route.params.id">
-          <MicRecord v-if="settings.recorder" />
-          <InputRecord v-else />
+          <LazyMicRecord v-if="settings.recorder" />
+          <LazyInputRecord v-else />
         </el-footer>
       </Transition>
     </el-container>
@@ -41,21 +41,20 @@
       :doOnConfirm="registerSettings"
       title="Settings"
     >
-      <span class="dialog-subtitle">Languages</span>
-      <SetLanguage />
-      <div class="dialog-block">
-        <div class="dialog-subtitle">Recorder Type</div>
+      <el-form-item label="Languages">
+        <SetLanguage />
+      </el-form-item>
+      <el-form-item label="Recorder">
         <el-switch
           v-model="settings.recorder"
           size="large"
           active-text="Voice"
           inactive-text="Text"
         />
-      </div>
-      <div class="dialog-block">
-        <span class="dialog-subtitle">Voice speed</span>
+      </el-form-item>
+      <el-form-item label="Voice speed">
         <el-slider v-model="settings.rate" :step="0.1" :min="0.6" :max="1.2" />
-      </div>
+      </el-form-item>
     </FormDialog>
   </div>
 </template>
@@ -178,8 +177,18 @@ a {
   right: 20px;
   z-index: 9999;
 }
-.dialog-block {
-  margin-top: 20px;
+.el-dialog__title {
+  font-weight: bold;
+  font-size: 24px;
+}
+.el-form-item {
+  align-items: center;
+  text-align: center;
+  padding-top: 20px;
+  border-top: 2px solid grey;
+}
+.el-switch {
+  margin-left: 30px;
 }
 .fade-enter-active,
 .fade-leave-active {
