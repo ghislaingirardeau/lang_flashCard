@@ -53,7 +53,11 @@ export default {
 
     const playSound = async (to, id) => {
       loader.value = id;
-      const { play } = await usePlayTranslation(to, cardsStore.languages.to);
+      const { play } = await usePlayTranslation(
+        to,
+        cardsStore.languages.to,
+        cardsStore.languages.rate
+      );
       play ? (loader.value = 0) : null;
     };
 

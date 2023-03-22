@@ -1,4 +1,4 @@
-export async function usePlayTranslation(to, lang) {
+export async function usePlayTranslation(to, lang, rate) {
   /* const { speak, status, isPlaying, isSupported, error } =
       useSpeechSynthesis(to, {
         lang: cardsStore.languages.to,
@@ -24,7 +24,7 @@ export async function usePlayTranslation(to, lang) {
   );
   let blobUrl = URL.createObjectURL(data.value);
   const audioElement = new Audio(blobUrl);
-  audioElement.playbackRate = 0.8;
+  audioElement.playbackRate = rate;
   audioElement.play();
   return { play: true };
 }

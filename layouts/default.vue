@@ -41,13 +41,21 @@
       :doOnConfirm="registerSettings"
       title="Settings"
     >
+      <span class="dialog-subtitle">Languages</span>
       <SetLanguage />
-      <el-switch
-        v-model="settings.recorder"
-        size="large"
-        active-text="Voice recorder"
-        inactive-text="Text"
-      />
+      <div class="dialog-block">
+        <div class="dialog-subtitle">Recorder Type</div>
+        <el-switch
+          v-model="settings.recorder"
+          size="large"
+          active-text="Voice"
+          inactive-text="Text"
+        />
+      </div>
+      <div class="dialog-block">
+        <span class="dialog-subtitle">Voice speed</span>
+        <el-slider v-model="settings.rate" :step="0.1" :min="0.6" :max="1.2" />
+      </div>
     </FormDialog>
   </div>
 </template>
@@ -55,10 +63,34 @@
 <script>
 export default {
   setup() {
+    const cardsStore = useCardsStore();
     const dialogSettings = ref(false);
     const { height } = useWindowSize();
     const settings = reactive({
-      recorder: false,
+      recorder: null,
+      rate: null,
+    });
+
+    const setFooter = () => {
+      let r = document.querySelector(":root");
+      settings.recorder
+        ? r.style.setProperty("--footer-height", "130px")
+        : r.style.setProperty("--footer-height", "75px");
+    };
+
+    onBeforeMount(async () => {
+      await cardsStore.nuxtServerInit();
+    });
+
+    onMounted(() => {
+      settings.recorder = cardsStore.languages.recorder
+        ? cardsStore.languages.recorder
+        : false;
+      settings.rate = cardsStore.languages.rate
+        ? cardsStore.languages.rate
+        : 0.8;
+
+      setFooter();
     });
 
     const containerHeight = computed(() => {
@@ -66,10 +98,8 @@ export default {
     });
 
     const registerSettings = () => {
-      let r = document.querySelector(":root");
-      settings.recorder
-        ? r.style.setProperty("--footer-height", "130px")
-        : r.style.setProperty("--footer-height", "75px");
+      setFooter();
+      cardsStore.setParams(settings);
     };
 
     return {
@@ -147,6 +177,9 @@ a {
   position: absolute;
   right: 20px;
   z-index: 9999;
+}
+.dialog-block {
+  margin-top: 20px;
 }
 .fade-enter-active,
 .fade-leave-active {
