@@ -7,6 +7,7 @@
           v-model="TextToTranslate"
           label="text-to-translate"
           placeholder="Translate"
+          autofocus
         >
           <template #append>
             <Icon

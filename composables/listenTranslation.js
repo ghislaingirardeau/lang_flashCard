@@ -1,12 +1,4 @@
 export async function usePlayTranslation(to, lang, rate) {
-  /* const { speak, status, isPlaying, isSupported, error } =
-      useSpeechSynthesis(to, {
-        lang: cardsStore.languages.to,
-        pitch: 1,
-        rate: 0.5,
-        volume: 1,
-      });
-    speak(); */
   const config = useRuntimeConfig();
   const { data } = await useFetch(
     `https://text-to-speech-api3.p.rapidapi.com/speak?text=${to}&lang=${lang.slice(

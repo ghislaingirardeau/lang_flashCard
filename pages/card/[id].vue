@@ -33,6 +33,13 @@
         >
       </el-row>
     </TransitionGroup>
+    <el-row @click="playAllSound">
+      <el-col :span="2"></el-col>
+      <el-col :span="22">
+        <div v-if="loader === 1" class="loader" v-loading="true"></div>
+        <Icon v-else name="mdi:play" size="34px" color="#0ea7de" />
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -61,6 +68,21 @@ export default {
       play ? (loader.value = 0) : null;
     };
 
+    const playAllSound = async () => {
+      loader.value = 1;
+      const allText = loadCard.value
+        .map((e) => e.to)
+        .toString()
+        .replace(",", " ");
+
+      const { play } = await usePlayTranslation(
+        allText,
+        cardsStore.languages.to,
+        cardsStore.languages.rate
+      );
+      play ? (loader.value = 0) : null;
+    };
+
     return {
       route,
       cardsStore,
@@ -68,6 +90,7 @@ export default {
       playSound,
       loader,
       touchBeg,
+      playAllSound,
     };
   },
   methods: {
