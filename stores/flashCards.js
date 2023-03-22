@@ -11,7 +11,7 @@ const save = (cards, cardItems, languages) => {
 
 export const useCardsStore = defineStore("cards", {
   state: () => ({
-    languages: { from: "fr-FR", to: "km-KM" },
+    languages: { from: "fr-FR", to: "km-KM", recorder: false, rate: 1 },
     cards: [],
     cardItems: {},
   }),
@@ -49,13 +49,8 @@ export const useCardsStore = defineStore("cards", {
       );
       save(this.cards, this.cardItems, this.languages);
     },
-    setLang(from, lang) {
-      from ? (this.languages.from = lang) : (this.languages.to = lang);
-      save(this.cards, this.cardItems, this.languages);
-    },
     setParams(params) {
-      this.languages.recorder = params.recorder;
-      this.languages.rate = params.rate;
+      this.languages = params;
       save(this.cards, this.cardItems, this.languages);
     },
   },

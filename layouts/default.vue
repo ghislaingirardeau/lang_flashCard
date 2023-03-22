@@ -14,14 +14,14 @@
             size="34px"
             color="white"
             @click="$router.back()"
-            class="goBack"
+            class="header-icons"
           />
           <Icon
             v-else
             name="mdi:cog-outline"
             size="34px"
             color="white"
-            class="goBack"
+            class="header-icons"
             @click="dialogSettings = true"
           />
         </Transition>
@@ -42,7 +42,7 @@
       title="Settings"
     >
       <el-form-item label="Languages">
-        <SetLanguage />
+        <SetLanguage v-model:settings="settings" />
       </el-form-item>
       <el-form-item label="Recorder">
         <el-switch
@@ -65,30 +65,19 @@ export default {
     const cardsStore = useCardsStore();
     const dialogSettings = ref(false);
     const { height } = useWindowSize();
-    const settings = reactive({
-      recorder: null,
-      rate: null,
-    });
+
+    const settings = ref({});
 
     const setFooter = () => {
       let r = document.querySelector(":root");
-      settings.recorder
+      settings.value.recorder
         ? r.style.setProperty("--footer-height", "130px")
         : r.style.setProperty("--footer-height", "75px");
     };
 
     onBeforeMount(async () => {
       await cardsStore.nuxtServerInit();
-    });
-
-    onMounted(() => {
-      settings.recorder = cardsStore.languages.recorder
-        ? cardsStore.languages.recorder
-        : false;
-      settings.rate = cardsStore.languages.rate
-        ? cardsStore.languages.rate
-        : 0.8;
-
+      settings.value = { ...cardsStore.languages };
       setFooter();
     });
 
@@ -97,8 +86,8 @@ export default {
     });
 
     const registerSettings = () => {
-      setFooter();
       cardsStore.setParams(settings);
+      setFooter();
     };
 
     return {
@@ -172,7 +161,7 @@ a {
   border-top: 2px solid grey;
   height: var(--footer-height);
 }
-.goBack {
+.header-icons {
   position: absolute;
   right: 20px;
   z-index: 9999;

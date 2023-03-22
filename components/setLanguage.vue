@@ -2,12 +2,7 @@
   <div class="center-block">
     <el-row justify="space-between" align="middle">
       <el-col :span="10">
-        <el-select
-          v-model="valueFrom"
-          class="m-2"
-          placeholder="Select"
-          @change="changeFrom"
-        >
+        <el-select v-model="settings.from" class="m-2" placeholder="Select">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -18,12 +13,7 @@
       </el-col>
       <el-col :span="2"> To </el-col>
       <el-col :span="10">
-        <el-select
-          v-model="valueTo"
-          class="m-2"
-          placeholder="Select"
-          @change="changeTo"
-        >
+        <el-select v-model="settings.to" class="m-2" placeholder="Select">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -38,8 +28,10 @@
 
 <script>
 export default {
+  props: {
+    settings: Object,
+  },
   setup() {
-    const cardsStore = useCardsStore();
     const options = reactive([
       {
         label: "French",
@@ -54,27 +46,9 @@ export default {
         value: "En-UK",
       },
     ]);
-    const valueFrom = ref(
-      options.find((e) => e.value === cardsStore.languages.from)
-    );
-    const valueTo = ref(
-      options.find((e) => e.value === cardsStore.languages.to)
-    );
-
-    const changeFrom = () => {
-      cardsStore.setLang(true, valueFrom.value);
-    };
-
-    const changeTo = () => {
-      cardsStore.setLang(false, valueTo.value);
-    };
 
     return {
       options,
-      valueFrom,
-      valueTo,
-      changeFrom,
-      changeTo,
     };
   },
 };
