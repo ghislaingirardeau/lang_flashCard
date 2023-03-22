@@ -56,10 +56,6 @@ export default {
     });
     const touchBeg = ref(null);
 
-    onBeforeMount(async () => {
-      await cardsStore.nuxtServerInit();
-    });
-
     const loadCards = computed(() => {
       return cardsStore.cards;
     });
