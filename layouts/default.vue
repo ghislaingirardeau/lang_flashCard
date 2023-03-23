@@ -30,9 +30,15 @@
         <el-main><slot /></el-main>
       </el-container>
       <Transition name="fade" mode="out-in">
-        <el-footer class="footer-container" v-if="$route.params.id">
+        <el-footer
+          class="footer-container footer-container-recorder"
+          v-if="$route.params.id"
+        >
           <LazyMicRecord v-if="settings.recorder" />
           <LazyInputRecord v-else />
+        </el-footer>
+        <el-footer class="footer-container footer-container-home" v-else>
+          Create By Gg web dev
         </el-footer>
       </Transition>
     </el-container>
@@ -137,13 +143,21 @@ export default {
 
 a {
   text-decoration: none;
+  color: $colorPrimary;
+}
+
+body {
+  background-color: $colorFith;
+  color: $colorPrimary;
 }
 
 .header-container {
-  background-color: $btnColor;
+  background-color: $colorSecondary;
+  color: $colorPrimary;
   padding-top: 10px;
   position: relative;
   height: 55px;
+  border-bottom: 2px solid $colorFourth;
   &-title {
     font-size: 24px;
     padding-left: 10px;
@@ -158,8 +172,14 @@ a {
 .footer-container {
   position: relative;
   padding-top: 15px;
-  border-top: 2px solid grey;
-  height: var(--footer-height);
+  border-top: 2px solid $colorFourth;
+  &-recorder {
+    height: var(--footer-height);
+  }
+  &-home {
+    background-color: $colorSecondary;
+    color: $colorPrimary;
+  }
 }
 .header-icons {
   position: absolute;

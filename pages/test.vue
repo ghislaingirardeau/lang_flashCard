@@ -1,10 +1,13 @@
 <template>
   <div>
-    <div @touchstart="startDrag" @touchend="endDrag" class="block-test"></div>
+    <div
+      @touchstart.prevent="startDrag($event)"
+      @touchend.prevent="endDrag($event)"
+      class="block-test"
+    ></div>
     <div>{{ touch }}</div>
     <button @click="startDrag">play</button>
-    <div ref="el" class="block-swipe">Swipe here</div>
-    <div>{{ lengthX }} {{ direction }}</div>
+    <div ref="el" class="block-swipe" @touchstart="swipe">Swipe here</div>
   </div>
 </template>
 
@@ -14,22 +17,29 @@ import soundStop from "@/assets/sound/stop.wav";
 export default {
   setup() {
     const el = ref(null);
-    const { isSwiping, direction, lengthX } = useSwipe(el);
+    const recognition = reactive(null);
     const touch = ref(false);
+    const touchBeg = ref(null);
+    const swipe = (e) => {
+      const { isSwiping, direction, lengthX } = useSwipe(e.target);
+      console.log(isSwiping, direction, lengthX);
+    };
     return {
       el,
-      isSwiping,
+      recognition,
+      /* isSwiping,
       direction,
-      lengthX,
+      lengthX, */
       touch,
+      swipe,
     };
   },
   methods: {
-    startDrag() {
-      this.touch = true;
+    startDrag($event) {
+      this.touchBeg = $event.changedTouches[0].clientX;
     },
-    endDrag() {
-      this.touch = false;
+    endDrag($event) {
+      console.log($event.changedTouches[0].clientX - this.touchBeg);
     },
   },
 };

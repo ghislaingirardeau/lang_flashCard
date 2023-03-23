@@ -24,9 +24,7 @@ export default {
     const loading = ref(false);
     const route = useRoute();
     const micAnimation = reactive({});
-    const micAnimationDuration = ref(500);
-
-    console.log("mic mounted");
+    const micAnimationDuration = ref(700);
 
     return {
       loading,
@@ -39,19 +37,19 @@ export default {
     };
   },
   methods: {
-    startDrag() {
+    async startDrag() {
       this.loading = true;
       const mic = document.querySelector(".mic-circle");
       const micframes = new KeyframeEffect(
         mic,
-        [{ transform: "scale(1)" }, { transform: "scale(1.2)" }],
+        [{ transform: "scale(1)" }, { transform: "scale(1.15)" }],
         {
           duration: this.micAnimationDuration,
+          pseudoElement: "::after",
           iterations: 10,
           fill: "both",
         }
       );
-
       this.micAnimation = new Animation(micframes, document.timeline);
       this.micAnimation.play();
       /* const SpeechRecognition =
@@ -87,6 +85,7 @@ export default {
     endDrag() {
       /* this.recognition.stop(); */
       this.loading = false;
+      this.micAnimation.reverse();
       const getTime = () => {
         if (this.micAnimation.currentTime < this.micAnimationDuration)
           return this.micAnimation.currentTime;
@@ -97,8 +96,6 @@ export default {
           return this.micAnimation.currentTime;
         }
       };
-
-      this.micAnimation.reverse();
 
       setTimeout(() => {
         this.micAnimation.pause();
@@ -118,25 +115,19 @@ export default {
   height: 90px;
   border-radius: 50%;
   position: relative;
-  border: 2px solid $btnColor;
-  background-color: #ce9504;
+  z-index: 10 !important;
+  border: 2px solid $colorThird;
 }
-/* .mic-circle::before {
+.mic-circle::after {
   content: "";
-  opacity: 0;
   position: absolute;
   left: 0px;
-  background-color: #ce9504;
+  background-color: $colorThird;
   width: 90px;
   height: 90px;
+  z-index: -1;
   border-radius: 50%;
-  transform: scaleX(1) scaleY(1);
-  transition: all 0.5s ease-in-out;
 }
-.mic-circle:active::before {
-  transform: scaleX(1.3) scaleY(1.3);
-  opacity: 0.5;
-} */
 .loader {
   display: inline-block;
   width: 90px;

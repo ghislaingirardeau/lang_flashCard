@@ -116,7 +116,7 @@ button {
 }
 .el-row {
   align-items: center;
-  border-bottom: 2px solid $btnColor;
+  border-bottom: 2px solid $colorThird;
   width: 100%;
 }
 .el-col {

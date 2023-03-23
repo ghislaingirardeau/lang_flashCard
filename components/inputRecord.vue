@@ -72,6 +72,6 @@ export default {
   background-color: transparent;
 }
 .el-input {
-  border: 1px solid $btnColor;
+  border: 1px solid $colorPrimary;
 }
 </style>

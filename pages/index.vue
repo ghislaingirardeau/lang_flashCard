@@ -122,7 +122,7 @@ export default {
 <style lang="scss" scoped>
 .el-row {
   padding: 10px;
-  border-bottom: 2px solid grey;
+  border-bottom: 2px solid $colorThird;
   align-items: center;
   min-height: 60px;
   text-align: center;
