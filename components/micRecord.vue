@@ -1,7 +1,9 @@
 <template>
   <div class="mic-block">
-    <div v-if="loading" class="loader" v-loading="loading"></div>
-    <div v-else class="mic-circle">
+    <!-- <div v-if="loading" class="loader" v-loading="loading"></div> -->
+
+    {{ loading }}
+    <div class="mic-circle">
       <Icon
         @touchstart.prevent="startDrag"
         @touchend.prevent="endDrag"
@@ -21,38 +23,38 @@ export default {
     const recognition = reactive({});
     const loading = ref(false);
     const route = useRoute();
+    const micAnimation = reactive({});
+    const micAnimationDuration = ref(500);
 
-    /* const speechStop = async () => {
-      console.log(transcriptResult.value);
-      loading.value = true;
-      const { text } = await useTranslation(
-        transcriptResult.value,
-        cardsStore.languages.from,
-        cardsStore.languages.to
-      );
-      if (text) {
-        cardsStore.addNewItem(route.params.id, {
-          id: Date.now(),
-          from: transcriptResult.value,
-          to: text,
-          pronouce: "xxx",
-        });
-      } else {
-        alert("translation does not work");
-      }
-      loading.value = false;
-    }; */
+    console.log("mic mounted");
+
     return {
       loading,
       recognition,
       cardsStore,
       useTranslation,
       route,
+      micAnimation,
+      micAnimationDuration,
     };
   },
   methods: {
     startDrag() {
-      const SpeechRecognition =
+      this.loading = true;
+      const mic = document.querySelector(".mic-circle");
+      const micframes = new KeyframeEffect(
+        mic,
+        [{ transform: "scale(1)" }, { transform: "scale(1.2)" }],
+        {
+          duration: this.micAnimationDuration,
+          iterations: 10,
+          fill: "both",
+        }
+      );
+
+      this.micAnimation = new Animation(micframes, document.timeline);
+      this.micAnimation.play();
+      /* const SpeechRecognition =
         window.SpeechRecognition || window.webkitSpeechRecognition;
       this.recognition = new SpeechRecognition();
       this.recognition.continuous = false;
@@ -80,10 +82,27 @@ export default {
           alert("translation does not work");
         }
         this.loading = false;
-      };
+      }; */
     },
     endDrag() {
-      this.recognition.stop();
+      /* this.recognition.stop(); */
+      this.loading = false;
+      const getTime = () => {
+        if (this.micAnimation.currentTime < this.micAnimationDuration)
+          return this.micAnimation.currentTime;
+        if (this.micAnimation.currentTime > this.micAnimationDuration) {
+          while (this.micAnimation.currentTime > this.micAnimationDuration) {
+            this.micAnimation.currentTime -= this.micAnimationDuration;
+          }
+          return this.micAnimation.currentTime;
+        }
+      };
+
+      this.micAnimation.reverse();
+
+      setTimeout(() => {
+        this.micAnimation.pause();
+      }, getTime());
     },
   },
 };
@@ -93,20 +112,20 @@ export default {
 .mic-block {
   text-align: center;
 }
-/* .mic-circle {
+.mic-circle {
   display: inline-block;
   width: 90px;
   height: 90px;
   border-radius: 50%;
   position: relative;
   border: 2px solid $btnColor;
+  background-color: #ce9504;
 }
-.mic-circle::after {
+/* .mic-circle::before {
   content: "";
   opacity: 0;
   position: absolute;
   left: 0px;
-  z-index: -1;
   background-color: #ce9504;
   width: 90px;
   height: 90px;
@@ -114,7 +133,7 @@ export default {
   transform: scaleX(1) scaleY(1);
   transition: all 0.5s ease-in-out;
 }
-.mic-circle:active::after {
+.mic-circle:active::before {
   transform: scaleX(1.3) scaleY(1.3);
   opacity: 0.5;
 } */
