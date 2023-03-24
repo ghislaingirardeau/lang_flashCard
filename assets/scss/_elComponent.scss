@@ -1,0 +1,66 @@
+:root {
+  --footer-height: 75px;
+  --el-text-color-regular: $colorSecondary;
+  --el-switch-on-color: $colorSecondary;
+  --el-text-color-primary: $colorSecondary;
+  --el-color-primary: $colorSecondary;
+  --el-fill-color-blank: $colorFith;
+  --el-fill-color-light: $colorFith;
+}
+
+.el-dialog {
+  background-color: $colorFith;
+  &__header {
+    background-color: $colorSecondary;
+    margin-right: 0px;
+    border-bottom: 1px solid rgb(255, 255, 255);
+  }
+  &__title {
+    font-weight: bold;
+    font-size: 24px;
+    color: $colorPrimary;
+  }
+  &__body {
+    color: $colorThird;
+    border: 1px solid rgb(255, 255, 255);
+    & label {
+      color: $colorPrimary;
+    }
+  }
+}
+.el-slider__bar {
+  background-color: $colorThird;
+}
+.el-switch__label {
+  color: white;
+}
+
+.el-select-dropdown__item {
+  color: $colorSecondary;
+  &.selected {
+    color: $colorThird;
+  }
+}
+.el-form-item {
+  align-items: center;
+  text-align: center;
+  padding-top: 20px;
+  &__label {
+    color: $colorPrimary;
+  }
+}
+.el-switch {
+  margin-left: 30px;
+}
+.el-input-group__append {
+  box-shadow: none;
+}
+.el-input__wrapper.is-focus {
+  border: 1px solid white;
+}
+.el-button {
+  color: white;
+  &--primary {
+    color: $colorThird;
+  }
+}

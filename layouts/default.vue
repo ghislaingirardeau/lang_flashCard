@@ -3,10 +3,8 @@
     <el-container :style="{ height: containerHeight }">
       <el-header class="header-container">
         <span class="header-container-title">
-          {{ $route.params.id ? $route.params.id : "Home" }}
+          {{ $route.params.id ? $route.params.id : "Flash Cards" }}
         </span>
-        <el-divider direction="vertical" />
-        <NuxtLink class="ml-5" :to="{ name: 'test' }">te</NuxtLink>
         <Transition name="fade">
           <Icon
             v-if="$route.name === 'card-id'"
@@ -135,14 +133,6 @@ export default {
 </script>
 
 <style lang="scss">
-:root {
-  --footer-height: 75px;
-  --el-text-color-regular: $colorSecondary;
-  --el-switch-on-color: $colorSecondary;
-  --el-text-color-primary: $colorSecondary;
-  --el-color-primary: $colorSecondary;
-}
-
 a {
   text-decoration: none;
   color: $colorPrimary;
@@ -190,52 +180,7 @@ svg {
   position: absolute;
   right: 20px;
 }
-.el-dialog {
-  background-color: $colorFith;
-  &__header {
-    background-color: $colorSecondary;
-    margin-right: 0px;
-    border-bottom: 1px solid rgb(255, 255, 255);
-  }
-  &__title {
-    font-weight: bold;
-    font-size: 24px;
-    color: $colorPrimary;
-  }
-  &__body {
-    color: $colorThird;
-    border: 1px solid rgb(255, 255, 255);
-    & label {
-      color: $colorThird;
-    }
-  }
-}
-.el-slider__bar {
-  background-color: $colorThird;
-}
-.el-switch__label {
-  color: $colorSecondary;
-}
-.el-select-dropdown__item {
-  color: $colorSecondary;
-  &.selected {
-    color: $colorThird;
-  }
-}
-.el-button {
-  color: $colorSecondary;
-  &--primary {
-    color: white;
-  }
-}
-.el-form-item {
-  align-items: center;
-  text-align: center;
-  padding-top: 20px;
-}
-.el-switch {
-  margin-left: 30px;
-}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.4s ease;
