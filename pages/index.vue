@@ -13,7 +13,7 @@
             @touchstart.prevent="startDrag($event)"
             @touchend.prevent="endDrag(card.id, card.title, $event)"
           >
-            <span> {{ card.title }}</span></el-col
+            <h2>{{ card.title }}</h2></el-col
           >
           <!-- <el-col :span="14">
           <span> {{ getDate(card.createOn) }} cardNumberItems</span></el-col
@@ -39,7 +39,7 @@
     <FormDialog
       v-model:value="dialogAddCard"
       :doOnConfirm="saveNewCard"
-      title="New card"
+      title="NEW CARD"
     >
       <el-form-item label="Card name">
         <el-input v-model="cardForm.name" autocomplete="off" />

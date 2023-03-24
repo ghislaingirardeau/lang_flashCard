@@ -12,7 +12,7 @@
           @touchstart.prevent="startDrag($event)"
           @touchend.prevent="endDrag(item.id, $event)"
         >
-          <span class="loadCard-text"> {{ item.from }} </span></el-col
+          <h2 class="loadCard-text">{{ item.from }}</h2></el-col
         >
 
         <el-col :span="4" :class="`col-${item.id}`">
@@ -28,7 +28,7 @@
           @touchstart.prevent="startDrag($event)"
           @touchend.prevent="endDrag(item.id, $event)"
         >
-          <span class="loadCard-text"> {{ item.to }}</span></el-col
+          <h2 class="loadCard-text">{{ item.to }}</h2></el-col
         >
       </el-row>
     </TransitionGroup>
@@ -132,10 +132,6 @@ button {
   transition: all 0.4s ease;
 }
 
-.loadCard-text {
-  font-size: 16px;
-  font-weight: bold;
-}
 .loader {
   display: inline-block;
   width: 30px;

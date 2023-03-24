@@ -2,10 +2,12 @@
   <div class="common-layout">
     <el-container :style="{ height: containerHeight }">
       <el-header class="header-container">
-        <span class="header-container-title">
-          {{ $route.params.id ? $route.params.id : "Flash Cards" }}
-        </span>
-        <Transition name="fade">
+        <Transition name="fade" mode="out-in">
+          <h1 class="header-container-title" :key="$route.params.id">
+            {{ $route.params.id ? $route.params.id : "Flash Cards" }}
+          </h1>
+        </Transition>
+        <Transition name="fade" mode="out-in">
           <Icon
             v-if="$route.name === 'card-id'"
             name="mdi:arrow-left-drop-circle-outline"
@@ -27,13 +29,13 @@
       </el-container>
       <Transition name="fade" mode="out-in">
         <el-footer
-          class="footer-container footer-container-recorder"
+          class="footer_container footer_container-recorder"
           v-if="$route.params.id"
         >
           <LazyMicRecord v-if="settings.recorder" />
           <LazyInputRecord v-else />
         </el-footer>
-        <el-footer class="footer-container footer-container-home" v-else>
+        <el-footer class="footer_container footer_container-home" v-else>
           Create By Gg web dev
         </el-footer>
       </Transition>
@@ -41,7 +43,7 @@
     <FormDialog
       v-model:value="dialogSettings"
       :doOnConfirm="registerSettings"
-      title="Settings"
+      title="SETTINGS"
     >
       <el-form-item label="Languages">
         <SetLanguage v-model:settings="settings" />
@@ -133,19 +135,6 @@ export default {
 </script>
 
 <style lang="scss">
-a {
-  text-decoration: none;
-  color: $colorPrimary;
-}
-
-body {
-  background-color: $colorFith;
-  color: $colorPrimary;
-}
-svg {
-  color: $colorThird;
-}
-
 .header-container {
   background-color: $colorSecondary;
   color: $colorPrimary;
@@ -154,8 +143,11 @@ svg {
   height: 55px;
   border-bottom: 1px solid rgb(255, 255, 255);
   &-title {
-    font-size: 24px;
     padding-left: 10px;
+    font-size: 28px;
+    width: 50%;
+    display: inline;
+    font-family: $fontSecondary;
   }
 }
 .main-container {
@@ -164,7 +156,7 @@ svg {
 .el-main {
   padding: 0px;
 }
-.footer-container {
+.footer_container {
   position: relative;
   padding-top: 15px;
   border-top: 1px solid rgb(255, 255, 255);
@@ -174,6 +166,8 @@ svg {
   &-home {
     background-color: $colorSecondary;
     color: $colorPrimary;
+    font-family: $fontSecondary;
+    font-size: 20px;
   }
 }
 .header-icons {
@@ -183,7 +177,7 @@ svg {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.4s ease;
+  transition: opacity 0.3s ease;
 }
 
 .fade-enter-from,

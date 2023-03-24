@@ -2,7 +2,6 @@ require("dotenv").config();
 
 export default defineNuxtConfig({
   ssr: false,
-  target: "static",
   app: {
     head: {
       charset: "utf-16",
@@ -21,7 +20,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@use "@/assets/_colors.scss" as *;',
+          additionalData: '@use "@/assets/scss/_variables.scss" as *;',
         },
       },
     },
