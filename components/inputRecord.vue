@@ -14,7 +14,6 @@
               @click="translate"
               name="mdi:check-underline-circle-outline"
               size="34px"
-              color="#0ea7de"
             />
           </template>
         </el-input>
@@ -70,8 +69,5 @@ export default {
   width: 40px;
   height: 40px;
   background-color: transparent;
-}
-.el-input {
-  border: 1px solid $colorPrimary;
 }
 </style>

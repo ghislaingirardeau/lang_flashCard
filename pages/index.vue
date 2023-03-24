@@ -28,8 +28,12 @@
         </el-row>
       </TransitionGroup>
       <el-row @click="dialogAddCard = true">
-        <el-col :span="4"> <Icon name="mdi:plus" size="34px" /></el-col>
-        <el-col :span="20"> <span> Create new card</span></el-col>
+        <el-col :span="12">
+          <Icon name="mdi:plus-box-outline" size="34px"
+        /></el-col>
+        <el-col :span="8">
+          <span class="newCard_block--text"> Create new card</span></el-col
+        >
       </el-row>
     </div>
     <FormDialog
@@ -120,11 +124,14 @@ export default {
 <style lang="scss" scoped>
 .el-row {
   padding: 10px;
-  border-bottom: 2px solid $colorThird;
+  border-bottom: 1px solid white;
   align-items: center;
   min-height: 60px;
   text-align: center;
   width: 100%;
+}
+.newCard_block--text {
+  color: $colorThird;
 }
 .slide-move,
 .slide-enter-active,

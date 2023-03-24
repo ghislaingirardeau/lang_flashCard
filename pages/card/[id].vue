@@ -143,7 +143,8 @@ button {
   background-color: $colorThird;
 }
 .btn-play-all {
-  background-color: $colorThird;
+  background-color: lighten($colorThird, 10%);
+  opacity: 0.5;
 }
 
 .slide-move,
