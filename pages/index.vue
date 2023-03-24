@@ -28,9 +28,7 @@
         </el-row>
       </TransitionGroup>
       <el-row @click="dialogAddCard = true">
-        <el-col :span="4">
-          <Icon name="mdi:plus" size="34px" color="#0ea7de"
-        /></el-col>
+        <el-col :span="4"> <Icon name="mdi:plus" size="34px" /></el-col>
         <el-col :span="20"> <span> Create new card</span></el-col>
       </el-row>
     </div>

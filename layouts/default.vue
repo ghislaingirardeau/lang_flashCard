@@ -12,7 +12,6 @@
             v-if="$route.name === 'card-id'"
             name="mdi:arrow-left-drop-circle-outline"
             size="34px"
-            color="white"
             @click="$router.back()"
             class="header-icons"
           />
@@ -20,7 +19,6 @@
             v-else
             name="mdi:cog-outline"
             size="34px"
-            color="white"
             class="header-icons"
             @click="dialogSettings = true"
           />
@@ -149,6 +147,9 @@ a {
 body {
   background-color: $colorFith;
   color: $colorPrimary;
+}
+svg {
+  color: $colorThird;
 }
 
 .header-container {

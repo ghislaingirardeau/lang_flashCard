@@ -21,7 +21,6 @@
             v-else
             name="mdi:volume-high"
             size="34px"
-            color="#0ea7de"
             @click="playSound(item.to, item.id)"
         /></el-col>
         <el-col
@@ -33,11 +32,11 @@
         >
       </el-row>
     </TransitionGroup>
-    <el-row @click="playAllSound">
+    <el-row @click="playAllSound" class="btn-play-all">
       <el-col :span="2"></el-col>
       <el-col :span="22">
         <div v-if="loader === 1" class="loader" v-loading="true"></div>
-        <Icon v-else name="mdi:play" size="34px" color="#0ea7de" />
+        <Icon v-else name="mdi:play-outline" size="34px" color="#000814" />
       </el-col>
     </el-row>
   </div>
@@ -132,6 +131,10 @@ button {
   display: inline-block;
   width: 30px;
   height: 30px;
+  background-color: $colorThird;
+}
+.btn-play-all {
+  background-color: $colorThird;
 }
 
 .slide-move,

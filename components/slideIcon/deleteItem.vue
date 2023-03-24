@@ -1,11 +1,6 @@
 <template>
   <div class="display-trash" :id="id">
-    <Icon
-      name="mdi:trash-can"
-      size="34px"
-      color="#0ea7de"
-      @click="doOnClickDelete(id)"
-    />
+    <Icon name="mdi:trash-can" size="34px" @click="doOnClickDelete(id)" />
   </div>
 </template>
 
