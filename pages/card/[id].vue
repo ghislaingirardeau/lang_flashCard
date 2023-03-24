@@ -15,7 +15,7 @@
           <span class="loadCard-text"> {{ item.from }} </span></el-col
         >
 
-        <el-col :span="2">
+        <el-col :span="4" :class="`col-${item.id}`">
           <div v-if="loader === item.id" class="loader" v-loading="true"></div>
           <Icon
             v-else
@@ -33,8 +33,7 @@
       </el-row>
     </TransitionGroup>
     <el-row @click="playAllSound" class="btn-play-all">
-      <el-col :span="2"></el-col>
-      <el-col :span="22">
+      <el-col :span="24">
         <div v-if="loader === 1" class="loader" v-loading="true"></div>
         <Icon v-else name="mdi:play-outline" size="34px" color="#000814" />
       </el-col>
@@ -97,13 +96,24 @@ export default {
       this.touchBeg = $event.changedTouches[0].clientX;
     },
     endDrag(id, $event) {
-      if ($event.changedTouches[0].clientX - this.touchBeg > 30) {
-        document.getElementById(id).style.width = "30px";
-        document.getElementById(id).style.opacity = "1";
-      } else {
-        document.getElementById(id).style.width = "0px";
-        document.getElementById(id).style.opacity = "0";
-      }
+      const getCol = document.querySelector(`.col-${id}`);
+
+      const animRow = (w, o, r, a, params) => {
+        document.getElementById(id).style.width = `${w}px`;
+        document.getElementById(id).style.opacity = `${o}`;
+        const classManage = () => {
+          getCol.classList.remove(`el-col-${r}`);
+          getCol.classList.add(`el-col-${a}`);
+        };
+        params
+          ? setTimeout(() => {
+              classManage();
+            }, 150)
+          : classManage();
+      };
+      $event.changedTouches[0].clientX - this.touchBeg > 30
+        ? animRow(30, 1, 4, 2, false)
+        : animRow(0, 0, 2, 4, true);
     },
   },
 };
@@ -121,6 +131,7 @@ button {
 .el-col {
   text-align: center;
   padding: 10px;
+  transition: all 0.4s ease;
 }
 
 .loadCard-text {
