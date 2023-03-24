@@ -1,15 +1,12 @@
 <template>
   <div class="mic-block">
-    <!-- <div v-if="loading" class="loader" v-loading="loading"></div> -->
-
-    {{ loading }}
-    <div class="mic-circle">
+    <div v-if="loading" class="loader" v-loading="loading"></div>
+    <div v-else class="mic-circle">
       <Icon
         @touchstart.prevent="startDrag"
         @touchend.prevent="endDrag"
         name="mdi:microphone"
         size="84px"
-        color="#0ea7de"
       />
     </div>
   </div>
@@ -38,7 +35,6 @@ export default {
   },
   methods: {
     async startDrag() {
-      this.loading = true;
       const mic = document.querySelector(".mic-circle");
       const micframes = new KeyframeEffect(
         mic,
@@ -52,7 +48,7 @@ export default {
       );
       this.micAnimation = new Animation(micframes, document.timeline);
       this.micAnimation.play();
-      /* const SpeechRecognition =
+      const SpeechRecognition =
         window.SpeechRecognition || window.webkitSpeechRecognition;
       this.recognition = new SpeechRecognition();
       this.recognition.continuous = false;
@@ -80,10 +76,10 @@ export default {
           alert("translation does not work");
         }
         this.loading = false;
-      }; */
+      };
     },
     endDrag() {
-      /* this.recognition.stop(); */
+      this.recognition.stop();
       this.loading = false;
       this.micAnimation.reverse();
       const getTime = () => {
@@ -118,9 +114,13 @@ export default {
   z-index: 10 !important;
   border: 2px solid $colorThird;
 }
+svg {
+  color: $colorSecondary;
+}
 .mic-circle::after {
   content: "";
   position: absolute;
+  opacity: 0.5;
   left: 0px;
   background-color: $colorThird;
   width: 90px;
@@ -132,5 +132,6 @@ export default {
   display: inline-block;
   width: 90px;
   height: 90px;
+  background-color: $colorFith;
 }
 </style>
