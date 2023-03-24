@@ -1,6 +1,11 @@
 <template>
   <client-only>
-    <el-dialog :model-value="value" :fullscreen="true" :title="title">
+    <el-dialog
+      :model-value="value"
+      :fullscreen="true"
+      :title="title"
+      :show-close="false"
+    >
       <el-form>
         <slot></slot>
       </el-form>

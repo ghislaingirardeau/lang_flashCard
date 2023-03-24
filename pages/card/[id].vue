@@ -32,11 +32,9 @@
         >
       </el-row>
     </TransitionGroup>
-    <el-row @click="playAllSound" class="btn-play-all">
-      <el-col :span="24">
-        <div v-if="loader === 1" class="loader" v-loading="true"></div>
-        <Icon v-else name="mdi:play-outline" size="34px" color="#000814" />
-      </el-col>
+    <el-row @click="playAllSound" justify="center" class="btn-play-all">
+      <div v-if="loader === 1" class="loader" v-loading="true"></div>
+      <Icon v-else name="mdi:play-outline" size="44px" color="#000814" />
     </el-row>
   </div>
 </template>

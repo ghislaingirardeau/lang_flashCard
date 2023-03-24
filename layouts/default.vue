@@ -137,6 +137,10 @@ export default {
 <style lang="scss">
 :root {
   --footer-height: 75px;
+  --el-text-color-regular: $colorSecondary;
+  --el-switch-on-color: $colorSecondary;
+  --el-text-color-primary: $colorSecondary;
+  --el-color-primary: $colorSecondary;
 }
 
 a {
@@ -158,7 +162,7 @@ svg {
   padding-top: 10px;
   position: relative;
   height: 55px;
-  border-bottom: 2px solid $colorFourth;
+  border-bottom: 1px solid rgb(255, 255, 255);
   &-title {
     font-size: 24px;
     padding-left: 10px;
@@ -173,7 +177,7 @@ svg {
 .footer-container {
   position: relative;
   padding-top: 15px;
-  border-top: 2px solid $colorFourth;
+  border-top: 1px solid rgb(255, 255, 255);
   &-recorder {
     height: var(--footer-height);
   }
@@ -185,17 +189,49 @@ svg {
 .header-icons {
   position: absolute;
   right: 20px;
-  z-index: 9999;
 }
-.el-dialog__title {
-  font-weight: bold;
-  font-size: 24px;
+.el-dialog {
+  background-color: $colorFith;
+  &__header {
+    background-color: $colorSecondary;
+    margin-right: 0px;
+    border-bottom: 1px solid rgb(255, 255, 255);
+  }
+  &__title {
+    font-weight: bold;
+    font-size: 24px;
+    color: $colorPrimary;
+  }
+  &__body {
+    color: $colorThird;
+    border: 1px solid rgb(255, 255, 255);
+    & label {
+      color: $colorThird;
+    }
+  }
+}
+.el-slider__bar {
+  background-color: $colorThird;
+}
+.el-switch__label {
+  color: $colorSecondary;
+}
+.el-select-dropdown__item {
+  color: $colorSecondary;
+  &.selected {
+    color: $colorThird;
+  }
+}
+.el-button {
+  color: $colorSecondary;
+  &--primary {
+    color: white;
+  }
 }
 .el-form-item {
   align-items: center;
   text-align: center;
   padding-top: 20px;
-  border-top: 2px solid grey;
 }
 .el-switch {
   margin-left: 30px;
