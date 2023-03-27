@@ -23,7 +23,9 @@
             @touchstart.prevent="startDrag($event)"
             @touchend.prevent="endDrag(card.id, card.title, $event)"
           >
-            <span> {{ cardNumberItems(card.title) }} tradutions </span></el-col
+            <span>
+              {{ cardNumberItems(card.title) }} {{ $t("home.translation") }}
+            </span></el-col
           >
         </el-row>
       </TransitionGroup>
@@ -32,16 +34,18 @@
           <Icon name="mdi:plus-box-outline" size="34px"
         /></el-col>
         <el-col :span="8">
-          <span class="newCard_block--text"> Create new card</span></el-col
+          <span class="newCard_block--text">
+            {{ $t("home.newCard") }}</span
+          ></el-col
         >
       </el-row>
     </div>
     <FormDialog
       v-model:value="dialogAddCard"
       :doOnConfirm="saveNewCard"
-      title="NEW CARD"
+      :title="$t('newCard.title')"
     >
-      <el-form-item label="Card name">
+      <el-form-item :label="$t('newCard.label')">
         <el-input v-model="cardForm.name" autocomplete="off" />
       </el-form-item>
     </FormDialog>
@@ -114,7 +118,9 @@ export default {
         document.getElementById(id).style.opacity = "0";
         return;
       } else {
-        this.$router.push({ name: "card-id", params: { id: category } });
+        this.$router.push(
+          this.localePath({ name: "card-id", params: { id: category } })
+        );
       }
     },
   },

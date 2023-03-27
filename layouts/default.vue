@@ -9,7 +9,7 @@
         </Transition>
         <Transition name="fade" mode="out-in">
           <Icon
-            v-if="$route.name === 'card-id'"
+            v-if="$route.params.id"
             name="mdi:arrow-left-drop-circle-outline"
             size="34px"
             @click="$router.back()"
@@ -36,27 +36,27 @@
           <LazyInputRecord v-else />
         </el-footer>
         <el-footer class="footer_container footer_container-home" v-else>
-          Create By Gg web dev
+          {{ $t("footer.title") }} gG web dev
         </el-footer>
       </Transition>
     </el-container>
     <FormDialog
       v-model:value="dialogSettings"
       :doOnConfirm="registerSettings"
-      title="SETTINGS"
+      :title="$t('settings.title')"
     >
-      <el-form-item label="Languages">
+      <el-form-item :label="$t('settings.languages')">
         <SetLanguage v-model:settings="settings" />
       </el-form-item>
-      <el-form-item label="Recorder">
+      <el-form-item :label="$t('settings.recorder')">
         <el-switch
           v-model="settings.recorder"
           size="large"
-          active-text="Voice"
-          inactive-text="Text"
+          :active-text="$t('settings.voice')"
+          :inactive-text="$t('settings.text')"
         />
       </el-form-item>
-      <el-form-item label="Voice speed">
+      <el-form-item :label="$t('settings.voiceSpeed')">
         <el-slider v-model="settings.rate" :step="0.1" :min="0.6" :max="1.2" />
       </el-form-item>
     </FormDialog>
@@ -69,6 +69,9 @@ export default {
     const cardsStore = useCardsStore();
     const dialogSettings = ref(false);
     const { height } = useWindowSize();
+    const router = useRouter();
+    const switchLocalePath = useSwitchLocalePath();
+    const i18n = useI18n();
 
     const settings = ref({});
 
@@ -83,6 +86,10 @@ export default {
       await cardsStore.nuxtServerInit();
       settings.value = { ...cardsStore.languages };
       setFooter();
+      // check if app load on the right lang set
+      if (i18n.locale.value != cardsStore.languages.from.slice(0, 2)) {
+        navigateTo(switchLocalePath(cardsStore.languages.from.slice(0, 2)));
+      }
     });
 
     const containerHeight = computed(() => {
@@ -92,6 +99,10 @@ export default {
     const registerSettings = () => {
       cardsStore.setParams(settings);
       setFooter();
+      // if the from language change
+      if (i18n.locale.value != settings.value.from.slice(0, 2)) {
+        navigateTo(switchLocalePath(cardsStore.languages.from.slice(0, 2)));
+      }
     };
 
     return {

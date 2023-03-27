@@ -11,7 +11,7 @@
           />
         </el-select>
       </el-col>
-      <el-col :span="2"> To </el-col>
+      <el-col :span="2"> {{ $t("settings.to") }} </el-col>
       <el-col :span="10">
         <el-select v-model="settings.to" class="m-2" placeholder="Select">
           <el-option
@@ -43,7 +43,7 @@ export default {
       },
       {
         label: "English",
-        value: "En-UK",
+        value: "en-UK",
       },
     ]);
 

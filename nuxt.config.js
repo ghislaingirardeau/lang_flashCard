@@ -1,4 +1,6 @@
 require("dotenv").config();
+import en from "./lang/en";
+import fr from "./lang/fr";
 
 export default defineNuxtConfig({
   ssr: false,
@@ -33,6 +35,7 @@ export default defineNuxtConfig({
     "nuxt-icon",
     "@vite-pwa/nuxt",
     "@element-plus/nuxt",
+    "@nuxtjs/i18n",
     [
       "@pinia/nuxt",
       {
@@ -88,5 +91,25 @@ export default defineNuxtConfig({
       enabled: true,
       type: "module",
     }, */
+  },
+  i18n: {
+    locales: [
+      {
+        code: "en",
+        file: "en.js",
+      },
+      {
+        code: "fr",
+        file: "fr.js",
+      },
+    ],
+    lazy: true,
+    langDir: "lang",
+    defaultLocale: "en",
+    vueI18n: {
+      locale: "en",
+      fallbackLocale: "en",
+      messages: { en, fr },
+    },
   },
 });
