@@ -1,6 +1,6 @@
 <template>
   <div class="mic-block">
-    <div v-if="loading" class="loader" v-loading="loading"></div>
+    <TheLoader v-if="loading" size="48px" />
     <el-row v-else justify="space-between">
       <el-col :span="24">
         <el-input

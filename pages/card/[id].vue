@@ -16,7 +16,7 @@
         >
 
         <el-col :span="4" :class="`col-${item.id}`">
-          <div v-if="loader === item.id" class="loader" v-loading="true"></div>
+          <TheLoader v-if="loader === item.id" size="34px" />
           <Icon
             v-else
             name="mdi:volume-high"
@@ -33,7 +33,7 @@
       </el-row>
     </TransitionGroup>
     <el-row @click="playAllSound" justify="center" class="btn-play-all">
-      <div v-if="loader === 1" class="loader" v-loading="true"></div>
+      <TheLoader v-if="loader === 1" size="44px" color="#000814" />
       <Icon v-else name="mdi:play-outline" size="44px" color="#000814" />
     </el-row>
   </div>
@@ -138,6 +138,7 @@ button {
   height: 30px;
   background-color: $colorThird;
 }
+
 .btn-play-all {
   background-color: lighten($colorThird, 10%);
   opacity: 0.5;

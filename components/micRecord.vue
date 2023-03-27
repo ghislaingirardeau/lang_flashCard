@@ -1,6 +1,6 @@
 <template>
   <div class="mic-block">
-    <div v-if="loading" class="loader" v-loading="loading"></div>
+    <TheLoader v-if="loading" size="80px" color="#ffa200fd" />
     <div v-else class="mic-circle">
       <Icon
         @touchstart.prevent="startDrag"
