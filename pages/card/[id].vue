@@ -30,6 +30,7 @@
         >
           <h2 class="loadCard-text">{{ item.to }}</h2></el-col
         >
+        <el-col :span="24"> {{ pronouciation(item.to) }} </el-col>
       </el-row>
     </TransitionGroup>
     <el-row @click="playAllSound" justify="center" class="btn-play-all">
@@ -41,6 +42,7 @@
 
 <script>
 import { usePlayTranslation } from "@/composables/listenTranslation";
+import khmerRomanization from "@/assets/khmer.json";
 
 export default {
   setup() {
@@ -112,6 +114,18 @@ export default {
       $event.changedTouches[0].clientX - this.touchBeg > 30
         ? animRow(30, 1, 4, 2, false)
         : animRow(0, 0, 2, 4, true);
+    },
+    pronouciation(text) {
+      const chars = text.split("");
+
+      let res = [];
+
+      for (let i in chars) {
+        if (khmerRomanization[chars[i]]) {
+          res.push(khmerRomanization[chars[i]]);
+        }
+      }
+      return res;
     },
   },
 };
