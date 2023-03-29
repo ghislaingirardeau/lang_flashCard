@@ -69,6 +69,8 @@ export default {
             params: { id: this.idClass.title },
           })
         );
+      } else {
+        $event.preventDefault();
       }
     },
   },
