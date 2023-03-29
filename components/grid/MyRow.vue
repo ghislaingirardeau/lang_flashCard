@@ -1,14 +1,14 @@
 <template>
   <div class="container_swipe">
-    <div ref="el" class="block_swipe" id="myblock_swipe" @click="doDelete">
+    <div ref="el" class="block_swipe" @click="doDelete">
       <slot></slot>
       <div
         :id="idClass"
-        class="block_swipe_card block_swipe_card-sm block_swipe_card-hide"
+        class="block_swipe_card my-col-3 block_swipe_card-hide"
+        style="background-color: yellow"
         @click="doDelete"
       ></div>
     </div>
-    <!-- <div :id="idClass" class="anim-icon" @click="doDelete">delete</div> -->
   </div>
 </template>
 
@@ -25,30 +25,32 @@ export default {
     const { isSwiping, direction, lengthX } = useSwipe(el, {
       passive: false,
       threshold: 0,
-      /* onSwipeStart(e) {
-        if (lengthX.value === 0) {
-          console.log(isSwiping.value);
-        }
-      }, */
       onSwipeEnd(e, direction) {
         if (lengthX.value < -50) {
-          /* e.target.style.width = `100%`; */
           document
             .getElementById(props.idClass)
             .classList.add("block_swipe_card-hide");
-          console.log(document.getElementById(props.idClass));
           return;
         }
         if (lengthX.value > 50) {
-          /* e.target.style.width = `80%`; */
           document
             .getElementById(props.idClass)
             .classList.remove("block_swipe_card-hide");
-          console.log(document.getElementById(props.idClass));
           return;
         }
-        if (lengthX.value > -50 && lengthX.value < 50) {
-          console.log("go to the route");
+        if (
+          lengthX.value > -50 &&
+          lengthX.value < 50 &&
+          !e.target.getAttribute("id")
+        ) {
+          console.log("go from the rest of box without swipe");
+        }
+        if (
+          lengthX.value > -50 &&
+          lengthX.value < 50 &&
+          e.target.getAttribute("id")
+        ) {
+          console.log("get click from hiding box");
         }
       },
     });
@@ -77,12 +79,6 @@ export default {
 
     height: 100%;
     transition: all 0.5s ease;
-    &-sm {
-      width: 25%;
-    }
-    &-md {
-      width: 50%;
-    }
     &-hide {
       width: 0%;
     }
