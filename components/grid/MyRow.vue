@@ -1,13 +1,21 @@
 <template>
   <div class="container_swipe">
-    <div ref="el" class="block_swipe" @click="doDelete">
+    <div
+      class="block_swipe"
+      @touchstart.prevent="startDrag($event)"
+      @touchend.prevent="endDrag($event)"
+    >
       <slot></slot>
       <div
-        :id="idClass"
-        class="block_swipe_card my-col-3 block_swipe_card-hide"
-        style="background-color: yellow"
-        @click="doDelete"
-      ></div>
+        :id="idClass.id"
+        class="block_swipe_card my-col-2 block_swipe_card-hide hide"
+      >
+        <Icon
+          name="mdi:trash-can-outline"
+          size="34px"
+          class="block_swipe_card-icon"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -17,49 +25,51 @@ export default {
   props: {
     idClass: {
       required: true,
-      type: Number,
+      type: Object,
     },
   },
   setup(props) {
-    const el = ref(null);
-    const { isSwiping, direction, lengthX } = useSwipe(el, {
-      passive: false,
-      threshold: 0,
-      onSwipeEnd(e, direction) {
-        if (lengthX.value < -50) {
-          document
-            .getElementById(props.idClass)
-            .classList.add("block_swipe_card-hide");
-          return;
-        }
-        if (lengthX.value > 50) {
-          document
-            .getElementById(props.idClass)
-            .classList.remove("block_swipe_card-hide");
-          return;
-        }
-        if (
-          lengthX.value > -50 &&
-          lengthX.value < 50 &&
-          !e.target.getAttribute("id")
-        ) {
-          console.log("go from the rest of box without swipe");
-        }
-        if (
-          lengthX.value > -50 &&
-          lengthX.value < 50 &&
-          e.target.getAttribute("id")
-        ) {
-          console.log("get click from hiding box");
-        }
-      },
-    });
+    const cardsStore = useCardsStore();
+    const doOnClickDelete = (title, id) => {
+      console.log("createOn" in props.idClass);
+      "createOn" in props.idClass
+        ? cardsStore.removeCard(title, id)
+        : cardsStore.removeItem(title, id);
+    };
+    const touchBeg = ref(null);
+    const touchEnd = ref(null);
 
-    return { el, isSwiping, direction, lengthX };
+    return { touchBeg, touchEnd, doOnClickDelete };
   },
   methods: {
-    doDelete() {
-      console.log("delete");
+    startDrag($event) {
+      this.touchBeg = $event.changedTouches[0].clientX;
+      this.touchEnd = $event.changedTouches[0].clientY;
+    },
+    endDrag($event) {
+      const defineTouchX = $event.changedTouches[0].clientX - this.touchBeg;
+      const defineTouchY = $event.changedTouches[0].clientY - this.touchEnd;
+      let getTarget = $event.target.nodeName;
+
+      if (defineTouchX > 30) {
+        document.getElementById(this.idClass.id).classList.add("hide");
+        return;
+      }
+      if (defineTouchX < -30) {
+        document.getElementById(this.idClass.id).classList.remove("hide");
+        return;
+      }
+      if (getTarget === "svg" || getTarget === "path") {
+        return this.doOnClickDelete(this.idClass.title, this.idClass.id);
+      }
+      if (defineTouchY === 0) {
+        this.$router.push(
+          this.localePath({
+            name: "card-id",
+            params: { id: this.idClass.title },
+          })
+        );
+      }
     },
   },
 };
@@ -68,29 +78,39 @@ export default {
 <style lang="scss">
 .container_swipe {
   position: relative;
+  width: 100%;
+  border-bottom: 1px solid $colorThird;
+  z-index: 1;
 }
 .block_swipe {
   display: flex;
   width: 100%;
-  height: 80px;
-  background-color: red;
+  height: 60px;
   &_card {
-    border: 1px solid grey;
-
     height: 100%;
+    text-align: center;
+    font-size: 20px;
     transition: all 0.5s ease;
+    z-index: 10;
     &-hide {
-      width: 0%;
+      border: 2px solid $colorPrimary;
+      border-radius: 70% 30% 40% 50%;
+      height: 50px;
+      margin: 3px 3px 0 0;
+    }
+    &-text {
+      display: inline-block;
+      margin-top: 15px;
+    }
+    &-icon {
+      margin-top: 7px;
+      color: $colorPrimary;
     }
   }
 }
-.anim-icon {
-  position: absolute;
-  top: 0px;
-  right: 0px;
+.hide {
   width: 0%;
-  height: 80px;
-  background-color: rgb(246, 255, 0);
-  transition: all 0.5s ease;
+  overflow: hidden;
+  opacity: 0;
 }
 </style>

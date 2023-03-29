@@ -1,6 +1,6 @@
 <template>
   <div class="block_swipe_card" :class="classCol">
-    <slot></slot>
+    <span class="block_swipe_card-text"><slot></slot></span>
   </div>
 </template>
 
