@@ -70,7 +70,11 @@ export default {
           })
         );
       } else {
-        $event.preventDefault();
+        document.querySelector(".el-main").scroll({
+          top: -defineTouchY,
+          left: 0,
+          behavior: "smooth",
+        });
       }
     },
   },
