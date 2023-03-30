@@ -1,9 +1,11 @@
 <template>
   <div class="container_swipe">
+    <!-- to prevent touch selecting text -->
     <div
       class="block_swipe"
       @touchstart.prevent="startDrag($event)"
       @touchend.prevent="endDrag($event)"
+      @touchmove.prevent="scrollElement"
     >
       <slot></slot>
       <div
@@ -69,12 +71,14 @@ export default {
             params: { id: this.idClass.title },
           })
         );
-      } else {
-        document.querySelector(".el-main").scroll({
-          top: -defineTouchY,
-          left: 0,
-          behavior: "smooth",
-        });
+      }
+    },
+    scrollElement(event) {
+      const defineTouchY = event.changedTouches[0].clientY - this.touchEnd;
+      if (defineTouchY < -15 || defineTouchY > 15) {
+        document
+          .querySelector(".el-main")
+          .scrollTo(0, event.touches[0].clientY - 150);
       }
     },
   },
