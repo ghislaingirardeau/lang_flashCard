@@ -121,5 +121,7 @@ export default {
 }
 .cards_block {
   padding-top: 60px;
+  z-index: 1;
+  position: relative;
 }
 </style>

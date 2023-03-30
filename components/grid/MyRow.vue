@@ -1,23 +1,21 @@
 <template>
-  <div class="container_swipe">
-    <!-- to prevent touch selecting text -->
+  <!-- to prevent touch selecting text -->
+  <div
+    class="block_swipe"
+    @touchstart.prevent="startDrag"
+    @touchend.prevent="endDrag"
+    @touchmove.prevent="scrollElement"
+  >
+    <slot></slot>
     <div
-      class="block_swipe"
-      @touchstart.prevent="startDrag"
-      @touchend.prevent="endDrag"
-      @touchmove.prevent="scrollElement"
+      :id="idClass.id"
+      class="block_swipe_card my-col-2 block_swipe_card-hide hide"
     >
-      <slot></slot>
-      <div
-        :id="idClass.id"
-        class="block_swipe_card my-col-2 block_swipe_card-hide hide"
-      >
-        <Icon
-          name="mdi:trash-can-outline"
-          size="34px"
-          class="block_swipe_card-icon"
-        />
-      </div>
+      <Icon
+        name="mdi:trash-can-outline"
+        size="34px"
+        class="block_swipe_card-icon"
+      />
     </div>
   </div>
 </template>
@@ -90,16 +88,12 @@ export default {
 </script>
 
 <style lang="scss">
-.container_swipe {
-  position: relative;
-  width: 100%;
-  border-bottom: 1px solid $colorThird;
-  z-index: 1;
-}
 .block_swipe {
   display: flex;
   width: 100%;
   min-height: 60px;
+  border-bottom: 1px solid white;
+
   &_card {
     height: 100%;
     text-align: center;
