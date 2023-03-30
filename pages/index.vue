@@ -1,6 +1,17 @@
 <template>
   <div>
-    <div>
+    <el-row @click="dialogAddCard = true" class="newCard_block">
+      <el-col :span="12">
+        <Icon name="mdi:plus-box-outline" size="34px"
+      /></el-col>
+      <el-col :span="8">
+        <span class="newCard_block-text">
+          {{ $t("home.newCard") }}</span
+        ></el-col
+      >
+    </el-row>
+
+    <div class="cards_block">
       <TransitionGroup name="slide">
         <GridMyRow v-for="card in loadCards" :key="card.id" :idClass="card">
           <GridMyCol :col="6">
@@ -12,16 +23,6 @@
           >
         </GridMyRow>
       </TransitionGroup>
-      <el-row @click="dialogAddCard = true">
-        <el-col :span="12">
-          <Icon name="mdi:plus-box-outline" size="34px"
-        /></el-col>
-        <el-col :span="8">
-          <span class="newCard_block--text">
-            {{ $t("home.newCard") }}</span
-          ></el-col
-        >
-      </el-row>
     </div>
     <FormDialog
       v-model:value="dialogAddCard"
@@ -94,8 +95,16 @@ export default {
   text-align: center;
   width: 100%;
 }
-.newCard_block--text {
-  color: $colorThird;
+.newCard_block {
+  position: fixed;
+  background-color: $colorFourth;
+  z-index: 10;
+  &-text {
+    color: $colorThird;
+  }
+}
+.cards_block {
+  padding-top: 60px;
 }
 .slide-move,
 .slide-enter-active,
