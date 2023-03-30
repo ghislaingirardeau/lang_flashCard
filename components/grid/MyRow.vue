@@ -65,12 +65,14 @@ export default {
         return this.doOnClickDelete(this.idClass.title, this.idClass.id);
       }
       if (defineTouchY === 0) {
-        this.$router.push(
-          this.localePath({
-            name: "card-id",
-            params: { id: this.idClass.title },
-          })
-        );
+        "createOn" in this.idClass
+          ? this.$router.push(
+              this.localePath({
+                name: "card-id",
+                params: { id: this.idClass.title },
+              })
+            )
+          : console.log("play translation for item page");
       }
     },
     scrollElement(event) {
