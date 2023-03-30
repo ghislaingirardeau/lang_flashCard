@@ -3,8 +3,8 @@
     <!-- to prevent touch selecting text -->
     <div
       class="block_swipe"
-      @touchstart.prevent="startDrag($event)"
-      @touchend.prevent="endDrag($event)"
+      @touchstart.prevent="startDrag"
+      @touchend.prevent="endDrag"
       @touchmove.prevent="scrollElement"
     >
       <slot></slot>
@@ -29,14 +29,18 @@ export default {
       required: true,
       type: Object,
     },
+    doOnTap: {
+      type: Function,
+    },
   },
   setup(props) {
+    const route = useRoute();
     const cardsStore = useCardsStore();
+    // Refactor do on click for props function !
     const doOnClickDelete = (title, id) => {
-      console.log("createOn" in props.idClass);
       "createOn" in props.idClass
         ? cardsStore.removeCard(title, id)
-        : cardsStore.removeItem(title, id);
+        : cardsStore.removeItem(route.params.id, id);
     };
     const touchBeg = ref(null);
     const touchEnd = ref(null);
@@ -44,14 +48,14 @@ export default {
     return { touchBeg, touchEnd, doOnClickDelete };
   },
   methods: {
-    startDrag($event) {
-      this.touchBeg = $event.changedTouches[0].clientX;
-      this.touchEnd = $event.changedTouches[0].clientY;
+    startDrag(event) {
+      this.touchBeg = event.changedTouches[0].clientX;
+      this.touchEnd = event.changedTouches[0].clientY;
     },
-    endDrag($event) {
-      const defineTouchX = $event.changedTouches[0].clientX - this.touchBeg;
-      const defineTouchY = $event.changedTouches[0].clientY - this.touchEnd;
-      let getTarget = $event.target.nodeName;
+    endDrag(event) {
+      const defineTouchX = event.changedTouches[0].clientX - this.touchBeg;
+      const defineTouchY = event.changedTouches[0].clientY - this.touchEnd;
+      let getTarget = event.target.nodeName;
 
       if (defineTouchX > 30) {
         document.getElementById(this.idClass.id).classList.add("hide");
@@ -66,13 +70,11 @@ export default {
       }
       if (defineTouchY === 0) {
         "createOn" in this.idClass
-          ? this.$router.push(
-              this.localePath({
-                name: "card-id",
-                params: { id: this.idClass.title },
-              })
-            )
-          : console.log("play translation for item page");
+          ? this.$emit("doOnTap")
+          : this.$emit("doOnTap", {
+              id: this.idClass.id,
+              to: this.idClass.to,
+            });
       }
     },
     scrollElement(event) {
@@ -97,7 +99,7 @@ export default {
 .block_swipe {
   display: flex;
   width: 100%;
-  height: 60px;
+  min-height: 60px;
   &_card {
     height: 100%;
     text-align: center;

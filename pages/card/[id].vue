@@ -1,37 +1,27 @@
 <template>
   <div>
     <TransitionGroup name="slide">
-      <el-row v-for="item in loadCard" :key="item.id" justify="space-between">
-        <SlideIconDeleteItem
-          :id="item.id"
-          :category="$route.params.id ? $route.params.id : ''"
-        />
-
-        <el-col
-          :span="10"
-          @touchstart.prevent="startDrag($event)"
-          @touchend.prevent="endDrag(item.id, $event)"
+      <GridMyRow
+        v-for="item in loadCard"
+        :key="item.id"
+        :idClass="item"
+        @doOnTap="playSound"
+      >
+        <GridMyCol :col="4">
+          {{ item.from }}
+        </GridMyCol>
+        <GridMyCol
+          :col="loader === item.id ? 6 : 8"
+          style="word-break: break-all"
+          >{{ item.to }} <br />
+          <span style="font-size: 15px">{{
+            pronouciation(item.to)
+          }}</span></GridMyCol
         >
-          <h2 class="loadCard-text">{{ item.from }}</h2></el-col
-        >
-
-        <el-col :span="4" :class="`col-${item.id}`">
-          <TheLoader v-if="loader === item.id" size="34px" />
-          <Icon
-            v-else
-            name="mdi:volume-high"
-            size="34px"
-            @click="playSound(item.to, item.id)"
-        /></el-col>
-        <el-col
-          :span="10"
-          @touchstart.prevent="startDrag($event)"
-          @touchend.prevent="endDrag(item.id, $event)"
-        >
-          <h2 class="loadCard-text">{{ item.to }}</h2></el-col
-        >
-        <el-col :span="24"> {{ pronouciation(item.to) }} </el-col>
-      </el-row>
+        <GridMyCol :col="2" v-if="loader === item.id">
+          <TheLoader size="44px" />
+        </GridMyCol>
+      </GridMyRow>
     </TransitionGroup>
     <el-row @click="playAllSound" justify="center" class="btn-play-all">
       <TheLoader v-if="loader === 1" size="44px" color="#000814" />
@@ -56,10 +46,10 @@ export default {
       return cardsStore.cardItems[route.params.id];
     });
 
-    const playSound = async (to, id) => {
-      loader.value = id;
+    const playSound = async (payload) => {
+      loader.value = payload.id;
       const { play } = await usePlayTranslation(
-        to,
+        payload.to,
         cardsStore.languages.to,
         cardsStore.languages.rate
       );
@@ -92,7 +82,7 @@ export default {
     };
   },
   methods: {
-    startDrag($event) {
+    /* startDrag($event) {
       this.touchBeg = $event.changedTouches[0].clientX;
     },
     endDrag(id, $event) {
@@ -114,7 +104,7 @@ export default {
       $event.changedTouches[0].clientX - this.touchBeg > 30
         ? animRow(30, 1, 4, 2, false)
         : animRow(0, 0, 2, 4, true);
-    },
+    }, */
     pronouciation(text) {
       const chars = text.split("");
 
@@ -125,7 +115,7 @@ export default {
           res.push(khmerRomanization[chars[i]]);
         }
       }
-      return res;
+      return res.toString();
     },
   },
 };
@@ -156,20 +146,5 @@ button {
 .btn-play-all {
   background-color: lighten($colorThird, 10%);
   opacity: 0.5;
-}
-
-.slide-move,
-.slide-enter-active,
-.slide-leave-active {
-  transition: all 0.4s ease;
-}
-
-.slide-enter-from,
-.slide-leave-to {
-  opacity: 0;
-  transform: translateX(-40px);
-}
-.slide-leave-active {
-  position: absolute;
 }
 </style>

@@ -13,7 +13,12 @@
 
     <div class="cards_block">
       <TransitionGroup name="slide">
-        <GridMyRow v-for="card in loadCards" :key="card.id" :idClass="card">
+        <GridMyRow
+          v-for="card in loadCards"
+          :key="card.id"
+          :idClass="card"
+          @doOnTap="goToItem(card.title)"
+        >
           <GridMyCol :col="6">
             {{ card.title }}
           </GridMyCol>
@@ -44,10 +49,20 @@ export default {
     const cardForm = reactive({
       name: "",
     });
+    const localePath = useLocalePath();
 
     const loadCards = computed(() => {
       return cardsStore.cards;
     });
+
+    const goToItem = (title) => {
+      navigateTo(
+        localePath({
+          name: "card-id",
+          params: { id: title },
+        })
+      );
+    };
 
     const getDate = (params) => {
       let d = new Date(params);
@@ -81,6 +96,7 @@ export default {
       saveNewCard,
       getDate,
       cardNumberItems,
+      goToItem,
     };
   },
 };
