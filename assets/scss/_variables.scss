@@ -18,3 +18,18 @@ h2 {
 svg {
   color: $colorThird;
 }
+
+.slide-move,
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.4s ease;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  opacity: 0;
+  transform: translateX(-40px);
+}
+.slide-leave-active {
+  position: absolute;
+}

@@ -106,18 +106,4 @@ export default {
 .cards_block {
   padding-top: 60px;
 }
-.slide-move,
-.slide-enter-active,
-.slide-leave-active {
-  transition: all 0.4s ease;
-}
-
-.slide-enter-from,
-.slide-leave-to {
-  opacity: 0;
-  transform: translateY(-40px);
-}
-.slide-leave-active {
-  position: absolute;
-}
 </style>
