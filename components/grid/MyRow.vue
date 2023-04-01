@@ -5,11 +5,7 @@
       :id="`swipe-${idClass.id}`"
       class="block_swipe_card my-col-2 block_swipe_card-hide hide"
     >
-      <Icon
-        name="mdi:trash-can-outline"
-        size="34px"
-        class="block_swipe_card-icon"
-      />
+      <Icon :name="`mdi:${append}`" size="34px" class="block_swipe_card-icon" />
     </div>
   </div>
 </template>
@@ -20,6 +16,10 @@ export default {
     idClass: {
       required: true,
       type: Object,
+    },
+    append: {
+      required: true,
+      type: String,
     },
   },
   setup(props) {
@@ -35,6 +35,9 @@ export default {
   min-height: 60px;
   border-bottom: 1px solid white;
   &_card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     min-height: 60px;
     text-align: center;
     font-size: 20px;
@@ -42,17 +45,13 @@ export default {
     z-index: 10;
     &-hide {
       border: 2px solid $colorPrimary;
-      border-radius: 70% 30% 40% 50%;
+      background-color: $colorPrimary;
+      border-radius: 70% 0% 0% 40%;
       height: 50px;
-      margin: 3px 3px 0 0;
-    }
-    &-text {
-      display: inline-block;
-      margin-top: 15px;
+      /* transform: translateX(0); */
     }
     &-icon {
-      margin-top: 7px;
-      color: $colorPrimary;
+      color: $colorFourth;
     }
   }
 }
@@ -60,5 +59,6 @@ export default {
   width: 0%;
   overflow: hidden;
   opacity: 0;
+  /* transform: translateX(50px); */
 }
 </style>

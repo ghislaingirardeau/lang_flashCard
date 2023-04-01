@@ -2,7 +2,12 @@
   <div>
     <GridSwiper @onTapPlay="playSound">
       <TransitionGroup name="slide">
-        <GridMyRow v-for="item in loadCard" :key="item.id" :idClass="item">
+        <GridMyRow
+          v-for="item in loadCard"
+          :key="item.id"
+          :idClass="item"
+          append="trash-can-outline"
+        >
           <GridMyCol :col="4">
             {{ item.from }}
           </GridMyCol>

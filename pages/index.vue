@@ -14,7 +14,12 @@
     <div class="cards_block">
       <GridSwiper>
         <TransitionGroup name="slide">
-          <GridMyRow v-for="card in loadCards" :key="card.id" :idClass="card">
+          <GridMyRow
+            v-for="card in loadCards"
+            :key="card.id"
+            :idClass="card"
+            append="trash-can"
+          >
             <GridMyCol :col="6">
               {{ card.title }}
             </GridMyCol>
