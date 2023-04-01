@@ -1,22 +1,23 @@
 <template>
-  <div>
-    <GridMyRow v-for="card in loadCards" :key="card.id" :idClass="card.id">
+  <GridSwiper>
+    <GridMyRow v-for="card in loadCards" :key="card.id" :idClass="card">
       <GridMyCol :col="6">
         {{ card.title }}
       </GridMyCol>
-      <GridMyCol :col="2"> {{ card.lastUpdate }}</GridMyCol>
-      <GridMyCol :col="4"> {{ $t("home.translation") }}</GridMyCol>
+      <GridMyCol :col="6"> {{ $t("home.translation") }}</GridMyCol>
     </GridMyRow>
-  </div>
+  </GridSwiper>
 </template>
 
 <script>
 export default {
-  setup() {
+  setup(props) {
     const cardsStore = useCardsStore();
+
     const loadCards = computed(() => {
       return cardsStore.cards;
     });
+
     return { loadCards };
   },
 };

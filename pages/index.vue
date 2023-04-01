@@ -12,7 +12,20 @@
     </el-row>
 
     <div class="cards_block">
-      <TransitionGroup name="slide">
+      <GridSwiper>
+        <TransitionGroup name="slide">
+          <GridMyRow v-for="card in loadCards" :key="card.id" :idClass="card">
+            <GridMyCol :col="6">
+              {{ card.title }}
+            </GridMyCol>
+            <GridMyCol :col="6"
+              >{{ cardNumberItems(card.title) }}
+              {{ $t("home.translation") }}</GridMyCol
+            >
+          </GridMyRow>
+        </TransitionGroup>
+      </GridSwiper>
+      <!-- <TransitionGroup name="slide">
         <GridMyRow
           v-for="card in loadCards"
           :key="card.id"
@@ -27,7 +40,7 @@
             {{ $t("home.translation") }}</GridMyCol
           >
         </GridMyRow>
-      </TransitionGroup>
+      </TransitionGroup> -->
     </div>
     <FormDialog
       v-model:value="dialogAddCard"

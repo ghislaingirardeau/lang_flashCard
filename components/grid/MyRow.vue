@@ -1,14 +1,8 @@
 <template>
-  <!-- to prevent touch selecting text -->
-  <div
-    class="block_swipe"
-    @touchstart.prevent="startDrag"
-    @touchend.prevent="endDrag"
-    @touchmove.prevent="scrollElement"
-  >
+  <div class="block_swipe" :id="`${idClass.id}`">
     <slot></slot>
     <div
-      :id="idClass.id"
+      :id="`swipe-${idClass.id}`"
       class="block_swipe_card my-col-2 block_swipe_card-hide hide"
     >
       <Icon
@@ -27,62 +21,9 @@ export default {
       required: true,
       type: Object,
     },
-    doOnTap: {
-      type: Function,
-    },
   },
   setup(props) {
-    const route = useRoute();
-    const cardsStore = useCardsStore();
-    // Refactor do on click for props function !
-    const doOnClickDelete = (title, id) => {
-      "createOn" in props.idClass
-        ? cardsStore.removeCard(title, id)
-        : cardsStore.removeItem(route.params.id, id);
-    };
-    const touchBeg = ref(null);
-    const touchEnd = ref(null);
-
-    return { touchBeg, touchEnd, doOnClickDelete };
-  },
-  methods: {
-    startDrag(event) {
-      this.touchBeg = event.changedTouches[0].clientX;
-      this.touchEnd = event.changedTouches[0].clientY;
-    },
-    endDrag(event) {
-      const defineTouchX = event.changedTouches[0].clientX - this.touchBeg;
-      const defineTouchY = event.changedTouches[0].clientY - this.touchEnd;
-      let getTarget = event.target.nodeName;
-
-      if (defineTouchX > 30) {
-        document.getElementById(this.idClass.id).classList.add("hide");
-        return;
-      }
-      if (defineTouchX < -30) {
-        document.getElementById(this.idClass.id).classList.remove("hide");
-        return;
-      }
-      if (getTarget === "svg" || getTarget === "path") {
-        return this.doOnClickDelete(this.idClass.title, this.idClass.id);
-      }
-      if (defineTouchY === 0) {
-        "createOn" in this.idClass
-          ? this.$emit("doOnTap")
-          : this.$emit("doOnTap", {
-              id: this.idClass.id,
-              to: this.idClass.to,
-            });
-      }
-    },
-    scrollElement(event) {
-      const defineTouchY = event.changedTouches[0].clientY - this.touchEnd;
-      if (defineTouchY < -15 || defineTouchY > 15) {
-        document
-          .querySelector(".el-main")
-          .scrollTo(0, event.touches[0].clientY - 150);
-      }
-    },
+    return {};
   },
 };
 </script>
@@ -93,9 +34,8 @@ export default {
   width: 100%;
   min-height: 60px;
   border-bottom: 1px solid white;
-
   &_card {
-    height: 100%;
+    min-height: 60px;
     text-align: center;
     font-size: 20px;
     transition: all 0.5s ease;

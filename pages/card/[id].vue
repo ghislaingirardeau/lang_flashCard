@@ -1,28 +1,23 @@
 <template>
   <div>
-    <TransitionGroup name="slide">
-      <GridMyRow
-        v-for="item in loadCard"
-        :key="item.id"
-        :idClass="item"
-        @doOnTap="playSound"
-      >
-        <GridMyCol :col="4">
-          {{ item.from }}
-        </GridMyCol>
-        <GridMyCol
-          :col="loader === item.id ? 6 : 8"
-          style="word-break: break-all"
-          >{{ item.to }} <br />
-          <span style="font-size: 15px">{{
-            pronouciation(item.to)
-          }}</span></GridMyCol
-        >
-        <GridMyCol :col="2" v-if="loader === item.id">
-          <TheLoader size="44px" />
-        </GridMyCol>
-      </GridMyRow>
-    </TransitionGroup>
+    <GridSwiper @onTapPlay="playSound">
+      <TransitionGroup name="slide">
+        <GridMyRow v-for="item in loadCard" :key="item.id" :idClass="item">
+          <GridMyCol :col="4">
+            {{ item.from }}
+          </GridMyCol>
+          <GridMyCol
+            :col="loader === item.id ? 6 : 8"
+            style="word-break: break-all"
+            >{{ item.to }} <br />
+            {{ pronouciation(item.to) }}</GridMyCol
+          >
+          <GridMyCol :col="2" v-if="loader === item.id">
+            <TheLoader size="44px" />
+          </GridMyCol>
+        </GridMyRow>
+      </TransitionGroup>
+    </GridSwiper>
     <el-row @click="playAllSound" justify="center" class="btn-play-all">
       <TheLoader v-if="loader === 1" size="44px" color="#000814" />
       <Icon v-else name="mdi:play-outline" size="44px" color="#000814" />
@@ -38,9 +33,7 @@ export default {
   setup() {
     const route = useRoute();
     const cardsStore = useCardsStore();
-
     const loader = ref(0);
-    const touchBeg = ref(null);
 
     const loadCard = computed(() => {
       return cardsStore.cardItems[route.params.id];
@@ -77,34 +70,10 @@ export default {
       loadCard,
       playSound,
       loader,
-      touchBeg,
       playAllSound,
     };
   },
   methods: {
-    /* startDrag($event) {
-      this.touchBeg = $event.changedTouches[0].clientX;
-    },
-    endDrag(id, $event) {
-      const getCol = document.querySelector(`.col-${id}`);
-
-      const animRow = (w, o, r, a, params) => {
-        document.getElementById(id).style.width = `${w}px`;
-        document.getElementById(id).style.opacity = `${o}`;
-        const classManage = () => {
-          getCol.classList.remove(`el-col-${r}`);
-          getCol.classList.add(`el-col-${a}`);
-        };
-        params
-          ? setTimeout(() => {
-              classManage();
-            }, 150)
-          : classManage();
-      };
-      $event.changedTouches[0].clientX - this.touchBeg > 30
-        ? animRow(30, 1, 4, 2, false)
-        : animRow(0, 0, 2, 4, true);
-    }, */
     pronouciation(text) {
       const chars = text.split("");
 
