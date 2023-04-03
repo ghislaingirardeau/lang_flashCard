@@ -8,14 +8,14 @@
           :idClass="item"
           append="trash-can-outline"
         >
-          <GridMyCol :col="4">
-            {{ item.from }}
-          </GridMyCol>
+          <GridMyCol :col="4"> {{ item.from }} </GridMyCol>
           <GridMyCol
             :col="loader === item.id ? 6 : 8"
             style="word-break: break-all"
-            >{{ item.to }} <br />
-            {{ pronouciation(item.to) }}</GridMyCol
+            ><span>{{ item.to }} </span>
+            <span class="block_swipe_card-text">{{
+              useWordPronounce(item.to)
+            }}</span></GridMyCol
           >
           <GridMyCol :col="2" v-if="loader === item.id">
             <TheLoader size="44px" />
@@ -31,8 +31,10 @@
 </template>
 
 <script>
-import { usePlayTranslation } from "@/composables/listenTranslation";
-import khmerRomanization from "@/assets/khmer.json";
+import {
+  usePlayTranslation,
+  useWordPronounce,
+} from "@/composables/translation";
 
 export default {
   setup() {
@@ -70,27 +72,11 @@ export default {
     };
 
     return {
-      route,
-      cardsStore,
       loadCard,
       playSound,
       loader,
       playAllSound,
     };
-  },
-  methods: {
-    pronouciation(text) {
-      const chars = text.split("");
-
-      let res = [];
-
-      for (let i in chars) {
-        if (khmerRomanization[chars[i]]) {
-          res.push(khmerRomanization[chars[i]]);
-        }
-      }
-      return res.toString();
-    },
   },
 };
 </script>

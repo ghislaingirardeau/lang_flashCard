@@ -36,6 +36,7 @@ export default {
   border-bottom: 1px solid white;
   &_card {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 60px;
@@ -52,6 +53,9 @@ export default {
     }
     &-icon {
       color: $colorFourth;
+    }
+    &-text {
+      font-size: 12px;
     }
   }
 }
