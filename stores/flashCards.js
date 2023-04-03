@@ -21,6 +21,7 @@ export const useCardsStore = defineStore("cards", {
         const datas = localStorage.getItem("myFlashCards");
         if (datas) {
           const { languages, cards, cardItems } = JSON.parse(datas);
+          cards.map((e) => (e.lastUpdate = e.id));
           this.languages = languages;
           this.cards = cards;
           this.cardItems = cardItems;
@@ -28,7 +29,9 @@ export const useCardsStore = defineStore("cards", {
         resolve(true);
       });
     },
-    addNewCard(card) {
+    addNewCard(card, message) {
+      if (this.cards.findIndex((e) => e.title === card.title) != -1)
+        return alert(message);
       this.cards.push(card);
       this.cardItems[card.title] = [];
       save(this.cards, this.cardItems, this.languages);
@@ -41,6 +44,8 @@ export const useCardsStore = defineStore("cards", {
     },
     addNewItem(category, item) {
       this.cardItems[category].push(item);
+      let cardToUpdate = this.cards.find((e) => e.title === category);
+      cardToUpdate.lastUpdate = Date.now();
       save(this.cards, this.cardItems, this.languages);
     },
     removeItem(category, id) {

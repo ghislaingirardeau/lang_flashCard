@@ -25,4 +25,7 @@ export default {
     title: "NEW CARD",
     label: "Card name",
   },
+  store: {
+    alert: "This card already exist, pick a new name"
+  }
 };

@@ -68,6 +68,7 @@ export default {
       name: "",
     });
     const localePath = useLocalePath();
+    const { t } = useI18n();
 
     const loadCards = computed(() => {
       return cardsStore.cards;
@@ -98,7 +99,7 @@ export default {
         lastUpdate: "xxx",
         createOn: Date.now(),
       };
-      cardsStore.addNewCard(newCard);
+      cardsStore.addNewCard(newCard, t("store.alert"));
       dialogAddCard.value = false;
       cardForm.name = "";
     };

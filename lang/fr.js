@@ -25,4 +25,7 @@ export default {
     title: "NOUVELLE CARTE",
     label: "Titre de la carte",
   },
+  store: {
+    alert: "Cette carte existe déjà",
+  },
 };
