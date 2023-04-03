@@ -102,6 +102,10 @@ export default defineNuxtConfig({
         code: "fr",
         file: "fr.js",
       },
+      {
+        code: "km",
+        file: "en.js",
+      },
     ],
     lazy: true,
     langDir: "lang",

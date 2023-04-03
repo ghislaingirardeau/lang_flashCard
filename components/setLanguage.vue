@@ -4,7 +4,7 @@
       <el-col :span="10">
         <el-select v-model="settings.from" class="m-2" placeholder="Select">
           <el-option
-            v-for="item in options.filter((e) => e.label != 'Khmer')"
+            v-for="item in options"
             :key="item.value"
             :label="item.label"
             :value="item.value"

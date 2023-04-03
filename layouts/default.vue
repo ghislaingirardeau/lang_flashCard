@@ -127,11 +127,10 @@ export default {
                   case "installed":
                     if (navigator.serviceWorker.controller) {
                       // new update available
-                      alert("new update available");
+                      alert("new update available, restart the app");
                       resolve(true);
                     } else {
                       // no update available
-                      alert("no update available");
                       resolve(false);
                     }
                     break;
