@@ -25,6 +25,7 @@ export const useCardsStore = defineStore("cards", {
           this.languages = languages;
           this.cards = cards;
           this.cardItems = cardItems;
+          this.cards.sort((a, b) => b.lastUpdate - a.lastUpdate);
         }
         resolve(true);
       });
@@ -32,7 +33,7 @@ export const useCardsStore = defineStore("cards", {
     addNewCard(card, message) {
       if (this.cards.findIndex((e) => e.title === card.title) != -1)
         return alert(message);
-      this.cards.push(card);
+      this.cards.unshift(card);
       this.cardItems[card.title] = [];
       save(this.cards, this.cardItems, this.languages);
     },
@@ -43,9 +44,10 @@ export const useCardsStore = defineStore("cards", {
       save(this.cards, this.cardItems, this.languages);
     },
     addNewItem(category, item) {
-      this.cardItems[category].push(item);
+      this.cardItems[category].unshift(item);
       let cardToUpdate = this.cards.find((e) => e.title === category);
       cardToUpdate.lastUpdate = Date.now();
+      this.cards.sort((a, b) => b.lastUpdate - a.lastUpdate);
       save(this.cards, this.cardItems, this.languages);
     },
     removeItem(category, id) {

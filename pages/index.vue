@@ -21,7 +21,7 @@
             append="trash-can"
           >
             <GridMyCol :col="6">
-              {{ card.title }}
+              {{ card.title }} {{ card.lastUpdate }}
             </GridMyCol>
             <GridMyCol :col="6"
               >{{ cardNumberItems(card.title) }}
@@ -30,22 +30,6 @@
           </GridMyRow>
         </TransitionGroup>
       </GridSwiper>
-      <!-- <TransitionGroup name="slide">
-        <GridMyRow
-          v-for="card in loadCards"
-          :key="card.id"
-          :idClass="card"
-          @doOnTap="goToItem(card.title)"
-        >
-          <GridMyCol :col="6">
-            {{ card.title }}
-          </GridMyCol>
-          <GridMyCol :col="6"
-            >{{ cardNumberItems(card.title) }}
-            {{ $t("home.translation") }}</GridMyCol
-          >
-        </GridMyRow>
-      </TransitionGroup> -->
     </div>
     <FormDialog
       v-model:value="dialogAddCard"
@@ -96,7 +80,7 @@ export default {
       const newCard = {
         id: Date.now(),
         title: cardForm.name,
-        lastUpdate: "xxx",
+        lastUpdate: Date.now(),
         createOn: Date.now(),
       };
       cardsStore.addNewCard(newCard, t("store.alert"));
