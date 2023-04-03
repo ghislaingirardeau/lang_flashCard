@@ -21,8 +21,10 @@ export default {
 
     const idCard = (id) => {
       return route.params.id
-        ? cardsStore.cardItems[route.params.id].find((e) => e.id === id)
-        : cardsStore.cards.find((e) => e.id === id);
+        ? cardsStore.cardItems[route.params.id].find(
+            (e) => e.id === parseInt(id)
+          )
+        : cardsStore.cards.find((e) => e.id === parseInt(id));
     };
 
     const doOnTap = (param) => {
@@ -96,27 +98,27 @@ export default {
 
       // on touch TAP
       if (defineTouchY === 0 && defineTouchX === 0) {
-        const getTarget = event.target.nodeName;
-        let eltAsParam;
-        // fetch che title & id of the parentElement depending the target element
-        const getElementDetail = (target) => {
-          let id = parseInt(target.id.replace("swipe-", ""));
-          eltAsParam = this.idCard(id).title;
-          return [eltAsParam, id];
+        const findUpEltId = (el) => {
+          if (el.id) return el.id;
+          while (el) {
+            el = el.parentNode;
+            if (el.id) return el.id;
+          }
+          return null;
         };
-        if (getTarget === "svg") {
-          this.doOnClickDelete(...getElementDetail(event.target.parentNode));
-        } else if (getTarget === "path") {
-          this.doOnClickDelete(
-            ...getElementDetail(event.target.parentNode.parentNode)
-          );
-        } else if (event.target.id.includes("swipe-")) {
-          this.doOnClickDelete(...getElementDetail(event.target));
+        // get the first parent with an id
+
+        let target = findUpEltId(event.target);
+        let cardDetails;
+
+        if (target.includes("swipe-")) {
+          // if id includes swipe = so it's a click on delete block
+          cardDetails = this.idCard(target.replace("swipe-", ""));
+          this.doOnClickDelete(cardDetails.title, cardDetails.id);
         } else {
-          event.target.id
-            ? (eltAsParam = this.idCard(parseInt(event.target.id)))
-            : (eltAsParam = this.idCard(parseInt(eltId)));
-          this.doOnTap(eltAsParam);
+          // if no swipe but an id, click en the row
+          cardDetails = this.idCard(target);
+          this.doOnTap(cardDetails);
         }
       }
     },
