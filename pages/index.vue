@@ -21,7 +21,7 @@
             append="trash-can"
           >
             <GridMyCol :col="6">
-              {{ card.title }} {{ card.lastUpdate }}
+              {{ card.title }}
             </GridMyCol>
             <GridMyCol :col="6"
               >{{ cardNumberItems(card.title) }}

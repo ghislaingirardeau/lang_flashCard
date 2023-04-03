@@ -21,7 +21,6 @@ export const useCardsStore = defineStore("cards", {
         const datas = localStorage.getItem("myFlashCards");
         if (datas) {
           const { languages, cards, cardItems } = JSON.parse(datas);
-          cards.map((e) => (e.lastUpdate = e.id));
           this.languages = languages;
           this.cards = cards;
           this.cardItems = cardItems;

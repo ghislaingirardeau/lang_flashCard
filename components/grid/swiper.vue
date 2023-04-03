@@ -87,11 +87,11 @@ export default {
       }
 
       // si tu scroll sur un coté : hide or unhide the delete option
-      if (defineTouchX > 30 && (defineTouchY > -20 || defineTouchY < 20)) {
+      if (defineTouchX > 50 && (defineTouchY > -30 || defineTouchY < 30)) {
         document.getElementById(`swipe-${eltId}`)?.classList.add("hide");
         return;
       }
-      if (defineTouchX < -30 && (defineTouchY > -20 || defineTouchY < 20)) {
+      if (defineTouchX < -50 && (defineTouchY > -30 || defineTouchY < 30)) {
         document.getElementById(`swipe-${eltId}`)?.classList.remove("hide");
         return;
       }
