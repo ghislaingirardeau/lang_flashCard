@@ -70,7 +70,15 @@ export default {
       const defineTouchY = event.changedTouches[0].clientY - this.scrollStartY;
 
       // get id to find the elements
-      let eltId = event.target.parentNode.id;
+      const findUpEltId = (el) => {
+        if (el.id) return el.id;
+        while (el) {
+          el = el.parentNode;
+          if (el.id) return el.id;
+        }
+        return null;
+      };
+      let elementWithId = findUpEltId(event.target);
 
       // set scrollend = so when swipe again, it start from where it ended
       let newScroll =
@@ -88,36 +96,31 @@ export default {
 
       // si tu scroll sur un coté : hide or unhide the delete option
       if (defineTouchX > 50 && (defineTouchY > -30 || defineTouchY < 30)) {
-        document.getElementById(`swipe-${eltId}`)?.classList.add("hide");
+        document
+          .getElementById(`swipe-${elementWithId}`)
+          ?.classList.add("hide");
         return;
       }
       if (defineTouchX < -50 && (defineTouchY > -30 || defineTouchY < 30)) {
-        document.getElementById(`swipe-${eltId}`)?.classList.remove("hide");
+        document
+          .getElementById(`swipe-${elementWithId}`)
+          ?.classList.remove("hide");
         return;
       }
 
       // on touch TAP
       if (defineTouchY === 0 && defineTouchX === 0) {
-        const findUpEltId = (el) => {
-          if (el.id) return el.id;
-          while (el) {
-            el = el.parentNode;
-            if (el.id) return el.id;
-          }
-          return null;
-        };
         // get the first parent with an id
 
-        let target = findUpEltId(event.target);
         let cardDetails;
 
-        if (target.includes("swipe-")) {
+        if (elementWithId.includes("swipe-")) {
           // if id includes swipe = so it's a click on delete block
-          cardDetails = this.idCard(target.replace("swipe-", ""));
+          cardDetails = this.idCard(elementWithId.replace("swipe-", ""));
           this.doOnClickDelete(cardDetails.title, cardDetails.id);
         } else {
           // if no swipe but an id, click en the row
-          cardDetails = this.idCard(target);
+          cardDetails = this.idCard(elementWithId);
           this.doOnTap(cardDetails);
         }
       }
