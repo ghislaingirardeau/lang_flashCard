@@ -3,10 +3,11 @@ export default {
   language: "EN",
   footer: {
     title: "Create by",
+    translate: "Text to translate",
   },
   home: {
     newCard: "Add new card",
-    translation: "Translations",
+    translation: "Words",
   },
   settings: {
     title: "SETTINGS",
@@ -26,6 +27,6 @@ export default {
     label: "Card name",
   },
   store: {
-    alert: "This card already exist, pick a new name"
-  }
+    alert: "This card already exist, pick a new name",
+  },
 };

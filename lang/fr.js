@@ -3,10 +3,11 @@ export default {
   language: "EN",
   footer: {
     title: "Créer par",
+    translate: "Text à traduire",
   },
   home: {
     newCard: "Nouvelle carte",
-    translation: "Traductions",
+    translation: "Mots",
   },
   settings: {
     title: "PARAMETRES",

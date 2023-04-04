@@ -6,8 +6,7 @@
         <el-input
           v-model="TextToTranslate"
           label="text-to-translate"
-          placeholder="Translate"
-          autofocus
+          :placeholder="$t('footer.translate')"
         >
           <template #append>
             <Icon
