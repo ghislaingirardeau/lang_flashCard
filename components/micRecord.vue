@@ -21,7 +21,7 @@ export default {
     const loading = ref(false);
     const route = useRoute();
     const micAnimation = reactive({});
-    const micAnimationDuration = ref(700);
+    const micAnimationDuration = ref(1000);
 
     return {
       loading,
@@ -38,7 +38,12 @@ export default {
       const mic = document.querySelector(".mic-circle");
       const micframes = new KeyframeEffect(
         mic,
-        [{ transform: "scale(1)" }, { transform: "scale(1.15)" }],
+        [
+          /* { transform: "scale(1)" },  */ {
+            transform: "scale(1.3)",
+            offset: 0.5,
+          },
+        ],
         {
           duration: this.micAnimationDuration,
           pseudoElement: "::after",
@@ -48,6 +53,7 @@ export default {
       );
       this.micAnimation = new Animation(micframes, document.timeline);
       this.micAnimation.play();
+
       const SpeechRecognition =
         window.SpeechRecognition || window.webkitSpeechRecognition;
       this.recognition = new SpeechRecognition();
@@ -112,7 +118,7 @@ export default {
   border-radius: 50%;
   position: relative;
   z-index: 10 !important;
-  border: 2px solid $colorThird;
+  border: 2px solid lighten($color: $colorPrimary, $amount: 20%);
 }
 svg {
   color: $colorSecondary;
@@ -120,9 +126,9 @@ svg {
 .mic-circle::after {
   content: "";
   position: absolute;
-  opacity: 0.5;
+  opacity: 0.6;
   left: 0px;
-  background-color: $colorThird;
+  background-color: $colorPrimary;
   width: 90px;
   height: 90px;
   z-index: -1;
