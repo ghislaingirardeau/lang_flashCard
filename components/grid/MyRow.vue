@@ -43,7 +43,7 @@ export default {
     text-align: center;
     font-size: 20px;
     transition: all 0.5s ease;
-    z-index: 10;
+    padding: 0px 5px;
     &-hide {
       border: 2px solid $colorPrimary;
       background-color: $colorPrimary;

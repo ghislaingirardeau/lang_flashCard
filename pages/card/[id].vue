@@ -14,7 +14,7 @@
             style="word-break: break-all"
             ><span>{{ item.to }} </span>
             <span class="block_swipe_card-text">{{
-              useWordPronounce(item.to)
+              langTo === "km" ? useWordPronounce(item.to) : ""
             }}</span></GridMyCol
           >
           <GridMyCol :col="2" v-if="loader === item.id">
@@ -45,16 +45,22 @@ export default {
     const loader = ref(0);
     const showPlay = ref(false);
 
+    const langTo = computed(() => {
+      return cardsStore.langTo;
+    });
+
     const loadCard = computed(() => {
       return cardsStore.cardItems[route.params.id];
     });
 
     const playSound = async (payload) => {
+      // get languages of speechsynthesis
       if (cardsStore.langAvailable.length === 0) {
         const synth = window.speechSynthesis;
         const voices = synth.getVoices();
         cardsStore.loadLang(voices.map((e) => e.lang));
       }
+      // to check if lang is supported by speechsynthesis = faster
       if (cardsStore.langAvailable.includes(cardsStore.languages.to)) {
         console.log(payload, cardsStore.languages.to);
         const speech = useSpeechSynthesis(payload.to, {
@@ -71,7 +77,12 @@ export default {
           cardsStore.languages.to,
           cardsStore.languages.rate
         );
-        play ? (loader.value = 0) : null;
+        try {
+          play ? (loader.value = 0) : null;
+        } catch (error) {
+          console.log(error);
+          loader.value = 0;
+        }
       }
     };
 
@@ -100,6 +111,7 @@ export default {
       loader,
       playAllSound,
       showPlay,
+      langTo,
     };
   },
 };
