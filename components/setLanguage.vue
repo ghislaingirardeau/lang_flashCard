@@ -43,7 +43,19 @@ export default {
       },
       {
         label: "English",
-        value: "en-UK",
+        value: "en-GB",
+      },
+      {
+        label: "Thai",
+        value: "th-TH",
+      },
+      {
+        label: "Spanish",
+        value: "es-ES",
+      },
+      {
+        label: "Indonesian",
+        value: "id-ID",
       },
     ]);
 
