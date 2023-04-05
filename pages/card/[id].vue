@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="id_container">
     <GridSwiper @onTapPlay="playSound">
       <TransitionGroup name="slide">
         <GridMyRow
@@ -23,10 +23,12 @@
         </GridMyRow>
       </TransitionGroup>
     </GridSwiper>
-    <el-row @click="playAllSound" justify="center" class="btn-play-all">
-      <TheLoader v-if="loader === 1" size="44px" color="#000814" />
-      <Icon v-else name="mdi:play-outline" size="44px" color="#000814" />
-    </el-row>
+    <Transition name="fade" mode="out-in">
+      <div v-show="showPlay" @click="playAllSound" class="btn-play-all">
+        <TheLoader v-if="loader === 1" size="44px" color="#000814" />
+        <Icon v-else name="mdi:play-outline" size="54px" color="#000814" />
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -41,41 +43,63 @@ export default {
     const route = useRoute();
     const cardsStore = useCardsStore();
     const loader = ref(0);
+    const showPlay = ref(false);
 
     const loadCard = computed(() => {
       return cardsStore.cardItems[route.params.id];
     });
 
     const playSound = async (payload) => {
-      loader.value = payload.id;
-      const { play } = await usePlayTranslation(
-        payload.to,
-        cardsStore.languages.to,
-        cardsStore.languages.rate
-      );
-      play ? (loader.value = 0) : null;
+      if (cardsStore.langAvailable.length === 0) {
+        const synth = window.speechSynthesis;
+        const voices = synth.getVoices();
+        cardsStore.loadLang(voices.map((e) => e.lang));
+      }
+      if (cardsStore.langAvailable.includes(cardsStore.languages.to)) {
+        console.log(payload, cardsStore.languages.to);
+        const speech = useSpeechSynthesis(payload.to, {
+          lang: cardsStore.languages.to,
+          pitch: 1,
+          rate: cardsStore.languages.rate,
+          volume: 1,
+        });
+        speech.speak();
+      } else {
+        payload.id ? (loader.value = payload.id) : (loader.value = 1);
+        const { play } = await usePlayTranslation(
+          payload.to,
+          cardsStore.languages.to,
+          cardsStore.languages.rate
+        );
+        play ? (loader.value = 0) : null;
+      }
     };
 
     const playAllSound = async () => {
-      loader.value = 1;
       const allText = loadCard.value
         .map((e) => e.to)
         .toString()
         .replace(",", " ");
 
-      const { play } = await usePlayTranslation(
-        allText,
-        cardsStore.languages.to,
-        cardsStore.languages.rate
-      );
-      play ? (loader.value = 0) : null;
+      playSound({ to: allText });
     };
+
+    onMounted(() => {
+      setTimeout(() => {
+        showPlay.value = true;
+      }, 800);
+    });
+
+    onBeforeRouteLeave(() => {
+      showPlay.value = false;
+    });
 
     return {
       loadCard,
       playSound,
       loader,
       playAllSound,
+      showPlay,
     };
   },
 };
@@ -102,9 +126,22 @@ button {
   height: 30px;
   background-color: $colorThird;
 }
-
+.id_container {
+  height: 100%;
+  position: relative;
+}
 .btn-play-all {
-  background-color: lighten($colorThird, 10%);
-  opacity: 0.5;
+  position: fixed;
+  bottom: calc(var(--footer-height) - 35px);
+  right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid lighten($colorPrimary, 20%);
+  background-color: $colorPrimary;
+  border-radius: 50% 40% 0% 40%;
+  width: 60px;
+  height: 60px;
+  z-index: 100;
 }
 </style>

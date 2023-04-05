@@ -5,6 +5,7 @@ export const useCardsStore = defineStore("cards", {
     languages: { from: "fr-FR", to: "km-KM", recorder: false, rate: 1 },
     cards: [],
     cardItems: {},
+    langAvailable: [],
   }),
   getters: {
     langTo: (state) => state.languages.to.slice(0, 2),
@@ -20,6 +21,7 @@ export const useCardsStore = defineStore("cards", {
           this.cardItems = cardItems;
           this.cards.sort((a, b) => b.lastUpdate - a.lastUpdate);
         }
+
         resolve(true);
       });
     },
@@ -52,6 +54,9 @@ export const useCardsStore = defineStore("cards", {
     setParams(params) {
       this.languages = params;
       useSaveToLs(this.cards, this.cardItems, this.languages);
+    },
+    loadLang(array) {
+      this.langAvailable = array;
     },
   },
 });
