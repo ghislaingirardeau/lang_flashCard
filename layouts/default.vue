@@ -30,11 +30,12 @@
       </el-container>
       <Transition name="fade" mode="out-in">
         <el-footer
-          class="footer_container footer_container-recorder"
+          class="footer_container footer_container-nav"
           v-if="$route.params.id"
         >
-          <LazyMicRecord v-if="settings.recorder" />
-          <LazyInputRecord v-else />
+          <!-- <LazyMicRecord v-if="settings.recorder" />
+          <LazyInputRecord v-else /> -->
+          <TheFooterNav />
         </el-footer>
         <el-footer class="footer_container footer_container-home" v-else>
           {{ $t("footer.title") }} gG web dev
@@ -171,7 +172,7 @@ export default {
   position: relative;
   padding-top: 15px;
   border-top: 1px solid rgb(255, 255, 255);
-  &-recorder {
+  &-nav {
     height: var(--footer-height);
   }
   &-home {

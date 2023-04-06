@@ -23,27 +23,18 @@
         </GridMyRow>
       </TransitionGroup>
     </GridSwiper>
-    <Transition name="fade" mode="out-in">
-      <div v-show="showPlay" @click="playAllSound" class="btn-play-all">
-        <TheLoader v-if="loader === 1" size="44px" color="#000814" />
-        <Icon v-else name="mdi:play-outline" size="54px" color="#000814" />
-      </div>
-    </Transition>
   </div>
 </template>
 
 <script>
-import {
-  usePlayTranslation,
-  useWordPronounce,
-} from "@/composables/translation";
+import { useWordPronounce } from "@/composables/translation";
+import { usePlaySound } from "~~/composables/playSound";
 
 export default {
   setup() {
     const route = useRoute();
     const cardsStore = useCardsStore();
     const loader = ref(0);
-    const showPlay = ref(false);
 
     const langTo = computed(() => {
       return cardsStore.langTo;
@@ -53,64 +44,15 @@ export default {
       return cardsStore.cardItems[route.params.id];
     });
 
-    const playSound = async (payload) => {
-      // get languages of speechsynthesis
-      if (cardsStore.langAvailable.length === 0) {
-        const synth = window.speechSynthesis;
-        const voices = synth.getVoices();
-        cardsStore.loadLang(voices.map((e) => e.lang));
-      }
-      // to check if lang is supported by speechsynthesis = faster
-      if (cardsStore.langAvailable.includes(cardsStore.languages.to)) {
-        console.log(payload, cardsStore.languages.to);
-        const speech = useSpeechSynthesis(payload.to, {
-          lang: cardsStore.languages.to,
-          pitch: 1,
-          rate: cardsStore.languages.rate,
-          volume: 1,
-        });
-        speech.speak();
-      } else {
-        payload.id ? (loader.value = payload.id) : (loader.value = 1);
-        const { play } = await usePlayTranslation(
-          payload.to,
-          cardsStore.languages.to,
-          cardsStore.languages.rate
-        );
-        try {
-          play ? (loader.value = 0) : null;
-        } catch (error) {
-          console.log(error);
-          loader.value = 0;
-        }
-      }
+    const playSound = (payload) => {
+      // envoie en params le payload de childNode emit onTap + le loader créer
+      usePlaySound(loader, payload);
     };
-
-    const playAllSound = async () => {
-      const allText = loadCard.value
-        .map((e) => e.to)
-        .toString()
-        .replace(",", " ");
-
-      playSound({ to: allText });
-    };
-
-    onMounted(() => {
-      setTimeout(() => {
-        showPlay.value = true;
-      }, 800);
-    });
-
-    onBeforeRouteLeave(() => {
-      showPlay.value = false;
-    });
 
     return {
       loadCard,
       playSound,
       loader,
-      playAllSound,
-      showPlay,
       langTo,
     };
   },
