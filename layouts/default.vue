@@ -33,8 +33,6 @@
           class="footer_container footer_container-nav"
           v-if="$route.params.id"
         >
-          <!-- <LazyMicRecord v-if="settings.recorder" />
-          <LazyInputRecord v-else /> -->
           <TheFooterNav />
         </el-footer>
         <el-footer class="footer_container footer_container-home" v-else>
@@ -49,14 +47,6 @@
     >
       <el-form-item :label="$t('settings.languages')">
         <SetLanguage v-model:settings="settings" />
-      </el-form-item>
-      <el-form-item :label="$t('settings.recorder')">
-        <el-switch
-          v-model="settings.recorder"
-          size="large"
-          :active-text="$t('settings.voice')"
-          :inactive-text="$t('settings.text')"
-        />
       </el-form-item>
       <el-form-item :label="$t('settings.voiceSpeed')">
         <el-slider v-model="settings.rate" :step="0.1" :min="0.6" :max="1.2" />
@@ -77,17 +67,9 @@ export default {
 
     const settings = ref({});
 
-    const setFooter = () => {
-      let r = document.querySelector(":root");
-      settings.value.recorder
-        ? r.style.setProperty("--footer-height", "130px")
-        : r.style.setProperty("--footer-height", "75px");
-    };
-
     onBeforeMount(async () => {
       await cardsStore.nuxtServerInit();
       settings.value = { ...cardsStore.languages };
-      setFooter();
       // check if app load on the right lang set
       if (i18n.locale.value != cardsStore.languages.from.slice(0, 2)) {
         navigateTo(switchLocalePath(cardsStore.languages.from.slice(0, 2)));
@@ -169,11 +151,11 @@ export default {
   padding: 0px;
 }
 .footer_container {
-  position: relative;
   padding-top: 15px;
   border-top: 1px solid rgb(255, 255, 255);
   &-nav {
-    height: var(--footer-height);
+    height: 120px;
+    background-color: $colorSecondary;
   }
   &-home {
     background-color: $colorSecondary;

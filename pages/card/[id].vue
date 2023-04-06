@@ -82,20 +82,5 @@ button {
 }
 .id_container {
   height: 100%;
-  position: relative;
-}
-.btn-play-all {
-  position: fixed;
-  bottom: calc(var(--footer-height) - 35px);
-  right: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid lighten($colorPrimary, 20%);
-  background-color: $colorPrimary;
-  border-radius: 50% 40% 0% 40%;
-  width: 60px;
-  height: 60px;
-  z-index: 100;
 }
 </style>

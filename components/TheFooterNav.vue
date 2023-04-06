@@ -42,7 +42,13 @@
           @click="playAllSound"
         >
           <TheLoader v-if="loader === 1" size="44px" color="#000814" />
-          <Icon v-else name="mdi:play-outline" size="54px" color="#000814" />
+          <Icon
+            v-else
+            name="mdi:play-outline"
+            size="54px"
+            color="#000814"
+            class="rotate-icon"
+          />
         </div>
       </div>
     </Transition>
@@ -63,9 +69,10 @@ export default {
 
     const switchToInput = (e) => {
       toInput.value = !toInput.value;
-      document
-        .querySelector(".rotate-icon")
-        .classList.add("rotate-icon-animate");
+      let list = document.querySelectorAll(".rotate-icon");
+      list.forEach((element) => {
+        element.classList.add("rotate-icon-animate");
+      });
     };
 
     const playAllSound = async () => {

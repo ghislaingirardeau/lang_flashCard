@@ -1,5 +1,5 @@
 <template>
-  <div class="mic-block">
+  <div class="input-block">
     <TheLoader v-if="loading" size="48px" />
     <el-row v-else justify="space-between">
       <el-col :span="24">
@@ -60,8 +60,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.mic-block {
+.input-block {
   text-align: center;
+  margin-left: 10px;
 }
 .loader {
   display: inline-block;
