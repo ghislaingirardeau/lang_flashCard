@@ -8,9 +8,11 @@
           :idClass="item"
           append="trash-can-outline"
         >
-          <GridMyCol :col="4"> {{ item.from }} </GridMyCol>
+          <GridMyCol :col="loader === item.id ? 4 : 6">
+            {{ item.from }}
+          </GridMyCol>
           <GridMyCol
-            :col="loader === item.id ? 6 : 8"
+            :col="loader === item.id ? 4 : 6"
             style="word-break: break-all"
             ><span>{{ item.to }} </span>
             <span class="block_swipe_card-text">{{

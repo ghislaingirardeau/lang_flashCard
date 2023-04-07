@@ -41,7 +41,7 @@ export default {
     justify-content: center;
     min-height: 60px;
     text-align: center;
-    font-size: 20px;
+    font-size: 16px;
     transition: all 0.5s ease;
     padding: 0px 5px;
     &-hide {
