@@ -41,6 +41,7 @@ export default {
         [
           /* { transform: "scale(1)" },  */ {
             transform: "scale(1.3)",
+            opacity: 0.5,
             offset: 0.5,
           },
         ],
@@ -118,7 +119,7 @@ export default {
   border-radius: 50%;
   position: relative;
   z-index: 10 !important;
-  border: 2px solid lighten($color: $colorPrimary, $amount: 20%);
+  border: 2px solid darken($color: $colorThird, $amount: 20%);
 }
 svg {
   color: $colorSecondary;
@@ -126,7 +127,6 @@ svg {
 .mic-circle::after {
   content: "";
   position: absolute;
-  opacity: 0.6;
   left: 0px;
   background-color: $colorPrimary;
   width: 90px;

@@ -1,23 +1,21 @@
 <template>
   <div class="input-block">
     <TheLoader v-if="loading" size="48px" />
-    <el-row v-else justify="space-between">
-      <el-col :span="24">
-        <el-input
-          v-model="TextToTranslate"
-          label="text-to-translate"
-          :placeholder="$t('footer.translate')"
-        >
-          <template #append>
-            <Icon
-              @click="translate"
-              name="mdi:check-underline-circle-outline"
-              size="34px"
-            />
-          </template>
-        </el-input>
-      </el-col>
-    </el-row>
+    <div v-else justify="space-between">
+      <el-input
+        v-model="TextToTranslate"
+        label="text-to-translate"
+        :placeholder="$t('footer.translate')"
+      >
+        <template #append>
+          <Icon
+            @click="translate"
+            name="mdi:check-underline-circle-outline"
+            size="44px"
+          />
+        </template>
+      </el-input>
+    </div>
   </div>
 </template>
 
@@ -62,7 +60,7 @@ export default {
 <style lang="scss" scoped>
 .input-block {
   text-align: center;
-  margin-left: 10px;
+  padding-left: 15px;
 }
 .loader {
   display: inline-block;

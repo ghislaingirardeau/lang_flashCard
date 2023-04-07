@@ -96,7 +96,7 @@ export default {
   justify-content: space-around;
 }
 .footer_nav_btn {
-  border: 2px solid lighten($colorPrimary, 20%);
+  border: 2px solid darken($color: $colorThird, $amount: 20%);
   background-color: $colorPrimary;
 
   width: 60px;
