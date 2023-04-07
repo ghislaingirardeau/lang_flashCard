@@ -1,11 +1,19 @@
 <template>
-  <div class="block_swipe" :id="`${idClass.id}`">
+  <div
+    class="block_swipe"
+    :id="`card-${idClass.id}`"
+    :class="{ 'block_swipe-display': defineRoute }"
+  >
     <slot></slot>
     <div
       :id="`swipe-${idClass.id}`"
-      class="block_swipe_card my-col-2 block_swipe_card-hide hide"
+      class="block_swipe_card my-col-2 hide"
+      :class="{
+        'block_swipe_card-hide-bis': defineRoute,
+        'block_swipe_card-hide': !defineRoute,
+      }"
     >
-      <Icon :name="`mdi:${append}`" size="34px" class="block_swipe_card-icon" />
+      <Icon :name="`${append}`" size="34px" />
     </div>
   </div>
 </template>
@@ -23,7 +31,11 @@ export default {
     },
   },
   setup(props) {
-    return {};
+    const route = useRoute();
+    const defineRoute = computed(() => {
+      return route.params.id ? false : true;
+    });
+    return { defineRoute };
   },
 };
 </script>
@@ -31,9 +43,19 @@ export default {
 <style lang="scss">
 .block_swipe {
   display: flex;
-  width: 100%;
   min-height: 60px;
+  margin: 0px;
+  width: 100%;
   border-bottom: 1px solid white;
+  &-display {
+    margin: 10px 5px;
+    width: 45%;
+    border: 1px solid $colorThird;
+    border-radius: 20px 10px;
+    box-shadow: rgba($colorThird, 0.4) 0px 2px 4px,
+      rgba($colorThird, 0.3) 0px 7px 13px -3px,
+      rgba($colorThird, 0.2) 0px -3px 0px inset;
+  }
   &_card {
     display: flex;
     flex-direction: column;
@@ -44,15 +66,21 @@ export default {
     font-size: 16px;
     transition: all 0.5s ease;
     padding: 0px 5px;
+    word-break: break-all;
     &-hide {
       border: 2px solid $colorPrimary;
       background-color: $colorPrimary;
       border-radius: 70% 0% 0% 40%;
       height: 50px;
-      /* transform: translateX(0); */
+      & > svg {
+        color: $colorFourth;
+      }
     }
-    &-icon {
-      color: $colorFourth;
+    &-hide-bis {
+      height: 50px;
+      & > svg {
+        color: $colorPrimary;
+      }
     }
     &-text {
       font-size: 12px;
@@ -63,6 +91,5 @@ export default {
   width: 0%;
   overflow: hidden;
   opacity: 0;
-  /* transform: translateX(50px); */
 }
 </style>

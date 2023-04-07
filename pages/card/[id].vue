@@ -6,7 +6,7 @@
           v-for="item in loadCard"
           :key="item.id"
           :idClass="item"
-          append="trash-can-outline"
+          append="mdi:trash-can-outline"
         >
           <GridMyCol :col="loader === item.id ? 4 : 6">
             {{ item.from }}

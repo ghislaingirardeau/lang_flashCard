@@ -4,6 +4,7 @@
     @touchstart.prevent="startDrag"
     @touchend.prevent="endDrag"
     @touchmove.prevent="scrollElement"
+    :class="{ 'container-swipe-flex': defineRoute }"
   >
     <slot></slot>
   </div>
@@ -18,6 +19,10 @@ export default {
     const cardsStore = useCardsStore();
     const localePath = useLocalePath();
     const route = useRoute();
+
+    const defineRoute = computed(() => {
+      return route.params.id ? false : true;
+    });
 
     const idCard = (id) => {
       return route.params.id
@@ -58,6 +63,7 @@ export default {
       idCard,
       doOnTap,
       doOnClickDelete,
+      defineRoute,
     };
   },
   methods: {
@@ -97,13 +103,13 @@ export default {
       // si tu scroll sur un coté : hide or unhide the delete option
       if (defineTouchX > 50 && (defineTouchY > -30 || defineTouchY < 30)) {
         document
-          .getElementById(`swipe-${elementWithId}`)
+          .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
           ?.classList.add("hide");
         return;
       }
       if (defineTouchX < -50 && (defineTouchY > -30 || defineTouchY < 30)) {
         document
-          .getElementById(`swipe-${elementWithId}`)
+          .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
           ?.classList.remove("hide");
         return;
       }
@@ -118,10 +124,13 @@ export default {
           // if id includes swipe = so it's a click on delete block
           cardDetails = this.idCard(elementWithId.replace("swipe-", ""));
           this.doOnClickDelete(cardDetails.title, cardDetails.id);
-        } else {
+          return;
+        }
+        if (elementWithId.includes("card-")) {
           // if no swipe but an id, click en the row
-          cardDetails = this.idCard(elementWithId);
+          cardDetails = this.idCard(elementWithId.replace("card-", ""));
           this.doOnTap(cardDetails);
+          return;
         }
       }
     },
@@ -139,4 +148,10 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.container-swipe-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+</style>

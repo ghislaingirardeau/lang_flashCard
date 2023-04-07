@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-row @click="dialogAddCard = true" class="newCard_block">
+  <div class="home_container">
+    <el-row @touchstart="dialogAddCard = true" class="newCard_block">
       <el-col :span="12">
         <Icon name="mdi:plus-box-outline" size="34px"
       /></el-col>
@@ -18,15 +18,11 @@
             v-for="card in loadCards"
             :key="card.id"
             :idClass="card"
-            append="trash-can"
+            append="charm:circle-cross"
           >
-            <GridMyCol :col="6">
-              {{ card.title }}
+            <GridMyCol :col="12">
+              {{ card.title }} ({{ cardNumberItems(card.title) }})
             </GridMyCol>
-            <GridMyCol :col="6"
-              >{{ cardNumberItems(card.title) }}
-              {{ $t("home.translation") }}</GridMyCol
-            >
           </GridMyRow>
         </TransitionGroup>
       </GridSwiper>
@@ -106,6 +102,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.home_container {
+  height: 100%;
+}
 .el-row {
   padding: 10px;
   border-bottom: 1px solid white;
@@ -123,8 +122,7 @@ export default {
   }
 }
 .cards_block {
-  padding-top: 60px;
+  padding-top: 65px;
   z-index: 1;
-  position: relative;
 }
 </style>
