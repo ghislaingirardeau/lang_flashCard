@@ -7,7 +7,7 @@
             {{ $route.params.id ? $route.params.id : "Flash Cards" }}
           </h1>
         </Transition>
-        <!-- <nuxt-link :to="localePath('test')">test</nuxt-link> -->
+        <nuxt-link :to="localePath('test')">test</nuxt-link>
         <Transition name="fade" mode="out-in">
           <Icon
             v-if="$route.params.id"
@@ -82,7 +82,6 @@ export default {
 
     const registerSettings = () => {
       cardsStore.setParams(settings);
-      setFooter();
       // if the from language change
       if (i18n.locale.value != settings.value.from.slice(0, 2)) {
         navigateTo(switchLocalePath(cardsStore.languages.from.slice(0, 2)));
