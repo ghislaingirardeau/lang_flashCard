@@ -2,9 +2,10 @@
   <client-only>
     <el-dialog
       :model-value="value"
-      :fullscreen="true"
+      width="100%"
       :title="title"
-      :show-close="false"
+      top="0px"
+      @close="submitForm(false)"
     >
       <el-form>
         <slot></slot>
@@ -38,7 +39,7 @@ export default {
   setup(props, { emit }) {
     const submitForm = (params) => {
       params ? props.doOnConfirm() : null;
-      emit("update:value", !props.value);
+      emit("update:value", false);
     };
     return {
       submitForm,

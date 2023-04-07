@@ -20,6 +20,9 @@
     color: $colorPrimary;
     font-family: $fontSecondary;
   }
+  &__headerbtn {
+    font-size: 28px;
+  }
   &__body {
     color: $colorThird;
     border: 1px solid rgb(255, 255, 255);

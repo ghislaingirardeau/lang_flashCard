@@ -1,6 +1,6 @@
 <template>
   <div class="home_container">
-    <el-row @touchstart="dialogAddCard = true" class="newCard_block">
+    <el-row @touchstart="openModal" class="newCard_block">
       <el-col :span="12">
         <Icon name="mdi:plus-box-outline" size="34px"
       /></el-col>
