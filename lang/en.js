@@ -1,6 +1,4 @@
 export default {
-  hello: "Hello!",
-  language: "EN",
   footer: {
     title: "Create by",
     translate: "Text to translate",
@@ -13,9 +11,6 @@ export default {
     title: "SETTINGS",
     languages: "languages",
     to: "to",
-    recorder: "recorder",
-    voice: "Voice",
-    text: "Text",
     voiceSpeed: "Voice speed",
   },
   dialog: {

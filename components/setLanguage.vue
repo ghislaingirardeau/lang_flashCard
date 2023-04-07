@@ -50,10 +50,6 @@ export default {
         value: "th-TH",
       },
       {
-        label: "Spanish",
-        value: "es-ES",
-      },
-      {
         label: "Indonesian",
         value: "id-ID",
       },

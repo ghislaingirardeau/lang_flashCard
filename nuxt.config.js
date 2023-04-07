@@ -1,6 +1,9 @@
 require("dotenv").config();
 import en from "./lang/en";
 import fr from "./lang/fr";
+import km from "./lang/km";
+import id from "./lang/id";
+import th from "./lang/th";
 
 export default defineNuxtConfig({
   ssr: false,
@@ -104,7 +107,15 @@ export default defineNuxtConfig({
       },
       {
         code: "km",
-        file: "en.js",
+        file: "km.js",
+      },
+      {
+        code: "id",
+        file: "id.js",
+      },
+      {
+        code: "th",
+        file: "th.js",
       },
     ],
     lazy: true,
@@ -113,7 +124,7 @@ export default defineNuxtConfig({
     vueI18n: {
       locale: "en",
       fallbackLocale: "en",
-      messages: { en, fr },
+      messages: { en, fr, km, id, th },
     },
   },
 });
