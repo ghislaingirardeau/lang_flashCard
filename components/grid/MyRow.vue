@@ -50,11 +50,12 @@ export default {
   &-display {
     margin: 10px 5px;
     width: 45%;
+    background-color: $colorFourth;
     border: 1px solid $colorThird;
     border-radius: 20px 10px;
     box-shadow: rgba($colorThird, 0.4) 0px 2px 4px,
       rgba($colorThird, 0.3) 0px 7px 13px -3px,
-      rgba($colorThird, 0.2) 0px -3px 0px inset;
+      rgba($colorThird, 0.5) 0px -3px 0px inset;
   }
   &_card {
     display: flex;
