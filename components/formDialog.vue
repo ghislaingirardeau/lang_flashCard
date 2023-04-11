@@ -38,7 +38,7 @@ export default {
   },
   setup(props, { emit }) {
     const submitForm = (params) => {
-      params ? props.doOnConfirm() : null;
+      props.doOnConfirm(params);
       emit("update:value", false);
     };
     return {

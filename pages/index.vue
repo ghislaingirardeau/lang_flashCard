@@ -21,7 +21,9 @@
             append="charm:circle-cross"
           >
             <GridMyCol :col="12">
-              {{ card.title }} ({{ cardNumberItems(card.title) }})
+              {{ card.title.replaceAll("_", " ") }} ({{
+                cardNumberItems(card.title)
+              }})
             </GridMyCol>
           </GridMyRow>
         </TransitionGroup>
@@ -72,19 +74,23 @@ export default {
       return cardsStore.cardItems[params].length;
     };
 
-    const saveNewCard = () => {
-      if (cardForm.name.length > 2) {
+    const saveNewCard = (payload) => {
+      if (cardForm.name.length > 2 && payload) {
         const newCard = {
           id: Date.now(),
-          title: cardForm.name,
+          title: cardForm.name.trim().replaceAll(" ", "_"),
           lastUpdate: Date.now(),
           createOn: Date.now(),
         };
         cardsStore.addNewCard(newCard, t("store.alert"));
-        dialogAddCard.value = false;
         cardForm.name = "";
+        return;
+      }
+      if (cardForm.name.length < 2 && payload) {
+        cardForm.name = "";
+        return alert("the card title is too short");
       } else {
-        alert("the card title is too short");
+        cardForm.name = "";
       }
     };
 

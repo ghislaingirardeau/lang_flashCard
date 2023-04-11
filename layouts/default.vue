@@ -4,10 +4,14 @@
       <el-header class="header-container">
         <Transition name="fade" mode="out-in">
           <h1 class="header-container-title" :key="$route.params.id">
-            {{ $route.params.id ? $route.params.id : "Flash Cards" }}
+            {{
+              $route.params.id
+                ? $route.params.id.replaceAll("_", " ")
+                : "Flash Cards"
+            }}
           </h1>
         </Transition>
-        <nuxt-link :to="localePath('test')">test</nuxt-link>
+        <!-- <nuxt-link :to="localePath('test')">test</nuxt-link> -->
         <Transition name="fade" mode="out-in">
           <Icon
             v-if="$route.params.id"
@@ -36,7 +40,23 @@
           <TheFooterNav />
         </el-footer>
         <el-footer class="footer_container footer_container-home" v-else>
-          {{ $t("footer.title") }} gG web dev
+          <div class="footer_container-home-text">
+            <p>{{ $t("footer.title") }} gG web dev</p>
+          </div>
+          <div>
+            <p>
+              {{ langFrom }}
+            </p>
+            <Icon
+              name="mdi:arrow-up-down-bold-outline"
+              size="34px"
+              class="footer-icons"
+              @click="switchLang"
+            />
+            <p>
+              {{ langTo }}
+            </p>
+          </div>
         </el-footer>
       </Transition>
     </el-container>
@@ -80,11 +100,49 @@ export default {
       return height.value + "px";
     });
 
-    const registerSettings = () => {
-      cardsStore.setParams(settings);
-      // if the from language change
-      if (i18n.locale.value != settings.value.from.slice(0, 2)) {
-        navigateTo(switchLocalePath(cardsStore.languages.from.slice(0, 2)));
+    const langTo = computed(() => {
+      return cardsStore.langTo;
+    });
+    const langFrom = computed(() => {
+      return cardsStore.langFrom;
+    });
+
+    const switchLang = (e) => {
+      const eltToAnim = document.querySelector(".footer_container-home");
+      const textToFade = eltToAnim.querySelectorAll("p");
+      const iconToFade = eltToAnim.querySelector("svg");
+      iconToFade.classList.add("footer-icons-animate");
+      textToFade.forEach((element) => {
+        element.classList.add("footer-text-animate");
+      });
+
+      setTimeout(() => {
+        iconToFade.classList.remove("footer-icons-animate");
+        textToFade.forEach((element) => {
+          element.classList.remove("footer-text-animate");
+        });
+      }, 700);
+      let to = settings.value.to;
+      let from = settings.value.from;
+
+      settings.value.from = to;
+      settings.value.to = from;
+
+      registerSettings(true);
+    };
+
+    const registerSettings = (payload) => {
+      // need to desconstruct the object otherwise cardsStore.languages strict equal to settings.value on every changes
+      if (payload) {
+        const { from, to, rate } = settings.value;
+
+        cardsStore.setParams({ from, to, rate });
+        // if the from language change
+        if (i18n.locale.value != settings.value.from.slice(0, 2)) {
+          navigateTo(switchLocalePath(cardsStore.languages.from.slice(0, 2)));
+        }
+      } else {
+        settings.value = { ...cardsStore.languages };
       }
     };
 
@@ -93,6 +151,9 @@ export default {
       settings,
       dialogSettings,
       registerSettings,
+      langTo,
+      langFrom,
+      switchLang,
     };
   },
   mounted() {
@@ -150,22 +211,57 @@ export default {
   padding: 0px;
 }
 .footer_container {
-  padding-top: 15px;
   border-top: 1px solid rgb(255, 255, 255);
   &-nav {
     height: 120px;
     background-color: $colorSecondary;
+    padding-top: 15px;
   }
   &-home {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: $colorSecondary;
     color: $colorPrimary;
     font-family: $fontSecondary;
     font-size: 20px;
+    min-height: 64px;
+    & p {
+      display: inline;
+    }
+    &-text {
+      max-width: 200px;
+    }
   }
 }
 .header-icons {
   position: absolute;
   right: 20px;
+}
+.footer-icons {
+  transform: translateY(-5px) rotateZ(90deg);
+  margin-inline: 10px 10px;
+  &-animate {
+    animation: rotate-switcher 0.7s ease both;
+  }
+}
+.footer-text-animate {
+  animation: fade-on-switcher 0.7s ease both 1;
+}
+@keyframes rotate-switcher {
+  0% {
+    transform: translateY(-5px) rotateZ(90deg);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-5px) rotateZ(270deg);
+  }
+}
+@keyframes fade-on-switcher {
+  0% {
+    opacity: 0;
+    transform: translateY(0px);
+  }
 }
 
 .fade-enter-active,

@@ -8,7 +8,8 @@ export const useCardsStore = defineStore("cards", {
     langAvailable: [],
   }),
   getters: {
-    langTo: (state) => state.languages.to.slice(0, 2),
+    langTo: (state) => state.languages.to.slice(-2),
+    langFrom: (state) => state.languages.from.slice(-2),
   },
   actions: {
     nuxtServerInit() {
