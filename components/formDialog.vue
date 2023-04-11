@@ -15,7 +15,11 @@
           <el-button @click="submitForm(false)">
             {{ $t("dialog.cancel") }}</el-button
           >
-          <el-button type="primary" @click="submitForm(true)">
+          <el-button
+            type="primary"
+            @click="submitForm(true)"
+            :disabled="disabled"
+          >
             {{ $t("dialog.confirm") }}
           </el-button>
         </span>
@@ -34,6 +38,9 @@ export default {
     title: {
       required: true,
       type: String,
+    },
+    disabled: {
+      type: Boolean,
     },
   },
   setup(props, { emit }) {

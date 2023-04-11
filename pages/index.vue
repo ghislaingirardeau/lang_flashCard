@@ -33,10 +33,20 @@
       v-model:value="dialogAddCard"
       :doOnConfirm="saveNewCard"
       :title="$t('newCard.title')"
+      :disabled="validNewCardTitle"
     >
-      <el-form-item :label="$t('newCard.label')">
-        <el-input v-model="cardForm.name" autocomplete="off" />
-      </el-form-item>
+      <div class="newCard_content">
+        <el-form-item :label="$t('newCard.label')">
+          <el-input v-model="cardForm.name" autocomplete="off" />
+        </el-form-item>
+        <span v-show="validNewCardTitle" class="newCard_content-alert"
+          >{{
+            cardForm.name.length > 0
+              ? "Title already exist"
+              : "At least 1 character"
+          }}
+        </span>
+      </div>
     </FormDialog>
   </div>
 </template>
@@ -46,6 +56,7 @@ export default {
   setup() {
     const cardsStore = useCardsStore();
     const dialogAddCard = ref(false);
+    const validNewCardTitle = ref(true);
     const cardForm = reactive({
       name: "",
     });
@@ -54,6 +65,14 @@ export default {
 
     const loadCards = computed(() => {
       return cardsStore.cards;
+    });
+
+    watch(cardForm, (title) => {
+      let cardExist = loadCards.value.findIndex((e) => e.title === title.name);
+      if (title.name.length >= 1 && cardExist === -1)
+        return (validNewCardTitle.value = false);
+      if (title.name.length < 1 || cardExist != -1)
+        return (validNewCardTitle.value = true);
     });
 
     const goToItem = (title) => {
@@ -75,7 +94,7 @@ export default {
     };
 
     const saveNewCard = (payload) => {
-      if (cardForm.name.length > 2 && payload) {
+      if (cardForm.name.length >= 1 && payload) {
         const newCard = {
           id: Date.now(),
           title: cardForm.name.trim().replaceAll(" ", "_"),
@@ -86,9 +105,8 @@ export default {
         cardForm.name = "";
         return;
       }
-      if (cardForm.name.length < 2 && payload) {
+      if (cardForm.name.length < 1 && payload) {
         cardForm.name = "";
-        return alert("the card title is too short");
       } else {
         cardForm.name = "";
       }
@@ -106,6 +124,7 @@ export default {
       getDate,
       cardNumberItems,
       goToItem,
+      validNewCardTitle,
     };
   },
 };
@@ -129,6 +148,15 @@ export default {
   z-index: 10;
   &-text {
     color: $colorThird;
+  }
+}
+.newCard_content {
+  position: relative;
+  height: 80px;
+  &-alert {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
   }
 }
 .cards_block {

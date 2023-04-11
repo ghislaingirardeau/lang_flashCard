@@ -27,8 +27,6 @@ export const useCardsStore = defineStore("cards", {
       });
     },
     addNewCard(card, message) {
-      if (this.cards.findIndex((e) => e.title === card.title) != -1)
-        return alert(message);
       this.cards.unshift(card);
       this.cardItems[card.title] = [];
       useSaveToLs(this.cards, this.cardItems, this.languages);
