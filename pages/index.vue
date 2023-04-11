@@ -73,15 +73,19 @@ export default {
     };
 
     const saveNewCard = () => {
-      const newCard = {
-        id: Date.now(),
-        title: cardForm.name,
-        lastUpdate: Date.now(),
-        createOn: Date.now(),
-      };
-      cardsStore.addNewCard(newCard, t("store.alert"));
-      dialogAddCard.value = false;
-      cardForm.name = "";
+      if (cardForm.name.length > 2) {
+        const newCard = {
+          id: Date.now(),
+          title: cardForm.name,
+          lastUpdate: Date.now(),
+          createOn: Date.now(),
+        };
+        cardsStore.addNewCard(newCard, t("store.alert"));
+        dialogAddCard.value = false;
+        cardForm.name = "";
+      } else {
+        alert("the card title is too short");
+      }
     };
 
     const openModal = () => {
