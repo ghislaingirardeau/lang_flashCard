@@ -67,7 +67,7 @@ export default defineNuxtConfig({
       short_name: "FlashCard Lang",
       lang: "en",
       description: "FlashCard Language",
-      theme_color: "#000814",
+      theme_color: "#6fffe9",
       icons: [
         {
           src: "icons/pwa-144x144.png",
