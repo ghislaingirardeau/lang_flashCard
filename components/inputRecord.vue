@@ -6,6 +6,7 @@
         v-model="TextToTranslate"
         label="text-to-translate"
         :placeholder="$t('footer.translate')"
+        @keydown.enter="translate"
       >
         <template #append>
           <Icon
@@ -27,6 +28,10 @@ export default {
     const loading = ref(false);
     const route = useRoute();
     const TextToTranslate = ref("");
+
+    const doOnEnter = (params) => {
+      console.log("on enter");
+    };
 
     const translate = async () => {
       loading.value = true;
@@ -52,6 +57,7 @@ export default {
       TextToTranslate,
       loading,
       translate,
+      doOnEnter,
     };
   },
 };
