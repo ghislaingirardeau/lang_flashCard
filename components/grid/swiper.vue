@@ -101,13 +101,13 @@ export default {
       }
 
       // si tu scroll sur un coté : hide or unhide the delete option
-      if (defineTouchX > 50 && (defineTouchY > -30 || defineTouchY < 30)) {
+      if (defineTouchX > 50 && (defineTouchY > -50 || defineTouchY < 50)) {
         document
           .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
           ?.classList.add("hide");
         return;
       }
-      if (defineTouchX < -50 && (defineTouchY > -30 || defineTouchY < 30)) {
+      if (defineTouchX < -50 && (defineTouchY > -50 || defineTouchY < 50)) {
         document
           .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
           ?.classList.remove("hide");
