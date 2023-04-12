@@ -29,9 +29,6 @@
 </template>
 
 <script>
-import { useWordPronounce } from "@/composables/translation";
-import { usePlaySound } from "~~/composables/playSound";
-
 export default {
   setup() {
     const route = useRoute();
@@ -46,9 +43,20 @@ export default {
       return cardsStore.cardItems[route.params.id];
     });
 
-    const playSound = (payload) => {
+    const playSound = async (payload) => {
       // envoie en params le payload de childNode emit onTap + le loader créer
-      usePlaySound(loader, payload);
+      loader.value = payload.id;
+      const { play, error } = await usePlayTranslation(
+        payload.to,
+        cardsStore.languages.rate
+      );
+      if (play) {
+        loader.value = 0;
+      }
+      if (error) {
+        loader.value = 0;
+        alert(error);
+      }
     };
 
     return {

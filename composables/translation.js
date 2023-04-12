@@ -69,7 +69,6 @@ export async function usePlayTranslation(to, rate) {
   let langDetected;
   if (results.data.value) {
     langDetected = results.data.value.data.detections[0][0].language;
-    console.log(langDetected);
   }
   if (results.error.value) {
     return { play: null, error: "Could not detect the lang" };

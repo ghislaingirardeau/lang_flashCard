@@ -56,7 +56,6 @@
 </template>
 
 <script>
-import { usePlaySound } from "~~/composables/playSound";
 export default {
   setup() {
     const route = useRoute();
@@ -81,7 +80,18 @@ export default {
         .toString()
         .replace(",", " ");
 
-      usePlaySound(loader, { to: allText });
+      loader.value = 1;
+      const { play, error } = await usePlayTranslation(
+        allText,
+        cardsStore.languages.rate
+      );
+      if (play) {
+        loader.value = 0;
+      }
+      if (error) {
+        loader.value = 0;
+        alert(error);
+      }
     };
     return { loader, playAllSound, toInput, switchToInput };
   },
