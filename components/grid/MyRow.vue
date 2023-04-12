@@ -43,7 +43,6 @@ export default {
 <style lang="scss">
 .block_swipe {
   display: flex;
-  min-height: 60px;
   margin: 0px;
   width: 100%;
   border-bottom: 1px solid white;
@@ -67,12 +66,10 @@ export default {
     font-size: 16px;
     transition: all 0.5s ease;
     padding: 0px 5px;
-    word-break: break-all;
     &-hide {
       border: 2px solid $colorPrimary;
       background-color: $colorPrimary;
       border-radius: 70% 0% 0% 40%;
-      height: 50px;
       & > svg {
         color: $colorFourth;
       }
