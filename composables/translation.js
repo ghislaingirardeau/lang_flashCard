@@ -51,13 +51,33 @@ export async function useTranslation(text, from, to) {
   }
 }
 
-export async function usePlayTranslation(to, lang, rate) {
+export async function usePlayTranslation(to, rate) {
   const config = useRuntimeConfig();
+  //DETECT LANG
+  const results = await useFetch(
+    "https://google-translator9.p.rapidapi.com/v2/detect",
+    {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "X-RapidAPI-Key": config.XRAPIDAPIKEY,
+        "X-RapidAPI-Host": "google-translator9.p.rapidapi.com",
+      },
+      body: JSON.stringify({ q: to }),
+    }
+  );
+  let langDetected;
+  if (results.data.value) {
+    langDetected = results.data.value.data.detections[0][0].language;
+    console.log(langDetected);
+  }
+  if (results.error.value) {
+    return { play: null, error: "Could not detect the lang" };
+  }
+
+  //PLAY WITH THE DETECTED LANG
   const { data, error } = await useFetch(
-    `https://text-to-speech-api3.p.rapidapi.com/speak?text=${to}&lang=${lang.slice(
-      0,
-      2
-    )}`,
+    `https://text-to-speech-api3.p.rapidapi.com/speak?text=${to}&lang=${langDetected}`,
     {
       method: "GET",
       key: `${to}`,

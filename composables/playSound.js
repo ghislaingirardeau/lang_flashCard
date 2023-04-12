@@ -3,7 +3,7 @@ import { usePlayTranslation } from "@/composables/translation";
 export async function usePlaySound(loader, payload) {
   const cardsStore = useCardsStore();
   // get all languages of speechsynthesis and store it
-  if (cardsStore.langAvailable.length === 0) {
+  /* if (cardsStore.langAvailable.length === 0) {
     const synth = window.speechSynthesis;
     const voices = synth.getVoices();
     cardsStore.loadLang(voices.map((e) => e.lang));
@@ -17,13 +17,12 @@ export async function usePlaySound(loader, payload) {
       volume: 1,
     });
     return speech.speak();
-  }
+  } */
   // if it's not a lang available in SpeechSynthesis, fetch with usePlayTranslation
   if (payload) {
     payload.id ? (loader.value = payload.id) : (loader.value = 1);
     const { play, error } = await usePlayTranslation(
       payload.to,
-      cardsStore.languages.to,
       cardsStore.languages.rate
     );
     if (play) {
