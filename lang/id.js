@@ -20,6 +20,8 @@ export default {
   newCard: {
     title: "KARTU BARU",
     label: "Kartu nama",
+    hint1: "Judul sudah ada",
+    hint2: "Setidaknya satu karakter",
   },
   store: {
     alert: "Kartu ini sudah ada, pilih nama baru",

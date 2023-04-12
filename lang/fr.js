@@ -20,6 +20,8 @@ export default {
   newCard: {
     title: "NOUVELLE CARTE",
     label: "Titre de la carte",
+    hint1: "Ce titre existe déjà",
+    hint2: "Taper au moins un caractère",
   },
   store: {
     alert: "Cette carte existe déjà",

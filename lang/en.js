@@ -20,6 +20,8 @@ export default {
   newCard: {
     title: "NEW CARD",
     label: "Card name",
+    hint1: "Title already exist",
+    hint2: "Ce titre existe déjà",
   },
   store: {
     alert: "This card already exist, pick a new name",

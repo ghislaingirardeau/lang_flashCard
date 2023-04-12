@@ -7,6 +7,13 @@
   --el-fill-color-light: $colorFith;
 }
 
+.el-button.is-disabled,
+.el-button.is-disabled:focus {
+  color: #909399;
+  background-color: #001d3d;
+  border-color: #000000;
+}
+
 .el-dialog {
   background-color: $colorFith;
   &__header {

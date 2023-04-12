@@ -41,9 +41,7 @@
         </el-form-item>
         <span v-show="validNewCardTitle" class="newCard_content-alert"
           >{{
-            cardForm.name.length > 0
-              ? "Title already exist"
-              : "At least 1 character"
+            cardForm.name.length > 0 ? $t("newCard.hint1") : $t("newCard.hint2")
           }}
         </span>
       </div>
