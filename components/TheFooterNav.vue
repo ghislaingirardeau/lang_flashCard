@@ -75,23 +75,17 @@ export default {
     };
 
     const playAllSound = async () => {
-      const allText = loadCard.value
-        .map((e) => e.to)
-        .toString()
-        .replace(",", " ");
+      const allText = loadCard.value.map((e) => e.to);
 
       loader.value = 1;
-      const { play, error } = await usePlayTranslation(
-        allText,
-        cardsStore.languages.rate
-      );
-      if (play) {
-        loader.value = 0;
+
+      for (let index = 0; index < allText.length; index++) {
+        const { play, error } = await usePlayTranslation(
+          allText[index],
+          cardsStore.languages.rate
+        );
       }
-      if (error) {
-        loader.value = 0;
-        alert(error);
-      }
+      loader.value = 0;
     };
     return { loader, playAllSound, toInput, switchToInput };
   },
