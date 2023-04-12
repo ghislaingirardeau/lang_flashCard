@@ -65,8 +65,13 @@
 .el-input-group__append {
   box-shadow: none;
 }
-.el-input__wrapper.is-focus {
-  border: 1px solid white;
+.el-input {
+  width: 200px;
+}
+.el-input__wrapper {
+  border: 2px solid $colorThird;
+  border-radius: 5px 5px 5px 5px;
+  box-shadow: none;
 }
 .el-button {
   color: white;
