@@ -137,7 +137,7 @@ export default {
     scrollElement(event) {
       const defineTouchY = event.changedTouches[0].clientY - this.scrollStartY;
       // if scrollY long enough detected
-      if (defineTouchY < -10 || defineTouchY > 10) {
+      if (defineTouchY < -40 || defineTouchY > 40) {
         document.querySelector(".el-main").scroll(
           0,
           this.scrollEnd + (event.changedTouches[0].clientY - this.scrollStartY) // position it ended + dynamic scroll - depart position of the scroll
