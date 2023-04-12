@@ -29,10 +29,6 @@ export default {
     const route = useRoute();
     const TextToTranslate = ref("");
 
-    const doOnEnter = (params) => {
-      console.log("on enter");
-    };
-
     const translate = async () => {
       loading.value = true;
       const { text, error } = await useTranslation(
@@ -57,7 +53,6 @@ export default {
       TextToTranslate,
       loading,
       translate,
-      doOnEnter,
     };
   },
 };
