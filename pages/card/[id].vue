@@ -16,7 +16,7 @@
             style="word-break: break-all"
             ><span>{{ item.to }} </span>
             <span class="block_swipe_card-text">{{
-              langTo === "km" ? useWordPronounce(item.to) : ""
+              langTo === "KM" ? useWordPronounce(item.to) : ""
             }}</span></GridMyCol
           >
           <GridMyCol :col="2" v-if="loader === item.id">

@@ -30,7 +30,7 @@ export default {
 
     const translate = async () => {
       loading.value = true;
-      const { text } = await useTranslation(
+      const { text, error } = await useTranslation(
         TextToTranslate.value,
         cardsStore.languages.from,
         cardsStore.languages.to
@@ -43,7 +43,7 @@ export default {
           pronouce: "xxx",
         });
       } else {
-        alert("translation does not work");
+        alert("Error from API", error);
       }
       loading.value = false;
       TextToTranslate.value = "";

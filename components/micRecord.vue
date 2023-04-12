@@ -67,7 +67,7 @@ export default {
         this.recognition.stop();
         let transcriptResult = event.results[0][0].transcript;
         this.loading = true;
-        const { text } = await this.useTranslation(
+        const { text, error } = await this.useTranslation(
           transcriptResult,
           this.cardsStore.languages.from,
           this.cardsStore.languages.to
@@ -80,7 +80,7 @@ export default {
             pronouce: "xxx",
           });
         } else {
-          alert("translation does not work");
+          alert("Error from API", error);
         }
         this.loading = false;
       };

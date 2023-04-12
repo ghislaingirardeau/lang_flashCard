@@ -21,16 +21,17 @@ export async function usePlaySound(loader, payload) {
   // if it's not a lang available in SpeechSynthesis, fetch with usePlayTranslation
   if (payload) {
     payload.id ? (loader.value = payload.id) : (loader.value = 1);
-    const { play } = await usePlayTranslation(
+    const { play, error } = await usePlayTranslation(
       payload.to,
       cardsStore.languages.to,
       cardsStore.languages.rate
     );
-    try {
-      play ? (loader.value = 0) : null;
-    } catch (error) {
-      console.log(error);
+    if (play) {
       loader.value = 0;
+    }
+    if (error) {
+      loader.value = 0;
+      alert(error);
     }
   }
 }

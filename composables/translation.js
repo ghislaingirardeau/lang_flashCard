@@ -4,13 +4,13 @@ export async function useTranslation(text, from, to) {
   // state encapsulated and managed by the composable
   const config = useRuntimeConfig();
 
-  const body = {
+  /* const body = {
     q: text,
     source: from,
     target: to,
   };
 
-  const { data } = await useFetch(
+  const { data, error } = await useFetch(
     "https://deep-translate1.p.rapidapi.com/language/translate/v2",
     {
       method: "POST",
@@ -21,34 +21,61 @@ export async function useTranslation(text, from, to) {
       },
       body: JSON.stringify(body),
     }
+  ); */
+  const body = {
+    q: text,
+    source: from,
+    target: to,
+    format: "text",
+  };
+  const { data, error } = await useFetch(
+    "https://google-translator9.p.rapidapi.com/v2",
+    {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "X-RapidAPI-Key": config.XRAPIDAPIKEY,
+        "X-RapidAPI-Host": "google-translator9.p.rapidapi.com",
+      },
+      body: JSON.stringify(body),
+    }
   );
-  return { text: data._rawValue.data.translations.translatedText };
+  if (data.value)
+    return {
+      text: data.value.data.translations[0].translatedText,
+      error: null,
+    };
+  if (error.value) {
+    console.log(error);
+    return { text: null, error: error.value };
+  }
 }
 
 export async function usePlayTranslation(to, lang, rate) {
-  try {
-    const config = useRuntimeConfig();
-    const { data } = await useFetch(
-      `https://text-to-speech-api3.p.rapidapi.com/speak?text=${to}&lang=${lang.slice(
-        0,
-        2
-      )}`,
-      {
-        method: "GET",
-        key: `${to}`,
-        headers: {
-          "X-RapidAPI-Key": config.XRAPIDAPIKEY,
-          "X-RapidAPI-Host": config.XRAPIDAPIHOSTTTS,
-        },
-      }
-    );
+  const config = useRuntimeConfig();
+  const { data, error } = await useFetch(
+    `https://text-to-speech-api3.p.rapidapi.com/speak?text=${to}&lang=${lang.slice(
+      0,
+      2
+    )}`,
+    {
+      method: "GET",
+      key: `${to}`,
+      headers: {
+        "X-RapidAPI-Key": config.XRAPIDAPIKEY,
+        "X-RapidAPI-Host": config.XRAPIDAPIHOSTTTS,
+      },
+    }
+  );
+  if (data.value) {
     let blobUrl = URL.createObjectURL(data.value);
     const audioElement = new Audio(blobUrl);
     audioElement.playbackRate = rate;
     audioElement.play();
-    return { play: true };
-  } catch (error) {
-    console.log(error);
+    return { play: true, error: null };
+  }
+  if (error.value) {
+    return { play: null, error: error.value };
   }
 }
 
