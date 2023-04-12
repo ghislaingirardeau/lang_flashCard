@@ -245,9 +245,9 @@ export default {
     animation: rotate-switcher 0.7s ease both;
   }
 }
-.footer-text-animate {
+/* .footer-text-animate {
   animation: fade-on-switcher 0.7s ease both 1;
-}
+} */
 @keyframes rotate-switcher {
   0% {
     transform: translateY(-5px) rotateZ(90deg);
