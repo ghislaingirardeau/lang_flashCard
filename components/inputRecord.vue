@@ -60,7 +60,7 @@ export default {
 .input-container {
   text-align: center;
   padding-left: 15px;
-  width: 60%;
+  width: 75%;
 }
 .input-block {
   display: flex;

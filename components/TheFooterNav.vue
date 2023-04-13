@@ -2,7 +2,7 @@
   <div>
     <Transition name="fade-slideY" mode="out-in">
       <div
-        class="container_footer_nav"
+        class="container_footer_nav container_footer_nav-input"
         :style="{ alignItems: toInput ? 'center' : 'flex-end' }"
         v-if="toInput"
       >
@@ -20,7 +20,7 @@
         <InputRecord />
       </div>
       <div
-        class="container_footer_nav"
+        class="container_footer_nav container_footer_nav-mic"
         :style="{ alignItems: toInput ? 'center' : 'flex-end' }"
         v-else
       >
@@ -97,7 +97,15 @@ export default {
   height: 90px;
   display: flex;
   text-align: center;
-  justify-content: space-around;
+
+  &-mic {
+    align-items: flex-end;
+    justify-content: space-around;
+  }
+  &-input {
+    align-items: center;
+    justify-content: flex-start;
+  }
 }
 .footer_nav_btn {
   border: 2px solid darken($color: $colorThird, $amount: 20%);
