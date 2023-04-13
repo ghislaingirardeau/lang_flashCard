@@ -31,24 +31,6 @@ export default {
         : cardsStore.cards.find((e) => e.id === parseInt(id));
     };
 
-    const doOnTap = (param) => {
-      // if TAP touch come from home
-      if (param.title)
-        return navigateTo(
-          localePath({
-            name: "card-id",
-            params: { id: param.title },
-          })
-        );
-      // if TAP touch come from route id
-      if (param.to) {
-        emit("onTapPlay", {
-          id: param.id,
-          to: param.to,
-        });
-      }
-    };
-
     const doOnClickDelete = (param, id) => {
       param
         ? cardsStore.removeCard(param, id)
@@ -60,9 +42,9 @@ export default {
       scrollEnd,
       scrollStartY,
       idCard,
-      doOnTap,
       doOnClickDelete,
       defineRoute,
+      localePath,
     };
   },
   methods: {
@@ -126,10 +108,30 @@ export default {
           return;
         }
         if (elementWithId.includes("card-")) {
-          // if no swipe but an id, click en the row
-          cardDetails = this.idCard(elementWithId.replace("card-", ""));
-          this.doOnTap(cardDetails);
-          return;
+          // if on home route
+          if (this.defineRoute) {
+            cardDetails = this.idCard(elementWithId.replace("card-", ""));
+            return navigateTo(
+              this.localePath({
+                name: "card-id",
+                params: { id: cardDetails.title },
+              })
+            );
+          } else {
+            // if on id route
+            let textToTranslate =
+              event.target.tagName === "DIV"
+                ? event.target.innerText
+                : event.target.parentNode.innerText;
+            // REMOVE SPAN PART FOR KM
+            // LOADER SPIN ON LEFT OR RIGHT DEPEND ON WHICH IS LOAD
+
+            this.$emit("onTapPlay", {
+              id: parseInt(elementWithId.replace("card-", "")),
+              textToTranslate,
+            });
+            return;
+          }
         }
       }
     },

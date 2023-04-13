@@ -14,7 +14,7 @@
           <GridMyCol
             :col="loader === item.id ? 5 : 6"
             style="word-break: break-all"
-            ><span>{{ item.to }} </span>
+            >{{ item.to }}
             <span class="block_swipe_card-text">{{
               langTo === "KM" ? useWordPronounce(item.to) : ""
             }}</span></GridMyCol
@@ -47,7 +47,7 @@ export default {
       // envoie en params le payload de childNode emit onTap + le loader créer
       loader.value = payload.id;
       const { play, error } = await usePlayTranslation(
-        payload.to,
+        payload.textToTranslate,
         cardsStore.languages.rate
       );
       if (play) {
