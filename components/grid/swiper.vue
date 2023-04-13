@@ -121,14 +121,22 @@ export default {
             // if on id route
             let textToTranslate =
               event.target.tagName === "DIV"
-                ? event.target.innerText
-                : event.target.parentNode.innerText;
-            // REMOVE SPAN PART FOR KM
-            // LOADER SPIN ON LEFT OR RIGHT DEPEND ON WHICH IS LOAD
+                ? event.target
+                : event.target.parentNode;
+
+            let side = textToTranslate.className.includes("text-left")
+              ? "left"
+              : "right";
+
+            const index = textToTranslate.innerText.indexOf("\n");
+            index === -1
+              ? (textToTranslate = textToTranslate.innerText)
+              : (textToTranslate = textToTranslate.innerText.slice(0, index));
 
             this.$emit("onTapPlay", {
               id: parseInt(elementWithId.replace("card-", "")),
               textToTranslate,
+              side,
             });
             return;
           }
