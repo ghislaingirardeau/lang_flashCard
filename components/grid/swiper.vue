@@ -1,10 +1,9 @@
 <template>
   <div
-    class="container-swipe"
+    class="container-swipe container-swipe-flex"
     @touchstart.prevent="startDrag"
     @touchend.prevent="endDrag"
     @touchmove.prevent="scrollElement"
-    :class="{ 'container-swipe-flex': defineRoute }"
   >
     <slot></slot>
   </div>
