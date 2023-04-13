@@ -108,7 +108,7 @@ export function useWordPronounce(text) {
       res.push(khmerRomanization[chars[i]]);
     }
   }
-  return res.toString();
+  return res.toString().replaceAll(",", "");
 }
 
 /* export function useTest(loader) {

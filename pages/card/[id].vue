@@ -8,18 +8,28 @@
           :idClass="item"
           append="mdi:trash-can-outline"
         >
-          <GridMyCol :col="loader === item.id ? 5 : 6">
+          <GridMyCol
+            :col="2"
+            v-if="loader === item.id && sideLoader === 'left'"
+          >
+            <TheLoader size="44px" />
+          </GridMyCol>
+          <GridMyCol :col="loader === item.id ? 5 : 6" class="text-left">
             {{ item.from }}
           </GridMyCol>
           <GridMyCol
             :col="loader === item.id ? 5 : 6"
+            class="text-right"
             style="word-break: break-all"
             >{{ item.to }}
             <span class="block_swipe_card-text">{{
               langTo === "KM" ? useWordPronounce(item.to) : ""
             }}</span></GridMyCol
           >
-          <GridMyCol :col="2" v-if="loader === item.id">
+          <GridMyCol
+            :col="2"
+            v-if="loader === item.id && sideLoader === 'right'"
+          >
             <TheLoader size="44px" />
           </GridMyCol>
         </GridMyRow>
@@ -34,6 +44,7 @@ export default {
     const route = useRoute();
     const cardsStore = useCardsStore();
     const loader = ref(0);
+    const sideLoader = ref(null);
 
     const langTo = computed(() => {
       return cardsStore.langTo;
@@ -46,6 +57,7 @@ export default {
     const playSound = async (payload) => {
       // envoie en params le payload de childNode emit onTap + le loader créer
       loader.value = payload.id;
+      sideLoader.value = payload.side;
       const { play, error } = await usePlayTranslation(
         payload.textToTranslate,
         cardsStore.languages.rate
@@ -64,6 +76,7 @@ export default {
       playSound,
       loader,
       langTo,
+      sideLoader,
     };
   },
 };
@@ -83,7 +96,9 @@ button {
   padding: 10px;
   transition: all 0.4s ease;
 }
-
+.text-left {
+  border-right: 1px dashed $colorThird;
+}
 .loader {
   display: inline-block;
   width: 30px;
