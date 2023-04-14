@@ -24,6 +24,9 @@ export default {
 .my-col-12 {
   width: 100%;
 }
+.my-col-10 {
+  width: 83.33%;
+}
 .my-col-8 {
   width: 66.66%;
 }

@@ -7,7 +7,7 @@
     <slot></slot>
     <div
       :id="`swipe-${idClass.id}`"
-      class="block_swipe_card my-col-2 hide"
+      class="block_swipe_card hide"
       :class="{
         'block_swipe_card-hide-bis': defineRoute,
         'block_swipe_card-hide': !defineRoute,
@@ -79,12 +79,16 @@ export default {
       border-left: 2px solid $colorFith;
       background-color: $colorPrimary;
       border-radius: 70% 0% 0% 40%;
+      width: 16.66%;
       & > svg {
         color: $colorFourth;
       }
     }
     &-hide-bis {
       height: 50px;
+      width: 25%;
+      overflow: hidden;
+      /* transform: translateX(-5px) rotateZ(90deg); */
       & > svg {
         color: $colorPrimary;
       }
@@ -95,8 +99,11 @@ export default {
   }
 }
 .hide {
-  width: 0%;
-  overflow: hidden;
+  width: 0px;
   opacity: 0;
+  padding: 0px;
+  border: 0px;
+  overflow: hidden;
+  /* transform: translateX(-10px) rotateZ(0deg); */
 }
 </style>
