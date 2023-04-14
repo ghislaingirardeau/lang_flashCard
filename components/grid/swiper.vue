@@ -14,12 +14,12 @@ export default {
   setup(props, { emit }) {
     const scrollStartX = ref(null);
     const scrollStartY = ref(0);
-    const scrollEnd = ref(0);
+    const scrollEndY = ref(0);
     const cardsStore = useCardsStore();
     const localePath = useLocalePath();
     const route = useRoute();
 
-    const defineRoute = computed(() => {
+    const onRouteHome = computed(() => {
       return route.params.id ? false : true;
     });
 
@@ -37,13 +37,17 @@ export default {
         : cardsStore.removeItem(route.params.id, id);
     };
 
+    onMounted(() => {
+      useScrollTo();
+    });
+
     return {
       scrollStartX,
-      scrollEnd,
+      scrollEndY,
       scrollStartY,
       idCard,
       doOnClickDelete,
-      defineRoute,
+      onRouteHome,
       localePath,
     };
   },
@@ -57,48 +61,25 @@ export default {
       const defineTouchY = event.changedTouches[0].clientY - this.scrollStartY;
 
       // get id to find the elements
-      const findUpEltId = (el) => {
-        if (el.id) return el.id;
-        while (el) {
-          el = el.parentNode;
-          if (el.id) return el.id;
+      let elementWithId = useFindEltId(event.target);
+      // set scrollendY = so when swipe again, it start from where it ended
+      // stop counting when the scroll is over the main container
+      if (defineTouchX > -50 && defineTouchX < 50) {
+        let newScroll =
+          this.scrollEndY +
+          (event.changedTouches[0].clientY - this.scrollStartY);
+        if (newScroll < 0) {
+          this.scrollEndY = 0;
+        } else if (newScroll > useGetMainHeightScroll(this.onRouteHome)) {
+          this.scrollEndY = useGetMainHeightScroll(this.onRouteHome);
+        } else {
+          this.scrollEndY = newScroll;
         }
-        return null;
-      };
-      let elementWithId = findUpEltId(event.target);
-
-      // set scrollend = so when swipe again, it start from where it ended
-      let newScroll =
-        this.scrollEnd + (event.changedTouches[0].clientY - this.scrollStartY);
-      if (newScroll < 0) {
-        this.scrollEnd = 0;
-      } else if (
-        newScroll > document.querySelector(".container-swipe").clientHeight
-      ) {
-        this.scrollEnd =
-          document.querySelector(".container-swipe").clientHeight;
-      } else {
-        this.scrollEnd = newScroll;
-      }
-
-      // si tu scroll sur un coté : hide or unhide the delete option
-      if (defineTouchX > 50 && (defineTouchY > -50 || defineTouchY < 50)) {
-        document
-          .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
-          ?.classList.add("hide");
-        return;
-      }
-      if (defineTouchX < -50 && (defineTouchY > -50 || defineTouchY < 50)) {
-        document
-          .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
-          ?.classList.remove("hide");
-        return;
       }
 
       // on touch TAP
       if (defineTouchY === 0 && defineTouchX === 0) {
         // get the first parent with an id
-
         let cardDetails;
 
         if (elementWithId.includes("swipe-")) {
@@ -109,7 +90,7 @@ export default {
         }
         if (elementWithId.includes("card-")) {
           // if on home route
-          if (this.defineRoute) {
+          if (this.onRouteHome) {
             cardDetails = this.idCard(elementWithId.replace("card-", ""));
             return navigateTo(
               this.localePath({
@@ -147,13 +128,32 @@ export default {
       const defineTouchY = event.changedTouches[0].clientY - this.scrollStartY;
       const defineTouchX = event.changedTouches[0].clientX - this.scrollStartX;
       // if scrollY long enough detected
+
+      let elementWithId = useFindEltId(event.target);
+
+      // si tu scroll sur un coté : hide or unhide the delete option et tu arretes la fonction
+      if (defineTouchX > 50) {
+        document
+          .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
+          ?.classList.add("hide");
+        return;
+      }
+      if (defineTouchX < -50) {
+        document
+          .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
+          ?.classList.remove("hide");
+        return;
+      }
+
+      // scroll vertical
       if (
         (defineTouchY < -10 || defineTouchY > 10) &&
         (defineTouchX > -50 || defineTouchX < 50)
       ) {
         document.querySelector(".el-main").scroll(
           0,
-          this.scrollEnd + (event.changedTouches[0].clientY - this.scrollStartY) // position it ended + dynamic scroll - depart position of the scroll
+          this.scrollEndY +
+            (event.changedTouches[0].clientY - this.scrollStartY) // position it ended + dynamic scroll - depart position of the scroll
         );
       }
     },

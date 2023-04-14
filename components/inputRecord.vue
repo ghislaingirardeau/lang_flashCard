@@ -41,6 +41,7 @@ export default {
           to: text,
           pronouce: "xxx",
         });
+        useScrollTo();
       } else {
         alert("Error from API", error);
       }
