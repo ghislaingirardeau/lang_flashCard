@@ -108,20 +108,6 @@ export default {
     });
 
     const switchLang = (e) => {
-      const eltToAnim = document.querySelector(".footer_container-home");
-      const textToFade = eltToAnim.querySelectorAll("p");
-      const iconToFade = eltToAnim.querySelector("svg");
-      iconToFade.classList.add("footer-icons-animate");
-      textToFade.forEach((element) => {
-        element.classList.add("footer-text-animate");
-      });
-
-      setTimeout(() => {
-        iconToFade.classList.remove("footer-icons-animate");
-        textToFade.forEach((element) => {
-          element.classList.remove("footer-text-animate");
-        });
-      }, 700);
       let to = settings.value.to;
       let from = settings.value.from;
 
@@ -129,6 +115,31 @@ export default {
       settings.value.to = from;
 
       registerSettings(true);
+
+      const eltToAnim = document.querySelector(".footer_container-home");
+      const textToFade = eltToAnim.querySelectorAll("p");
+      const iconToFade = eltToAnim.querySelector("svg");
+
+      i18n.onLanguageSwitched = (oldLocale, newLocale) => {
+        iconToFade.classList.add("footer-icons-animate");
+        textToFade.forEach((element) => {
+          element.classList.add("footer-text-animate");
+        });
+      };
+
+      /* setTimeout(() => {
+        iconToFade.classList.add("footer-icons-animate");
+        textToFade.forEach((element) => {
+          element.classList.add("footer-text-animate");
+        });
+      }, 300); */
+
+      setTimeout(() => {
+        iconToFade.classList.remove("footer-icons-animate");
+        textToFade.forEach((element) => {
+          element.classList.remove("footer-text-animate");
+        });
+      }, 1000);
     };
 
     const registerSettings = (payload) => {
