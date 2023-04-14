@@ -38,7 +38,7 @@ export default {
     };
 
     onMounted(() => {
-      useScrollTo();
+      useScrollTo("auto");
     });
 
     return {

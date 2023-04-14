@@ -13,7 +13,7 @@
           <Icon
             name="mdi:microphone"
             size="44px"
-            color="#000814"
+            color="#0b132b"
             class="rotate-icon"
           />
         </div>
@@ -31,7 +31,7 @@
           <Icon
             name="material-symbols:keyboard-alt-outline"
             size="44px"
-            color="#000814"
+            color="#0b132b"
             class="rotate-icon"
           />
         </div>
@@ -41,12 +41,12 @@
           class="footer_nav_btn footer_nav_btn-radius-right"
           @click="playAllSound"
         >
-          <TheLoader v-if="loader === 1" size="44px" color="#000814" />
+          <TheLoader v-if="loader === 1" size="44px" />
           <Icon
             v-else
             name="mdi:play-outline"
             size="54px"
-            color="#000814"
+            color="#0b132b"
             class="rotate-icon"
           />
         </div>

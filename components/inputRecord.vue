@@ -41,7 +41,7 @@ export default {
           to: text,
           pronouce: "xxx",
         });
-        useScrollTo();
+        useScrollTo("smooth");
       } else {
         alert("Error from API", error);
       }
@@ -69,11 +69,5 @@ export default {
   & > div {
     margin-right: 10px;
   }
-}
-.loader {
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  background-color: transparent;
 }
 </style>

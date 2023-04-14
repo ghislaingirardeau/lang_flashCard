@@ -1,8 +1,8 @@
-export function useScrollTo() {
+export function useScrollTo(behave) {
   document.querySelector(".el-main").scroll({
     top: 0,
     left: 0,
-    behavior: "smooth",
+    behavior: behave,
   });
 }
 

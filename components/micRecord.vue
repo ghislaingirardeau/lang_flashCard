@@ -1,12 +1,13 @@
 <template>
   <div class="mic-block">
-    <TheLoader v-if="loading" size="80px" color="#ffa200fd" />
+    <TheLoader v-if="loading" size="80px" />
     <div v-else class="mic-circle">
       <Icon
         @touchstart.prevent="startDrag"
         @touchend.prevent="endDrag"
         name="mdi:microphone"
         size="84px"
+        class="icon_mic-color"
       />
     </div>
   </div>
@@ -79,6 +80,7 @@ export default {
             to: text,
             pronouce: "xxx",
           });
+          useScrollTo("smooth");
         } else {
           alert("Error from API", error);
         }
@@ -121,9 +123,7 @@ export default {
   z-index: 10 !important;
   border: 2px solid darken($color: $colorThird, $amount: 20%);
 }
-svg {
-  color: $colorSecondary;
-}
+
 .mic-circle::after {
   content: "";
   position: absolute;
@@ -134,10 +134,7 @@ svg {
   z-index: -1;
   border-radius: 50%;
 }
-.loader {
-  display: inline-block;
-  width: 90px;
-  height: 90px;
-  background-color: $colorFith;
+.icon_mic-color {
+  color: $colorSecondary;
 }
 </style>

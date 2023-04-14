@@ -86,24 +86,9 @@ export default {
 button {
   padding: 10px;
 }
-.el-row {
-  align-items: center;
-  border-bottom: 2px solid $colorThird;
-  width: 100%;
-}
-.el-col {
-  text-align: center;
-  padding: 10px;
-  transition: all 0.4s ease;
-}
+
 .text-left {
   border-right: 1px dashed $colorThird;
-}
-.loader {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  background-color: $colorThird;
 }
 .id_container {
   height: 100%;
