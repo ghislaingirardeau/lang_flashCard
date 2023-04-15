@@ -136,12 +136,22 @@ export default {
         document
           .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
           ?.classList.add("hide");
+        this.onRouteHome
+          ? document
+              .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
+              ?.firstChild?.classList.remove("anim-delete-leave")
+          : null;
         return;
       }
       if (defineTouchX < -50) {
         document
           .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
           ?.classList.remove("hide");
+        this.onRouteHome
+          ? document
+              .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
+              ?.firstChild?.classList.add("anim-delete-leave")
+          : null;
         return;
       }
 

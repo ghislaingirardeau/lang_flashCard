@@ -2,18 +2,22 @@
   <div
     class="block_swipe"
     :id="`card-${idClass.id}`"
-    :class="[defineRoute ? 'block_swipe_home' : 'block_swipe_id']"
+    :class="[onRouteHome ? 'block_swipe_home' : 'block_swipe_id']"
   >
     <slot></slot>
     <div
       :id="`swipe-${idClass.id}`"
       class="block_swipe_card hide"
       :class="{
-        'block_swipe_card-hide-bis': defineRoute,
-        'block_swipe_card-hide': !defineRoute,
+        'block_swipe_card-hide-bis': onRouteHome,
+        'block_swipe_card-hide': !onRouteHome,
       }"
     >
-      <Icon :name="`${append}`" size="34px" />
+      <Icon
+        :name="`${append}`"
+        size="34px"
+        :class="{ 'anim-delete-enter': onRouteHome }"
+      />
     </div>
   </div>
 </template>
@@ -32,10 +36,10 @@ export default {
   },
   setup(props) {
     const route = useRoute();
-    const defineRoute = computed(() => {
+    const onRouteHome = computed(() => {
       return route.params.id ? false : true;
     });
-    return { defineRoute };
+    return { onRouteHome };
   },
 };
 </script>
@@ -85,10 +89,8 @@ export default {
       }
     }
     &-hide-bis {
-      height: 50px;
       width: 25%;
       overflow: hidden;
-      /* transform: translateX(-5px) rotateZ(90deg); */
       & > svg {
         color: $colorPrimary;
       }
@@ -104,6 +106,14 @@ export default {
   padding: 0px;
   border: 0px;
   overflow: hidden;
-  /* transform: translateX(-10px) rotateZ(0deg); */
+}
+.anim-delete-enter {
+  opacity: 0;
+  transform: rotateZ(0deg);
+  transition: all 0.5s;
+}
+.anim-delete-leave {
+  opacity: 1;
+  transform: rotateZ(-90deg);
 }
 </style>
