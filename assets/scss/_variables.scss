@@ -22,13 +22,13 @@ svg {
 .slide-move,
 .slide-enter-active,
 .slide-leave-active {
-  transition: all 0.4s ease;
+  transition: all 0.6s ease;
 }
 
 .slide-enter-from,
 .slide-leave-to {
   opacity: 0;
-  transform: translateX(-40px);
+  transform: translate(-40px, 0);
 }
 .slide-leave-active {
   position: absolute;

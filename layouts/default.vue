@@ -253,12 +253,10 @@ export default {
   transform: translateY(-5px) rotateZ(90deg);
   margin-inline: 10px 10px;
   &-animate {
-    animation: rotate-switcher 0.7s ease both;
+    animation: rotate-switcher 1s ease both;
   }
 }
-/* .footer-text-animate {
-  animation: fade-on-switcher 0.7s ease both 1;
-} */
+
 @keyframes rotate-switcher {
   0% {
     transform: translateY(-5px) rotateZ(90deg);
@@ -266,12 +264,6 @@ export default {
   }
   100% {
     transform: translateY(-5px) rotateZ(270deg);
-  }
-}
-@keyframes fade-on-switcher {
-  0% {
-    opacity: 0;
-    transform: translateY(0px);
   }
 }
 

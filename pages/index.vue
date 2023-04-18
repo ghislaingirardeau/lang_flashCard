@@ -13,7 +13,7 @@
 
     <div class="cards_block">
       <GridSwiper>
-        <TransitionGroup name="slide">
+        <TransitionGroup name="slide" @before-leave="useBeforeLeave">
           <GridMyRow
             v-for="card in loadCards"
             :key="card.id"
@@ -131,6 +131,7 @@ export default {
 <style lang="scss" scoped>
 .home_container {
   height: 100%;
+  position: relative;
 }
 .el-row {
   padding: 10px;
