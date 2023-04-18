@@ -103,6 +103,9 @@ export default {
           } else {
             // if on id route
             // common with row click
+            document
+              .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
+              ?.classList.add("hide");
             this.useTextToPlay(
               event,
               parseInt(elementWithId.replace("card-", "")),
@@ -122,6 +125,7 @@ export default {
 
       // si tu scroll sur un coté : hide or unhide the delete option et tu arretes la fonction
       if (defineTouchX > 50) {
+        console.log("hide");
         document
           .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
           ?.classList.add("hide");
@@ -133,6 +137,7 @@ export default {
         return;
       }
       if (defineTouchX < -50) {
+        console.log("show");
         document
           .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
           ?.classList.remove("hide");
