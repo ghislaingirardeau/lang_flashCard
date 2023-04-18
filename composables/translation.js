@@ -110,11 +110,3 @@ export function useWordPronounce(text) {
   }
   return res.toString().replaceAll(",", "");
 }
-
-/* export function useTest(loader) {
-  // ref has to be imported
-  loader.value = 1;
-  setTimeout(() => {
-    loader.value = 0;
-  }, 1000);
-} */

@@ -1,7 +1,7 @@
 export default {
   footer: {
     title: "Créer par",
-    translate: "Text à traduire",
+    translate: "Texte à traduire",
   },
   home: {
     newCard: "Nouvelle carte",

@@ -127,6 +127,7 @@ export default {
   }
 }
 .rotate-icon {
+  cursor: pointer;
   animation: rotate-enter 0.4s both 1;
 }
 .rotate-icon-animate {

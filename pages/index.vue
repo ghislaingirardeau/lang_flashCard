@@ -1,6 +1,6 @@
 <template>
   <div class="home_container">
-    <el-row @touchstart="openModal" class="newCard_block">
+    <el-row @click="openModal" class="newCard_block">
       <el-col :span="12">
         <Icon name="mdi:plus-box-outline" size="34px"
       /></el-col>
@@ -145,6 +145,7 @@ export default {
   position: fixed;
   background-color: $colorFourth;
   z-index: 10;
+  cursor: pointer;
   &-text {
     color: $colorThird;
   }

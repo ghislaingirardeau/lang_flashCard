@@ -247,9 +247,11 @@ export default {
 }
 .header-icons {
   position: absolute;
+  cursor: pointer;
   right: 20px;
 }
 .footer-icons {
+  cursor: pointer;
   transform: translateY(-5px) rotateZ(90deg);
   margin-inline: 10px 10px;
   &-animate {

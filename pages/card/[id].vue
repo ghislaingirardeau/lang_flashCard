@@ -7,6 +7,7 @@
           :key="item.id"
           :idClass="item"
           append="mdi:trash-can-outline"
+          @onTapPlay="playSound"
         >
           <GridMyCol
             :col="2"

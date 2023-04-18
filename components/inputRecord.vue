@@ -13,6 +13,7 @@
         @click="translate"
         name="mdi:check-underline-circle-outline"
         size="44px"
+        class="valid-text-icon"
       />
     </div>
   </div>
@@ -69,5 +70,8 @@ export default {
   & > div {
     margin-right: 10px;
   }
+}
+.valid-text-icon {
+  cursor: pointer;
 }
 </style>

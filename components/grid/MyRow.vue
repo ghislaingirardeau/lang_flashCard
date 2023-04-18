@@ -3,6 +3,7 @@
     class="block_swipe"
     :id="`card-${idClass.id}`"
     :class="[onRouteHome ? 'block_swipe_home' : 'block_swipe_id']"
+    @click="onCardClick"
   >
     <slot></slot>
     <div
@@ -34,12 +35,26 @@ export default {
       type: String,
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const route = useRoute();
+    const localePath = useLocalePath();
     const onRouteHome = computed(() => {
       return route.params.id ? false : true;
     });
-    return { onRouteHome };
+    const onCardClick = (event) => {
+      if (onRouteHome.value) {
+        return navigateTo(
+          localePath({
+            name: "card-id",
+            params: { id: props.idClass.title },
+          })
+        );
+      } else {
+        // common with swiper touch
+        useTextToPlay(event, props.idClass.id, emit);
+      }
+    };
+    return { onRouteHome, onCardClick };
   },
 };
 </script>
@@ -72,6 +87,7 @@ export default {
   &_card {
     display: flex;
     flex-direction: column;
+    cursor: pointer;
     align-items: center;
     justify-content: center;
     min-height: 60px;
