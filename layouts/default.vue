@@ -81,7 +81,6 @@ export default {
     const cardsStore = useCardsStore();
     const dialogSettings = ref(false);
     const { height } = useWindowSize();
-    const router = useRouter();
     const switchLocalePath = useSwitchLocalePath();
     const i18n = useI18n();
 
@@ -216,7 +215,7 @@ export default {
   }
 }
 .main-container {
-  height: 70%;
+  height: 50%;
 }
 .el-main {
   padding: 0px;

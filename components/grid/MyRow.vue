@@ -37,6 +37,8 @@ export default {
   },
   setup(props, { emit }) {
     const route = useRoute();
+    /* const { width } = useWindowSize();
+    console.log(width); */
     const localePath = useLocalePath();
     const onRouteHome = computed(() => {
       return route.params.id ? false : true;
