@@ -1,40 +1,5 @@
-@import "./colors";
-@import "./elComponent";
+@import url("https://fonts.googleapis.com/css2?family=Delicious+Handrawn&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alkatra&display=swap");
 
-a {
-  text-decoration: none;
-  color: $colorPrimary;
-}
-
-body {
-  background-color: $colorSecondary;
-  color: $colorPrimary;
-  font-family: $fontPrimary;
-  margin: 0px;
-}
-#app_container {
-  background-color: $colorFith;
-}
-
-h2 {
-  margin: 0px;
-  font-size: 1.2em;
-}
-svg {
-  color: $colorThird;
-}
-
-.slide-move,
-.slide-enter-active,
-.slide-leave-active {
-  transition: all 0.6s ease;
-}
-
-.slide-enter-from,
-.slide-leave-to {
-  opacity: 0;
-  transform: translate(-40px, 0);
-}
-.slide-leave-active {
-  position: absolute;
-}
+$fontPrimary: "Alkatra", cursive;
+$fontSecondary: "Delicious Handrawn", cursive;

@@ -1,0 +1,27 @@
+@import "./variables";
+@import "./colors";
+@import "./transition";
+@import "./elComponent";
+
+a {
+  text-decoration: none;
+  color: $colorPrimary;
+}
+
+body {
+  background-color: $colorSecondary;
+  color: $colorPrimary;
+  font-family: $fontPrimary;
+  margin: 0px;
+}
+#app_container {
+  background-color: $colorFith;
+}
+
+h2 {
+  margin: 0px;
+  font-size: 1.2em;
+}
+svg {
+  color: $colorThird;
+}
