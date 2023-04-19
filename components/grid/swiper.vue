@@ -125,27 +125,22 @@ export default {
 
       // si tu scroll sur un coté : hide or unhide the delete option et tu arretes la fonction
       if (defineTouchX > 50) {
-        console.log("hide");
-        document
-          .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
-          ?.classList.add("hide");
-        this.onRouteHome
-          ? document
-              .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
-              ?.firstChild?.classList.remove("anim-delete-leave")
-          : null;
+        useAnimDeleteIcon(
+          elementWithId.replace("card-", ""),
+          this.onRouteHome,
+          "add",
+          "remove"
+        );
         return;
       }
       if (defineTouchX < -50) {
         console.log("show");
-        document
-          .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
-          ?.classList.remove("hide");
-        this.onRouteHome
-          ? document
-              .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
-              ?.firstChild?.classList.add("anim-delete-leave")
-          : null;
+        useAnimDeleteIcon(
+          elementWithId.replace("card-", ""),
+          this.onRouteHome,
+          "remove",
+          "add"
+        );
         return;
       }
 
