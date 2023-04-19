@@ -13,7 +13,7 @@
             :col="2"
             v-if="loader === item.id && sideLoader === 'left'"
           >
-            <TheLoader size="44px" />
+            <LazyTheLoader size="44px" />
           </GridMyCol>
           <GridMyCol :col="loader === item.id ? 5 : 6" class="text-left">
             {{ item.from }}
@@ -31,7 +31,7 @@
             :col="2"
             v-if="loader === item.id && sideLoader === 'right'"
           >
-            <TheLoader size="44px" />
+            <LazyTheLoader size="44px" />
           </GridMyCol>
         </GridMyRow>
       </TransitionGroup>

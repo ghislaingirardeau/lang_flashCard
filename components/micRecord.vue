@@ -1,6 +1,6 @@
 <template>
   <div class="mic-block">
-    <TheLoader v-if="loading" size="80px" />
+    <LazyTheLoader v-if="loading" size="80px" />
     <div v-else class="mic-circle">
       <Icon
         @touchstart.prevent="startDrag"

@@ -1,6 +1,6 @@
 <template>
   <div class="input-container">
-    <TheLoader v-if="loading" size="48px" />
+    <LazyTheLoader v-if="loading" size="48px" />
     <div class="input-block" v-else>
       <el-input
         v-model="TextToTranslate"

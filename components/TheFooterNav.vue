@@ -41,7 +41,7 @@
           class="footer_nav_btn footer_nav_btn-radius-right"
           @click="playAllSound"
         >
-          <TheLoader v-if="loader === 1" size="44px" />
+          <LazyTheLoader v-if="loader === 1" size="44px" />
           <Icon
             v-else
             name="mdi:play-outline"
