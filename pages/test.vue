@@ -1,26 +1,54 @@
 <template>
-  <GridSwiper>
-    <GridMyRow v-for="card in loadCards" :key="card.id" :idClass="card">
-      <GridMyCol :col="6">
-        {{ card.title }}
-      </GridMyCol>
-      <GridMyCol :col="6"> {{ $t("home.translation") }}</GridMyCol>
-    </GridMyRow>
-  </GridSwiper>
+  <div>
+    <div>test page</div>
+    <Icon
+      name="mdi:arrow-left-drop-circle-outline"
+      size="34px"
+      @click="backBtn"
+      class="header-icons"
+    />
+    <button @click="doError">create error</button>
+    <h2>{{ mic }}</h2>
+    <div class="mic-circle">
+      <Icon
+        @touchstart.prevent="startDrag"
+        @touchend.prevent="endDrag"
+        name="mdi:microphone"
+        size="84px"
+        class="icon_mic-color"
+      />
+    </div>
+  </div>
 </template>
 
-<script>
-export default {
-  setup(props) {
-    const cardsStore = useCardsStore();
-
-    const loadCards = computed(() => {
-      return cardsStore.cards;
-    });
-
-    return { loadCards };
-  },
+<script setup>
+definePageMeta({
+  layout: "test-layout",
+});
+const doError = () => {
+  throw createError({
+    statusCode: 404,
+    statusMessage: "Page Not Found",
+    fatal: true,
+  });
+};
+const localePath = useLocalePath();
+const backBtn = () => {
+  navigateTo(
+    localePath({
+      name: "index",
+    })
+  );
+};
+const mic = ref(false);
+const startDrag = (e) => {
+  console.log("start");
+  mic.value = true;
+};
+const endDrag = (e) => {
+  console.log("end");
+  mic.value = false;
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped></style>

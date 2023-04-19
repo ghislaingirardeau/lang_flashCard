@@ -11,7 +11,7 @@
             }}
           </h1>
         </Transition>
-        <!-- <nuxt-link :to="localePath('test')">test</nuxt-link> -->
+        <nuxt-link :to="localePath('test')">test</nuxt-link>
         <Transition name="fade" mode="out-in">
           <Icon
             v-if="$route.params.id"
@@ -79,6 +79,7 @@
 export default {
   setup() {
     const cardsStore = useCardsStore();
+    /* const device = useDeviceInfo(); */
     const dialogSettings = ref(false);
     const { height } = useWindowSize();
     const switchLocalePath = useSwitchLocalePath();
@@ -87,6 +88,7 @@ export default {
     const settings = ref({});
 
     onBeforeMount(async () => {
+      /* await device.nuxtServerInit(); */
       await cardsStore.nuxtServerInit();
       settings.value = { ...cardsStore.languages };
       // check if app load on the right lang set
