@@ -4,6 +4,8 @@
     :id="`card-${idClass.id}`"
     :class="[onRouteHome ? 'block_swipe_home' : 'block_swipe_id']"
     @click="onCardClick"
+    @mouseover="onCardHover(true)"
+    @mouseleave="onCardHover(false)"
   >
     <slot></slot>
     <div
@@ -37,26 +39,45 @@ export default {
   },
   setup(props, { emit }) {
     const route = useRoute();
-    /* const { width } = useWindowSize();
-    console.log(width); */
     const localePath = useLocalePath();
+    const cardsStore = useCardsStore();
     const onRouteHome = computed(() => {
       return route.params.id ? false : true;
     });
     const onCardClick = (event) => {
+      let elementWithId = useFindEltId(event.target);
       if (onRouteHome.value) {
-        return navigateTo(
-          localePath({
-            name: "card-id",
-            params: { id: props.idClass.title },
-          })
-        );
+        return elementWithId.includes("swipe-")
+          ? cardsStore.removeCard(props.idClass.title, props.idClass.id)
+          : navigateTo(
+              localePath({
+                name: "card-id",
+                params: { id: props.idClass.title },
+              })
+            );
       } else {
         // common with swiper touch
-        useTextToPlay(event, props.idClass.id, emit);
+        return elementWithId.includes("swipe-")
+          ? cardsStore.removeItem(route.params.id, props.idClass.id)
+          : useTextToPlay(event, props.idClass.id, emit);
       }
     };
-    return { onRouteHome, onCardClick };
+    const onCardHover = (param) => {
+      param
+        ? useAnimDeleteIcon(
+            props.idClass.id,
+            onRouteHome.value,
+            "remove",
+            "add"
+          )
+        : useAnimDeleteIcon(
+            props.idClass.id,
+            onRouteHome.value,
+            "add",
+            "remove"
+          );
+    };
+    return { onRouteHome, onCardClick, onCardHover };
   },
 };
 </script>
