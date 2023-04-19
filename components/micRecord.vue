@@ -5,6 +5,8 @@
       <Icon
         @touchstart.prevent="startDrag"
         @touchend.prevent="endDrag"
+        @mousedown="startDrag"
+        @mouseup="endDrag"
         name="mdi:microphone"
         size="84px"
         class="icon_mic-color"
