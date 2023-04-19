@@ -7,10 +7,15 @@ a {
 }
 
 body {
-  background-color: $colorFith;
+  background-color: $colorSecondary;
   color: $colorPrimary;
   font-family: $fontPrimary;
+  margin: 0px;
 }
+#app_container {
+  background-color: $colorFith;
+}
+
 h2 {
   margin: 0px;
   font-size: 1.2em;

@@ -3,6 +3,7 @@
     class="block_swipe"
     :id="`card-${idClass.id}`"
     :class="[onRouteHome ? 'block_swipe_home' : 'block_swipe_id']"
+    :style="{ width: rowWidth }"
     @click="onCardClick"
     @mouseover="onCardHover(true)"
     @mouseleave="onCardHover(false)"
@@ -41,9 +42,21 @@ export default {
     const route = useRoute();
     const localePath = useLocalePath();
     const cardsStore = useCardsStore();
+    const breakpoints = useBreakpoints({
+      lg: 800,
+    });
     const onRouteHome = computed(() => {
       return route.params.id ? false : true;
     });
+
+    const rowWidth = computed(() => {
+      if (onRouteHome.value) {
+        return breakpoints.smallerOrEqual("lg").value ? "45%" : "30%";
+      } else {
+        return breakpoints.smallerOrEqual("lg").value ? "95%" : "45%";
+      }
+    });
+    console.log(rowWidth.value);
     const onCardClick = (event) => {
       let elementWithId = useFindEltId(event.target);
       if (onRouteHome.value) {
@@ -77,7 +90,8 @@ export default {
             "remove"
           );
     };
-    return { onRouteHome, onCardClick, onCardHover };
+
+    return { onRouteHome, onCardClick, onCardHover, rowWidth };
   },
 };
 </script>
@@ -90,7 +104,6 @@ export default {
   border-bottom: 1px solid white;
   &_home {
     margin: 10px 5px;
-    width: 45%;
     background-color: $colorFourth;
     border: 1px solid rgba($colorThird, 0.6);
     border-radius: 20px 10px;
@@ -100,7 +113,6 @@ export default {
   }
   &_id {
     margin: 8px 5px;
-    width: 95%;
     background-color: $colorFourth;
     border-radius: 5px 0px 0px 10px;
     box-shadow: rgba($colorThird, 0.2) 0px 0px 0px 2px,

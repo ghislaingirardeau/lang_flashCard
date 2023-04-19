@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app_container">
     <VitePwaManifest />
     <!-- DEFINE LAYOUT = if pass name, available for all page -->
     <!-- OPT 1 <NuxtLayout name="default"> -->
@@ -11,12 +11,19 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const breakpoints = useBreakpoints({
+  xl: 1280,
+});
+onMounted(() => {
+  const styleBody = document.querySelector("#app_container").style;
+  breakpoints.smallerOrEqual("xl").value
+    ? (styleBody.marginInline = "0px")
+    : (styleBody.marginInline = "300px");
+});
+</script>
 
 <style lang="scss">
-body {
-  margin: 0px;
-}
 .page-enter-active,
 .page-leave-active {
   transition: all 0.4s;

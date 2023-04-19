@@ -142,7 +142,7 @@ export default {
   width: 100%;
 }
 .newCard_block {
-  position: fixed;
+  position: sticky;
   background-color: $colorFourth;
   z-index: 10;
   cursor: pointer;
@@ -160,7 +160,6 @@ export default {
   }
 }
 .cards_block {
-  padding-top: 65px;
   z-index: 1;
 }
 </style>
