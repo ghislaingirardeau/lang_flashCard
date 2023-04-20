@@ -44,6 +44,7 @@ export default defineNuxtConfig({
     "@vite-pwa/nuxt",
     "@element-plus/nuxt",
     "nuxt-simple-sitemap",
+    "@nuxtjs/robots",
     "@nuxtjs/i18n",
     [
       "@pinia/nuxt",
