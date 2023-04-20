@@ -10,10 +10,9 @@
 </template>
 
 <script>
-import { useTextToPlay } from "@/composables/speech";
 export default {
   setup(props, { emit }) {
-    const scrollStartX = ref(null);
+    const scrollStartX = ref(0);
     const scrollStartY = ref(0);
     const scrollEndY = ref(0);
     const cardsStore = useCardsStore();
@@ -38,29 +37,13 @@ export default {
         : cardsStore.removeItem(route.params.id, id);
     };
 
-    onMounted(() => {
-      useScrollTo("auto");
-    });
-
-    return {
-      scrollStartX,
-      scrollEndY,
-      scrollStartY,
-      idCard,
-      doOnClickDelete,
-      onRouteHome,
-      localePath,
-      useTextToPlay,
+    const startDrag = (event) => {
+      scrollStartX.value = event.changedTouches[0].clientX;
+      scrollStartY.value = event.changedTouches[0].clientY;
     };
-  },
-  methods: {
-    startDrag(event) {
-      this.scrollStartX = event.changedTouches[0].clientX;
-      this.scrollStartY = event.changedTouches[0].clientY;
-    },
-    endDrag(event) {
-      const defineTouchX = event.changedTouches[0].clientX - this.scrollStartX;
-      const defineTouchY = event.changedTouches[0].clientY - this.scrollStartY;
+    const endDrag = (event) => {
+      const defineTouchX = event.changedTouches[0].clientX - scrollStartX.value;
+      const defineTouchY = event.changedTouches[0].clientY - scrollStartY.value;
 
       // get id to find the elements
       let elementWithId = useFindEltId(event.target);
@@ -68,14 +51,14 @@ export default {
       // stop counting when the scroll is over the main container
       if (defineTouchX > -50 && defineTouchX < 50) {
         let newScroll =
-          this.scrollEndY +
-          (event.changedTouches[0].clientY - this.scrollStartY);
+          scrollEndY.value +
+          (event.changedTouches[0].clientY - scrollStartY.value);
         if (newScroll < 0) {
-          this.scrollEndY = 0;
-        } else if (newScroll > useGetMainHeightScroll(this.onRouteHome)) {
-          this.scrollEndY = useGetMainHeightScroll(this.onRouteHome);
+          scrollEndY.value = 0;
+        } else if (newScroll > useGetMainHeightScroll(onRouteHome.value)) {
+          scrollEndY.value = useGetMainHeightScroll(onRouteHome.value);
         } else {
-          this.scrollEndY = newScroll;
+          scrollEndY.value = newScroll;
         }
       }
 
@@ -86,16 +69,16 @@ export default {
 
         if (elementWithId.includes("swipe-")) {
           // if id includes swipe = so it's a click on delete block
-          cardDetails = this.idCard(elementWithId.replace("swipe-", ""));
-          this.doOnClickDelete(cardDetails.title, cardDetails.id);
+          cardDetails = idCard(elementWithId.replace("swipe-", ""));
+          doOnClickDelete(cardDetails.title, cardDetails.id);
           return;
         }
         if (elementWithId.includes("card-")) {
           // if on home route
-          if (this.onRouteHome) {
-            cardDetails = this.idCard(elementWithId.replace("card-", ""));
+          if (onRouteHome.value) {
+            cardDetails = idCard(elementWithId.replace("card-", ""));
             return navigateTo(
-              this.localePath({
+              localePath({
                 name: "card-id",
                 params: { id: cardDetails.title },
               })
@@ -106,19 +89,20 @@ export default {
             document
               .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
               ?.classList.add("hide");
-            this.useTextToPlay(
+            useTextToPlay(
               event,
               parseInt(elementWithId.replace("card-", "")),
-              this.$emit
+              emit
             );
             return;
           }
         }
       }
-    },
-    scrollElement(event) {
-      const defineTouchY = event.changedTouches[0].clientY - this.scrollStartY;
-      const defineTouchX = event.changedTouches[0].clientX - this.scrollStartX;
+    };
+
+    const scrollElement = (event) => {
+      const defineTouchY = event.changedTouches[0].clientY - scrollStartY.value;
+      const defineTouchX = event.changedTouches[0].clientX - scrollStartX.value;
       // if scrollY long enough detected
 
       let elementWithId = useFindEltId(event.target);
@@ -127,7 +111,7 @@ export default {
       if (defineTouchX > 50) {
         useAnimDeleteIcon(
           elementWithId.replace("card-", ""),
-          this.onRouteHome,
+          onRouteHome.value,
           "add",
           "remove"
         );
@@ -137,7 +121,7 @@ export default {
         console.log("show");
         useAnimDeleteIcon(
           elementWithId.replace("card-", ""),
-          this.onRouteHome,
+          onRouteHome.value,
           "remove",
           "add"
         );
@@ -151,11 +135,21 @@ export default {
       ) {
         document.querySelector(".el-main").scroll(
           0,
-          this.scrollEndY +
-            (event.changedTouches[0].clientY - this.scrollStartY) // position it ended + dynamic scroll - depart position of the scroll
+          scrollEndY.value +
+            (event.changedTouches[0].clientY - scrollStartY.value) // position it ended + dynamic scroll - depart position of the scroll
         );
       }
-    },
+    };
+
+    onMounted(() => {
+      useScrollTo("auto");
+    });
+
+    return {
+      startDrag,
+      endDrag,
+      scrollElement,
+    };
   },
 };
 </script>

@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import { useTranslation } from "@/composables/translation";
 export default {
   setup() {
     const cardsStore = useCardsStore();
@@ -26,18 +25,7 @@ export default {
     const micAnimation = reactive({});
     const micAnimationDuration = ref(1000);
 
-    return {
-      loading,
-      recognition,
-      cardsStore,
-      useTranslation,
-      route,
-      micAnimation,
-      micAnimationDuration,
-    };
-  },
-  methods: {
-    async startDrag() {
+    const startDrag = async () => {
       const mic = document.querySelector(".mic-circle");
       const micframes = new KeyframeEffect(
         mic,
@@ -49,34 +37,34 @@ export default {
           },
         ],
         {
-          duration: this.micAnimationDuration,
+          duration: micAnimationDuration.value,
           pseudoElement: "::after",
           iterations: 10,
           fill: "both",
         }
       );
-      this.micAnimation = new Animation(micframes, document.timeline);
-      this.micAnimation.play();
+      micAnimation.value = new Animation(micframes, document.timeline);
+      micAnimation.value.play();
 
       const SpeechRecognition =
         window.SpeechRecognition || window.webkitSpeechRecognition;
-      this.recognition = new SpeechRecognition();
-      this.recognition.continuous = false;
-      this.recognition.lang = this.cardsStore.languages.from;
-      this.recognition.interimResults = false;
-      this.recognition.maxAlternatives = 1;
-      this.recognition.start();
-      this.recognition.onresult = async (event) => {
-        this.recognition.stop();
+      recognition.value = new SpeechRecognition();
+      recognition.value.continuous = false;
+      recognition.value.lang = cardsStore.languages.from;
+      recognition.value.interimResults = false;
+      recognition.value.maxAlternatives = 1;
+      recognition.value.start();
+      recognition.value.onresult = async (event) => {
+        recognition.value.stop();
         let transcriptResult = event.results[0][0].transcript;
-        this.loading = true;
-        const { text, error } = await this.useTranslation(
+        loading.value = true;
+        const { text, error } = await useTranslation(
           transcriptResult,
-          this.cardsStore.languages.from,
-          this.cardsStore.languages.to
+          cardsStore.languages.from,
+          cardsStore.languages.to
         );
         if (text) {
-          this.cardsStore.addNewItem(this.route.params.id, {
+          cardsStore.addNewItem(route.params.id, {
             id: Date.now(),
             from: transcriptResult,
             to: text,
@@ -84,30 +72,38 @@ export default {
           });
           useScrollTo("smooth");
         } else {
-          alert("Error from API", error);
+          alert("Error from API, reload", error);
         }
-        this.loading = false;
+        loading.value = false;
       };
-    },
-    endDrag() {
-      this.recognition.stop();
-      this.loading = false;
-      this.micAnimation.reverse();
+    };
+
+    const endDrag = () => {
+      recognition.value.stop();
+      loading.value = false;
+      micAnimation.value.reverse();
+
       const getTime = () => {
-        if (this.micAnimation.currentTime < this.micAnimationDuration)
-          return this.micAnimation.currentTime;
-        if (this.micAnimation.currentTime > this.micAnimationDuration) {
-          while (this.micAnimation.currentTime > this.micAnimationDuration) {
-            this.micAnimation.currentTime -= this.micAnimationDuration;
+        if (micAnimation.value.currentTime < micAnimationDuration.value)
+          return micAnimation.value.currentTime;
+        if (micAnimation.value.currentTime > micAnimationDuration.value) {
+          while (micAnimation.value.currentTime > micAnimationDuration.value) {
+            micAnimation.value.currentTime -= micAnimationDuration.value;
           }
-          return this.micAnimation.currentTime;
+          return micAnimation.value.currentTime;
         }
       };
 
       setTimeout(() => {
-        this.micAnimation.pause();
+        micAnimation.value.pause();
       }, getTime());
-    },
+    };
+
+    return {
+      loading,
+      endDrag,
+      startDrag,
+    };
   },
 };
 </script>
