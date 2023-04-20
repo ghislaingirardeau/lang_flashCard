@@ -9,11 +9,16 @@ export default defineNuxtConfig({
   ssr: false,
   app: {
     head: {
-      charset: "utf-16",
-      viewport:
-        "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+      charset: "utf-8",
+      viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0",
       title: "My flashCard Lang",
-      meta: [{ name: "description", content: "My amazing site." }],
+      meta: [
+        {
+          name: "description",
+          content:
+            "A flash card is a web app to help you learning a new langagues. Flash cards language translate, speech and store word or expression you want to learn into customable categories.",
+        },
+      ],
       script: [],
     },
     pageTransition: { name: "page", mode: "out-in" },

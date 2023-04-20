@@ -43,6 +43,10 @@
 export default {
   setup() {
     const route = useRoute();
+    useHead({
+      titleTemplate: `Card-${route.params.id}`, // %s GET THE TITLE AND ADD THIS
+    });
+
     const cardsStore = useCardsStore();
     const loader = ref(0);
     const sideLoader = ref(null);
