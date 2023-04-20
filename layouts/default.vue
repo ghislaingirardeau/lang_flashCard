@@ -66,10 +66,15 @@
       :title="$t('settings.title')"
     >
       <el-form-item :label="$t('settings.languages')">
-        <SetLanguage v-model:settings="settings" />
+        <LazySetLanguage v-model:settings="settings" />
       </el-form-item>
       <el-form-item :label="$t('settings.voiceSpeed')">
-        <el-slider v-model="settings.rate" :step="0.1" :min="0.6" :max="1.2" />
+        <Lazyel-slider
+          v-model="settings.rate"
+          :step="0.1"
+          :min="0.6"
+          :max="1.2"
+        />
       </el-form-item>
     </FormDialog>
   </div>

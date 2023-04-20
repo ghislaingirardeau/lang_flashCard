@@ -17,7 +17,7 @@
             class="rotate-icon"
           />
         </div>
-        <InputRecord />
+        <LazyInputRecord />
       </div>
       <div
         class="container_footer_nav container_footer_nav-mic"
@@ -36,7 +36,7 @@
           />
         </div>
 
-        <MicRecord />
+        <LazyMicRecord />
         <div
           class="footer_nav_btn footer_nav_btn-radius-right"
           @click="playAllSound"
