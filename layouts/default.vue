@@ -182,7 +182,13 @@ export default {
                   case "installed":
                     if (navigator.serviceWorker.controller) {
                       // new update available
-                      alert("new update available, restart the app");
+                      if (
+                        window.confirm(
+                          "New update available ! Reload the app now ?"
+                        )
+                      ) {
+                        window.location.reload();
+                      }
                       resolve(true);
                     } else {
                       // no update available
