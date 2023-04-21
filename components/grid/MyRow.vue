@@ -56,7 +56,6 @@ export default {
         return breakpoints.smallerOrEqual("lg").value ? "95%" : "45%";
       }
     });
-    console.log(rowWidth.value);
     const onCardClick = (event) => {
       let elementWithId = useFindEltId(event.target);
       if (onRouteHome.value) {
