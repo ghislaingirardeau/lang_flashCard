@@ -11,7 +11,7 @@
             }}
           </h1>
         </Transition>
-        <nuxt-link :to="localePath('test')">test</nuxt-link>
+        <!-- <nuxt-link :to="localePath('test')">test</nuxt-link> -->
         <Transition name="fade" mode="out-in">
           <Icon
             v-if="$route.params.id"

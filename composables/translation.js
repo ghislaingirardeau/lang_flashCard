@@ -61,7 +61,7 @@ export async function usePlayTranslation(to, rate) {
       headers: {
         "content-type": "application/json",
         "X-RapidAPI-Key": config.XRAPIDAPIKEY,
-        "X-RapidAPI-Host": "google-translator9.p.rapidapi.com",
+        "X-RapidAPI-Host": config.XRAPIDAPIGOOGLE,
       },
       body: JSON.stringify({ q: to }),
     }

@@ -43,6 +43,7 @@ export default defineNuxtConfig({
     "nuxt-icon",
     "@vite-pwa/nuxt",
     "@element-plus/nuxt",
+    "@nuxt/devtools",
     /* "nuxt-simple-sitemap", */
     /* "@nuxtjs/robots", */
     "@nuxtjs/i18n",
