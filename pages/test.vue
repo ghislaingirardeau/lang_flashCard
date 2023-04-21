@@ -23,7 +23,7 @@
 
 <script setup>
 definePageMeta({
-  layout: "test-layout",
+  layout: "default",
 });
 const doError = () => {
   throw createError({
@@ -32,6 +32,7 @@ const doError = () => {
     fatal: true,
   });
 };
+const recognition = reactive({});
 const localePath = useLocalePath();
 const backBtn = () => {
   navigateTo(
@@ -48,6 +49,10 @@ const startDrag = (e) => {
 const endDrag = (e) => {
   console.log("end");
   mic.value = false;
+  if (window.confirm("Do you really want to leave?")) {
+    console.log("do this");
+    window.location.reload();
+  }
 };
 </script>
 

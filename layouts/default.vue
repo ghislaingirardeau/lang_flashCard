@@ -82,7 +82,6 @@
 
 <script setup>
 const cardsStore = useCardsStore();
-/* const device = useDeviceInfo(); */
 const dialogSettings = ref(false);
 const { height } = useWindowSize();
 const switchLocalePath = useSwitchLocalePath();
