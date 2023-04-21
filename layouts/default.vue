@@ -80,135 +80,114 @@
   </div>
 </template>
 
-<script>
-export default {
-  setup() {
-    const cardsStore = useCardsStore();
-    /* const device = useDeviceInfo(); */
-    const dialogSettings = ref(false);
-    const { height } = useWindowSize();
-    const switchLocalePath = useSwitchLocalePath();
-    const i18n = useI18n();
+<script setup>
+const cardsStore = useCardsStore();
+/* const device = useDeviceInfo(); */
+const dialogSettings = ref(false);
+const { height } = useWindowSize();
+const switchLocalePath = useSwitchLocalePath();
+const i18n = useI18n();
+const settings = ref({});
 
-    const settings = ref({});
+onBeforeMount(async () => {
+  /* await device.nuxtServerInit(); */
+  await cardsStore.nuxtServerInit();
+  settings.value = { ...cardsStore.languages };
+  // check if app load on the right lang set
+  if (i18n.locale.value != cardsStore.languages.from.slice(0, 2)) {
+    navigateTo(switchLocalePath(cardsStore.languages.from.slice(0, 2)));
+  }
+});
 
-    onBeforeMount(async () => {
-      /* await device.nuxtServerInit(); */
-      await cardsStore.nuxtServerInit();
-      settings.value = { ...cardsStore.languages };
-      // check if app load on the right lang set
-      if (i18n.locale.value != cardsStore.languages.from.slice(0, 2)) {
-        navigateTo(switchLocalePath(cardsStore.languages.from.slice(0, 2)));
-      }
+const containerHeight = computed(() => {
+  return height.value + "px";
+});
+
+const langTo = computed(() => {
+  return cardsStore.langTo;
+});
+const langFrom = computed(() => {
+  return cardsStore.langFrom;
+});
+
+const switchLang = (e) => {
+  let to = settings.value.to;
+  let from = settings.value.from;
+
+  settings.value.from = to;
+  settings.value.to = from;
+
+  registerSettings(true);
+
+  const eltToAnim = document.querySelector(".footer_container-home");
+  const textToFade = eltToAnim.querySelectorAll("p");
+  const iconToFade = eltToAnim.querySelector("svg");
+
+  i18n.onLanguageSwitched = (oldLocale, newLocale) => {
+    iconToFade.classList.add("footer-icons-animate");
+    textToFade.forEach((element) => {
+      element.classList.add("footer-text-animate");
     });
+  };
 
-    const containerHeight = computed(() => {
-      return height.value + "px";
+  setTimeout(() => {
+    iconToFade.classList.remove("footer-icons-animate");
+    textToFade.forEach((element) => {
+      element.classList.remove("footer-text-animate");
     });
-
-    const langTo = computed(() => {
-      return cardsStore.langTo;
-    });
-    const langFrom = computed(() => {
-      return cardsStore.langFrom;
-    });
-
-    const switchLang = (e) => {
-      let to = settings.value.to;
-      let from = settings.value.from;
-
-      settings.value.from = to;
-      settings.value.to = from;
-
-      registerSettings(true);
-
-      const eltToAnim = document.querySelector(".footer_container-home");
-      const textToFade = eltToAnim.querySelectorAll("p");
-      const iconToFade = eltToAnim.querySelector("svg");
-
-      i18n.onLanguageSwitched = (oldLocale, newLocale) => {
-        iconToFade.classList.add("footer-icons-animate");
-        textToFade.forEach((element) => {
-          element.classList.add("footer-text-animate");
-        });
-      };
-
-      /* setTimeout(() => {
-        iconToFade.classList.add("footer-icons-animate");
-        textToFade.forEach((element) => {
-          element.classList.add("footer-text-animate");
-        });
-      }, 300); */
-
-      setTimeout(() => {
-        iconToFade.classList.remove("footer-icons-animate");
-        textToFade.forEach((element) => {
-          element.classList.remove("footer-text-animate");
-        });
-      }, 1000);
-    };
-
-    const registerSettings = (payload) => {
-      // need to desconstruct the object otherwise cardsStore.languages strict equal to settings.value on every changes
-      if (payload) {
-        const { from, to, rate } = settings.value;
-
-        cardsStore.setParams({ from, to, rate });
-        // if the from language change
-        if (i18n.locale.value != settings.value.from.slice(0, 2)) {
-          navigateTo(switchLocalePath(cardsStore.languages.from.slice(0, 2)));
-        }
-      } else {
-        settings.value = { ...cardsStore.languages };
-      }
-    };
-
-    return {
-      containerHeight,
-      settings,
-      dialogSettings,
-      registerSettings,
-      langTo,
-      langFrom,
-      switchLang,
-    };
-  },
-  mounted() {
-    window.isUpdateAvailable = new Promise(function (resolve, reject) {
-      // lazy way of disabling service workers while developing
-      if ("serviceWorker" in navigator) {
-        // register service worker file
-        navigator.serviceWorker.ready
-          .then((reg) => {
-            reg.onupdatefound = () => {
-              const installingWorker = reg.installing;
-              installingWorker.onstatechange = () => {
-                switch (installingWorker.state) {
-                  case "installed":
-                    if (navigator.serviceWorker.controller) {
-                      // new update available
-                      if (
-                        window.confirm(
-                          "New update available ! Reload the app now ?"
-                        )
-                      ) {
-                        window.location.reload();
-                      }
-                      resolve(true);
-                    } else {
-                      // no update available
-                      resolve(false);
-                    }
-                    break;
-                }
-              };
-            };
-          })
-          .catch((err) => console.error("[SW ERROR]", err));
-      }
-    });
-  },
+  }, 1000);
 };
+
+const registerSettings = (payload) => {
+  // need to desconstruct the object otherwise cardsStore.languages strict equal to settings.value on every changes
+  if (payload) {
+    const { from, to, rate } = settings.value;
+
+    cardsStore.setParams({ from, to, rate });
+    // if the from language change
+    if (i18n.locale.value != settings.value.from.slice(0, 2)) {
+      navigateTo(switchLocalePath(cardsStore.languages.from.slice(0, 2)));
+    }
+  } else {
+    settings.value = { ...cardsStore.languages };
+  }
+};
+
+onMounted(() => {
+  window.isUpdateAvailable = new Promise(function (resolve, reject) {
+    // lazy way of disabling service workers while developing
+    if ("serviceWorker" in navigator) {
+      // register service worker file
+      navigator.serviceWorker.ready
+        .then((reg) => {
+          reg.onupdatefound = () => {
+            const installingWorker = reg.installing;
+            installingWorker.onstatechange = () => {
+              switch (installingWorker.state) {
+                case "installed":
+                  if (navigator.serviceWorker.controller) {
+                    // new update available
+                    if (
+                      window.confirm(
+                        "New update available ! Reload the app now ?"
+                      )
+                    ) {
+                      window.location.reload();
+                    }
+                    resolve(true);
+                  } else {
+                    // no update available
+                    resolve(false);
+                  }
+                  break;
+              }
+            };
+          };
+        })
+        .catch((err) => console.error("[SW ERROR]", err));
+    }
+  });
+});
 </script>
 
 <style lang="scss">

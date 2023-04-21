@@ -45,7 +45,7 @@ export default defineNuxtConfig({
     "@element-plus/nuxt",
     "@nuxt/devtools",
     "nuxt-simple-sitemap",
-    /* "@nuxtjs/robots", */
+    /* "@nuxtjs/robots", */ // BUG
     "@nuxtjs/i18n",
     [
       "@pinia/nuxt",
