@@ -20,6 +20,7 @@
     "@vueuse/nuxt": "^9.13.0",
     "dotenv": "^16.0.3",
     "nuxt-icon": "^0.3.2",
+    "nuxt-simple-sitemap": "^2.4.11",
     "pinia": "^2.0.33",
     "sass": "^1.58.3"
   }

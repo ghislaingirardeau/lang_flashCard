@@ -44,7 +44,7 @@ export default defineNuxtConfig({
     "@vite-pwa/nuxt",
     "@element-plus/nuxt",
     "@nuxt/devtools",
-    /* "nuxt-simple-sitemap", */
+    "nuxt-simple-sitemap",
     /* "@nuxtjs/robots", */
     "@nuxtjs/i18n",
     [
@@ -65,9 +65,9 @@ export default defineNuxtConfig({
       XRAPIDAPIGOOGLE: process.env.XRAPIDAPIGOOGLE,
     },
   },
-  /* sitemap: {
+  sitemap: {
     siteUrl: "https://my-flashcard-lang.netlify.app/fr",
-  }, */
+  },
   pwa: {
     meta: {
       title: "FlashCard Language",
