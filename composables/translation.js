@@ -16,8 +16,8 @@ export async function useTranslation(text, from, to) {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "X-RapidAPI-Key": config.XRAPIDAPIKEY,
-        "X-RapidAPI-Host": config.XRAPIDAPIHOST,
+        "X-RapidAPI-Key": config.public.XRAPIDAPIKEY,
+        "X-RapidAPI-Host": config.public.XRAPIDAPIHOST,
       },
       body: JSON.stringify(body),
     }
@@ -34,8 +34,8 @@ export async function useTranslation(text, from, to) {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "X-RapidAPI-Key": config.XRAPIDAPIKEY,
-        "X-RapidAPI-Host": "google-translator9.p.rapidapi.com",
+        "X-RapidAPI-Key": config.public.XRAPIDAPIKEY,
+        "X-RapidAPI-Host": config.public.XRAPIDAPIGOOGLE,
       },
       body: JSON.stringify(body),
     }
@@ -60,8 +60,8 @@ export async function usePlayTranslation(to, rate) {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "X-RapidAPI-Key": config.XRAPIDAPIKEY,
-        "X-RapidAPI-Host": config.XRAPIDAPIGOOGLE,
+        "X-RapidAPI-Key": config.public.XRAPIDAPIKEY,
+        "X-RapidAPI-Host": config.public.XRAPIDAPIGOOGLE,
       },
       body: JSON.stringify({ q: to }),
     }
@@ -81,8 +81,8 @@ export async function usePlayTranslation(to, rate) {
       method: "GET",
       key: `${to}`,
       headers: {
-        "X-RapidAPI-Key": config.XRAPIDAPIKEY,
-        "X-RapidAPI-Host": config.XRAPIDAPIHOSTTTS,
+        "X-RapidAPI-Key": config.public.XRAPIDAPIKEY,
+        "X-RapidAPI-Host": config.public.XRAPIDAPIHOSTTTS,
       },
     }
   );

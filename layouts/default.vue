@@ -99,6 +99,42 @@ onBeforeMount(async () => {
   }
 });
 
+onMounted(() => {
+  window.isUpdateAvailable = new Promise(function (resolve, reject) {
+    // lazy way of disabling service workers while developing
+    if ("serviceWorker" in navigator) {
+      // register service worker file
+      navigator.serviceWorker.ready
+        .then((reg) => {
+          reg.onupdatefound = () => {
+            const installingWorker = reg.installing;
+            installingWorker.onstatechange = () => {
+              switch (installingWorker.state) {
+                case "installed":
+                  if (navigator.serviceWorker.controller) {
+                    // new update available
+                    if (
+                      window.confirm(
+                        "New update available ! Reload the app now ?"
+                      )
+                    ) {
+                      window.location.reload();
+                    }
+                    resolve(true);
+                  } else {
+                    // no update available
+                    resolve(false);
+                  }
+                  break;
+              }
+            };
+          };
+        })
+        .catch((err) => console.error("[SW ERROR]", err));
+    }
+  });
+});
+
 const containerHeight = computed(() => {
   return height.value + "px";
 });
@@ -152,42 +188,6 @@ const registerSettings = (payload) => {
     settings.value = { ...cardsStore.languages };
   }
 };
-
-onMounted(() => {
-  window.isUpdateAvailable = new Promise(function (resolve, reject) {
-    // lazy way of disabling service workers while developing
-    if ("serviceWorker" in navigator) {
-      // register service worker file
-      navigator.serviceWorker.ready
-        .then((reg) => {
-          reg.onupdatefound = () => {
-            const installingWorker = reg.installing;
-            installingWorker.onstatechange = () => {
-              switch (installingWorker.state) {
-                case "installed":
-                  if (navigator.serviceWorker.controller) {
-                    // new update available
-                    if (
-                      window.confirm(
-                        "New update available ! Reload the app now ?"
-                      )
-                    ) {
-                      window.location.reload();
-                    }
-                    resolve(true);
-                  } else {
-                    // no update available
-                    resolve(false);
-                  }
-                  break;
-              }
-            };
-          };
-        })
-        .catch((err) => console.error("[SW ERROR]", err));
-    }
-  });
-});
 </script>
 
 <style lang="scss">
