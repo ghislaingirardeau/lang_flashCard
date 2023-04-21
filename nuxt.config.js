@@ -45,6 +45,7 @@ export default defineNuxtConfig({
     "@element-plus/nuxt",
     "@nuxt/devtools",
     "nuxt-simple-sitemap",
+    "nuxt-security",
     /* "@nuxtjs/robots", */ // BUG
     "@nuxtjs/i18n",
     [
