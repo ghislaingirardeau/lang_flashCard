@@ -88,6 +88,33 @@ const switchLocalePath = useSwitchLocalePath();
 const i18n = useI18n();
 const settings = ref({});
 
+// SET HEAD FOR I18N SEO
+const head = useLocaleHead({
+  addDirAttribute: true,
+  identifierAttribute: "id",
+  addSeoAttributes: true,
+});
+useHead({
+  title: i18n.t("headTag.title"),
+  htmlAttrs: {
+    ...head.value.htmlAttrs,
+  },
+  meta: [
+    { charset: "utf-8" },
+    {
+      name: "viewport",
+      content: "width=device-width, initial-scale=1.0, maximum-scale=1.0",
+    },
+    {
+      hid: "description",
+      name: "description",
+      content: i18n.t("headTag.content"),
+    },
+    ...head.value.meta,
+  ],
+  link: [...head.value.link],
+});
+
 onBeforeMount(async () => {
   /* await device.nuxtServerInit(); */
   await cardsStore.nuxtServerInit();

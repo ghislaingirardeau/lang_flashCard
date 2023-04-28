@@ -1,4 +1,9 @@
 export default {
+  headTag: {
+    title: "My vocabulary cards",
+    content:
+      "Create and custom your own vocabulary. My vocabulary cards is a web app to help you learning a new langagues. My vocabulary cards translate, spell at cutom rates and save word or expression you want to learn into customable card.",
+  },
   footer: {
     title: "Create by",
     translate: "Text to translate",

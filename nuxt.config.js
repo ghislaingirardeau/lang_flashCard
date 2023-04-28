@@ -8,19 +8,6 @@ import th from "./lang/th";
 export default defineNuxtConfig({
   ssr: false,
   app: {
-    head: {
-      charset: "utf-8",
-      viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0",
-      title: "My flashCard Lang",
-      meta: [
-        {
-          name: "description",
-          content:
-            "A flash card is a web app to help you learning a new langagues. Flash cards language translate, speech and store word or expression you want to learn into customable categories.",
-        },
-      ],
-      script: [],
-    },
     pageTransition: { name: "page", mode: "out-in" },
   },
   vite: {
@@ -67,18 +54,18 @@ export default defineNuxtConfig({
     },
   },
   sitemap: {
-    siteUrl: "https://my-flashcard-lang.netlify.app/fr",
+    siteUrl: "https://my-flashcard-lang.netlify.app",
   },
   pwa: {
     meta: {
-      title: "FlashCard Language",
+      title: "My Vocabulary Cardsuage",
       author: "gg web dev",
     },
     manifest: {
-      name: "FlashCard Language",
-      short_name: "FlashCard Lang",
+      name: "My Vocabulary Cardsuage",
+      short_name: "My Vocabulary Cards",
       lang: "en",
-      description: "FlashCard Language",
+      description: "My Vocabulary Cardsuage",
       theme_color: "#6fffe9",
       icons: [
         {
@@ -112,25 +99,31 @@ export default defineNuxtConfig({
     locales: [
       {
         code: "en",
+        iso: "en-US",
         file: "en.js",
       },
       {
         code: "fr",
+        iso: "fr-FR",
         file: "fr.js",
       },
       {
         code: "km",
+        iso: "km-KM",
         file: "km.js",
       },
       {
         code: "id",
+        iso: "id-ID",
         file: "id.js",
       },
       {
         code: "th",
+        iso: "th-TH",
         file: "th.js",
       },
     ],
+    baseUrl: "https://my-flashcard-lang.netlify.app",
     lazy: true,
     langDir: "lang",
     defaultLocale: "en",

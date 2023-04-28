@@ -1,4 +1,9 @@
 export default {
+  headTag: {
+    title: "Mon vocabulaire en carte",
+    content:
+      "Créez et personnalisez votre propre vocabulaire. Mon vocabulaire en carte est une application web pour vous aider à apprendre une nouvelle langue. Mon vocabulaire en carte vous permet de traduire, écouter la prononciation à différente vitesse et enregistre le mot ou l'expression que vous souhaitez apprendre sous forme de catégories ou cartes personnalisables.",
+  },
   footer: {
     title: "Créer par",
     translate: "Texte à traduire",

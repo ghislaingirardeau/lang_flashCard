@@ -32,7 +32,6 @@ const doError = () => {
     fatal: true,
   });
 };
-const recognition = reactive({});
 const localePath = useLocalePath();
 const backBtn = () => {
   navigateTo(
