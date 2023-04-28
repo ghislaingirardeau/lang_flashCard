@@ -1,5 +1,5 @@
 <template>
-  <div class="common-layout">
+  <div id="app_container">
     <el-container :style="{ height: containerHeight }">
       <el-header class="header-container">
         <Transition name="fade" mode="out-in">
@@ -125,7 +125,15 @@ onBeforeMount(async () => {
   }
 });
 
+const breakpoints = useBreakpoints({
+  xl: 1280,
+});
+
 onMounted(() => {
+  const styleBody = document.querySelector("#app_container").style;
+  breakpoints.smallerOrEqual("xl").value
+    ? (styleBody.marginInline = "0px")
+    : (styleBody.marginInline = "300px");
   window.isUpdateAvailable = new Promise(function (resolve, reject) {
     // lazy way of disabling service workers while developing
     if ("serviceWorker" in navigator) {
