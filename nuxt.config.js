@@ -32,7 +32,7 @@ export default defineNuxtConfig({
     "@element-plus/nuxt",
     "@nuxt/devtools",
     "nuxt-simple-sitemap",
-    /* "nuxt-security", */
+    "nuxt-security",
     /* "@nuxtjs/robots", */ // BUG
     "@nuxtjs/i18n",
     [
@@ -45,6 +45,14 @@ export default defineNuxtConfig({
       },
     ],
   ],
+  // from nuxt module security, to set the rate limit for calling an API
+  security: {
+    rateLimiter: {
+      tokensPerInterval: 200,
+      interval: "day",
+      fireImmediately: false,
+    },
+  },
   runtimeConfig: {
     public: {
       XRAPIDAPIKEY: process.env.XRAPIDAPIKEY,
