@@ -4,20 +4,16 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    col: {
-      required: true,
-      type: Number,
-    },
+<script setup>
+const props = defineProps({
+  col: {
+    required: true,
+    type: Number,
   },
-  computed: {
-    classCol() {
-      return `my-col-${this.col}`;
-    },
-  },
-};
+});
+const classCol = computed(() => {
+  return `my-col-${props.col}`;
+});
 </script>
 
 <style lang="scss">

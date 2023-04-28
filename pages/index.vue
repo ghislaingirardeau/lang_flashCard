@@ -49,82 +49,67 @@
   </div>
 </template>
 
-<script>
-export default {
-  setup() {
-    const cardsStore = useCardsStore();
-    const dialogAddCard = ref(false);
-    const validNewCardTitle = ref(true);
-    const cardForm = reactive({
-      name: "",
-    });
-    const localePath = useLocalePath();
-    const { t } = useI18n();
+<script setup>
+const cardsStore = useCardsStore();
+const dialogAddCard = ref(false);
+const validNewCardTitle = ref(true);
+const cardForm = reactive({
+  name: "",
+});
+const localePath = useLocalePath();
+const { t } = useI18n();
 
-    const loadCards = computed(() => {
-      return cardsStore.cards;
-    });
+const loadCards = computed(() => {
+  return cardsStore.cards;
+});
 
-    watch(cardForm, (title) => {
-      let cardExist = loadCards.value.findIndex((e) => e.title === title.name);
-      if (title.name.length >= 1 && cardExist === -1)
-        return (validNewCardTitle.value = false);
-      if (title.name.length < 1 || cardExist != -1)
-        return (validNewCardTitle.value = true);
-    });
+watch(cardForm, (title) => {
+  let cardExist = loadCards.value.findIndex((e) => e.title === title.name);
+  if (title.name.length >= 1 && cardExist === -1)
+    return (validNewCardTitle.value = false);
+  if (title.name.length < 1 || cardExist != -1)
+    return (validNewCardTitle.value = true);
+});
 
-    const goToItem = (title) => {
-      navigateTo(
-        localePath({
-          name: "card-id",
-          params: { id: title },
-        })
-      );
+const goToItem = (title) => {
+  navigateTo(
+    localePath({
+      name: "card-id",
+      params: { id: title },
+    })
+  );
+};
+
+const getDate = (params) => {
+  let d = new Date(params);
+  return d.toString();
+};
+
+const cardNumberItems = (params) => {
+  return cardsStore.cardItems[params].length;
+};
+
+const saveNewCard = (payload) => {
+  if (cardForm.name.length >= 1 && payload) {
+    const newCard = {
+      id: Date.now(),
+      title: cardForm.name.trim().replaceAll(" ", "_"),
+      lastUpdate: Date.now(),
+      createOn: Date.now(),
     };
+    cardsStore.addNewCard(newCard, t("store.alert"));
+    cardForm.name = "";
+    return;
+  }
+  if (cardForm.name.length < 1 && payload) {
+    cardForm.name = "";
+  } else {
+    cardForm.name = "";
+  }
+};
 
-    const getDate = (params) => {
-      let d = new Date(params);
-      return d.toString();
-    };
-
-    const cardNumberItems = (params) => {
-      return cardsStore.cardItems[params].length;
-    };
-
-    const saveNewCard = (payload) => {
-      if (cardForm.name.length >= 1 && payload) {
-        const newCard = {
-          id: Date.now(),
-          title: cardForm.name.trim().replaceAll(" ", "_"),
-          lastUpdate: Date.now(),
-          createOn: Date.now(),
-        };
-        cardsStore.addNewCard(newCard, t("store.alert"));
-        cardForm.name = "";
-        return;
-      }
-      if (cardForm.name.length < 1 && payload) {
-        cardForm.name = "";
-      } else {
-        cardForm.name = "";
-      }
-    };
-
-    const openModal = () => {
-      dialogAddCard.value = true;
-    };
-    return {
-      loadCards,
-      dialogAddCard,
-      openModal,
-      cardForm,
-      saveNewCard,
-      getDate,
-      cardNumberItems,
-      goToItem,
-      validNewCardTitle,
-    };
-  },
+const openModal = () => {
+  dialogAddCard.value = true;
 };
 </script>
 

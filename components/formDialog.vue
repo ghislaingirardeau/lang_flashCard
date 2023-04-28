@@ -28,30 +28,25 @@
   </client-only>
 </template>
 
-<script>
-export default {
-  props: {
-    value: {
-      required: true,
-    },
-    doOnConfirm: Function,
-    title: {
-      required: true,
-      type: String,
-    },
-    disabled: {
-      type: Boolean,
-    },
+<script setup>
+const props = defineProps({
+  value: {
+    required: true,
   },
-  setup(props, { emit }) {
-    const submitForm = (params) => {
-      props.doOnConfirm(params);
-      emit("update:value", false);
-    };
-    return {
-      submitForm,
-    };
+  doOnConfirm: Function,
+  title: {
+    required: true,
+    type: String,
   },
+  disabled: {
+    type: Boolean,
+  },
+});
+
+const emit = defineEmits();
+const submitForm = (params) => {
+  props.doOnConfirm(params);
+  emit("update:value", false);
 };
 </script>
 

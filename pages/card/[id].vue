@@ -42,53 +42,41 @@
   </div>
 </template>
 
-<script>
-export default {
-  setup() {
-    const route = useRoute();
-    useHead({
-      titleTemplate: `Card-${route.params.id}`, // %s GET THE TITLE AND ADD THIS
-    });
+<script setup>
+const route = useRoute();
+useHead({
+  titleTemplate: `Card-${route.params.id}`, // %s GET THE TITLE AND ADD THIS
+});
 
-    const cardsStore = useCardsStore();
-    const loader = ref(0);
-    const sideLoader = ref(null);
+const cardsStore = useCardsStore();
+const loader = ref(0);
+const sideLoader = ref(null);
 
-    const helpPronouce = computed(() => {
-      return cardsStore.langFrom === "KM" || cardsStore.langTo === "KM"
-        ? true
-        : false;
-    });
+const helpPronouce = computed(() => {
+  return cardsStore.langFrom === "KM" || cardsStore.langTo === "KM"
+    ? true
+    : false;
+});
 
-    const loadCard = computed(() => {
-      return cardsStore.cardItems[route.params.id];
-    });
+const loadCard = computed(() => {
+  return cardsStore.cardItems[route.params.id];
+});
 
-    const playSound = async (payload) => {
-      // envoie en params le payload de childNode emit onTap + le loader créer
-      loader.value = payload.id;
-      sideLoader.value = payload.side;
-      const { play, error } = await usePlayTranslation(
-        payload.textToTranslate,
-        cardsStore.languages.rate
-      );
-      if (play) {
-        loader.value = 0;
-      }
-      if (error) {
-        loader.value = 0;
-        alert(error);
-      }
-    };
-
-    return {
-      loadCard,
-      playSound,
-      loader,
-      helpPronouce,
-      sideLoader,
-    };
-  },
+const playSound = async (payload) => {
+  // envoie en params le payload de childNode emit onTap + le loader créer
+  loader.value = payload.id;
+  sideLoader.value = payload.side;
+  const { play, error } = await usePlayTranslation(
+    payload.textToTranslate,
+    cardsStore.languages.rate
+  );
+  if (play) {
+    loader.value = 0;
+  }
+  if (error) {
+    loader.value = 0;
+    alert(error);
+  }
 };
 </script>
 

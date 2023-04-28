@@ -19,10 +19,7 @@
   </div>
 </template>
 
-<script>
-import { useTranslation } from "@/composables/translation";
-export default {
-  setup() {
+<script setup>
     const cardsStore = useCardsStore();
     const loading = ref(false);
     const route = useRoute();
@@ -49,13 +46,6 @@ export default {
       loading.value = false;
       TextToTranslate.value = "";
     };
-    return {
-      TextToTranslate,
-      loading,
-      translate,
-    };
-  },
-};
 </script>
 
 <style lang="scss" scoped>

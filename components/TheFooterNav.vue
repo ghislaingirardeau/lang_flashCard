@@ -55,9 +55,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  setup() {
+<script setup>
     const route = useRoute();
     const loader = ref(0);
     const toInput = ref(false);
@@ -87,9 +85,6 @@ export default {
       }
       loader.value = 0;
     };
-    return { loader, playAllSound, toInput, switchToInput };
-  },
-};
 </script>
 
 <style lang="scss" scoped>

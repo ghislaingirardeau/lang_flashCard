@@ -15,9 +15,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  setup() {
+<script setup>
     const cardsStore = useCardsStore();
     const recognition = reactive({});
     const loading = ref(false);
@@ -98,14 +96,6 @@ export default {
         micAnimation.value.pause();
       }, getTime());
     };
-
-    return {
-      loading,
-      endDrag,
-      startDrag,
-    };
-  },
-};
 </script>
 
 <style lang="scss" scoped>

@@ -2,21 +2,16 @@
   <Icon name="mdi:loading" :size="size" :color="color" id="load--rotate" />
 </template>
 
-<script>
-export default {
-  props: {
-    color: {
-      type: String,
-    },
-    size: {
-      required: true,
-      type: String,
-    },
+<script setup>
+const props = defineProps({
+  color: {
+    type: String,
   },
-  setup(props) {
-    return {};
+  size: {
+    required: true,
+    type: String,
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
