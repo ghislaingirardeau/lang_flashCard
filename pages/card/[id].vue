@@ -17,6 +17,9 @@
           </GridMyCol>
           <GridMyCol :col="loader === item.id ? 5 : 6" class="text-left">
             {{ item.from }}
+            <span class="block_swipe_card-text">{{
+              helpPronouce ? useWordPronounce(item.from) : ""
+            }}</span>
           </GridMyCol>
           <GridMyCol
             :col="loader === item.id ? 5 : 6"
@@ -24,7 +27,7 @@
             style="word-break: break-all"
             >{{ item.to }}
             <span class="block_swipe_card-text">{{
-              langTo === "KM" ? useWordPronounce(item.to) : ""
+              helpPronouce ? useWordPronounce(item.to) : ""
             }}</span></GridMyCol
           >
           <GridMyCol
@@ -51,8 +54,10 @@ export default {
     const loader = ref(0);
     const sideLoader = ref(null);
 
-    const langTo = computed(() => {
-      return cardsStore.langTo;
+    const helpPronouce = computed(() => {
+      return cardsStore.langFrom === "KM" || cardsStore.langTo === "KM"
+        ? true
+        : false;
     });
 
     const loadCard = computed(() => {
@@ -80,7 +85,7 @@ export default {
       loadCard,
       playSound,
       loader,
-      langTo,
+      helpPronouce,
       sideLoader,
     };
   },
