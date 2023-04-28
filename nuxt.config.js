@@ -132,5 +132,12 @@ export default defineNuxtConfig({
       fallbackLocale: "en",
       messages: { en, fr, km, id, th },
     },
+    customRoutes: "config",
+    pages: {
+      "card/[id]": {
+        en: "/card/[id]",
+        fr: "/carte/[id]",
+      },
+    },
   },
 });
