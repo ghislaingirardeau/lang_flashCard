@@ -1,27 +1,16 @@
 import khmerRomanization from "@/assets/khmer.json";
 
+const playBlobResponse = (value, rate) => {
+  let blobUrl = URL.createObjectURL(value);
+  const audioElement = new Audio(blobUrl);
+  audioElement.playbackRate = rate;
+  audioElement.play();
+};
+
 export async function useTranslation(text, from, to) {
   // state encapsulated and managed by the composable
   const config = useRuntimeConfig();
 
-  /* const body = {
-    q: text,
-    source: from,
-    target: to,
-  };
-
-  const { data, error } = await useFetch(
-    "https://deep-translate1.p.rapidapi.com/language/translate/v2",
-    {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "X-RapidAPI-Key": config.public.XRAPIDAPIKEY,
-        "X-RapidAPI-Host": config.public.XRAPIDAPIHOST,
-      },
-      body: JSON.stringify(body),
-    }
-  ); */
   const body = {
     q: text,
     source: from,
@@ -51,51 +40,78 @@ export async function useTranslation(text, from, to) {
   }
 }
 
-export async function usePlayTranslation(to, rate) {
+export async function usePlayTranslation(to, rate, lang, loader, id) {
   const config = useRuntimeConfig();
-  //DETECT LANG
-  const results = await useFetch(
-    "https://google-translator9.p.rapidapi.com/v2/detect",
-    {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "X-RapidAPI-Key": config.public.XRAPIDAPIKEY,
-        "X-RapidAPI-Host": config.public.XRAPIDAPIGOOGLE,
-      },
-      body: JSON.stringify({ q: to }),
+
+  let langDetected = lang ? lang : null;
+
+  if (!langDetected) {
+    //DETECT LANG
+    const { data: currenLang, error } = await useFetch(
+      "https://google-translator9.p.rapidapi.com/v2/detect",
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "X-RapidAPI-Key": config.public.XRAPIDAPIKEY,
+          "X-RapidAPI-Host": config.public.XRAPIDAPIGOOGLE,
+        },
+        body: JSON.stringify({ q: to }),
+      }
+    );
+    if (currenLang.value) {
+      langDetected = currenLang.value.data.detections[0][0].language;
     }
-  );
-  let langDetected;
-  if (results.data.value) {
-    langDetected = results.data.value.data.detections[0][0].language;
-  }
-  if (results.error.value) {
-    return { play: null, error: "Could not detect the lang" };
+    if (error.value) {
+      return { play: null, error: "Could not detect the lang" };
+    }
   }
 
-  //PLAY WITH THE DETECTED LANG
-  const { data, error } = await useFetch(
+  // CHECK IF DATA INSIDE THE CACHE & PLAY IT IF SO
+  const cacheResponse = await caches.match(
+    `https://text-to-speech-api3.p.rapidapi.com/speak?text=${to}&lang=${langDetected}`
+  );
+  if (
+    cacheResponse &&
+    cacheResponse.status === 200 &&
+    cacheResponse.ok === true
+  ) {
+    //GET CACHE ELEMENT
+    const blob = await cacheResponse.blob();
+    playBlobResponse(blob, rate);
+    return { play: true, error: null };
+  }
+
+  //IF NOT IN CACHE, FETCH, STORE in CACHE & PLAY
+  loader.value = id;
+  const result = await fetch(
     `https://text-to-speech-api3.p.rapidapi.com/speak?text=${to}&lang=${langDetected}`,
     {
       method: "GET",
-      key: `${to}`,
       headers: {
         "X-RapidAPI-Key": config.public.XRAPIDAPIKEY,
         "X-RapidAPI-Host": config.public.XRAPIDAPIHOSTTTS,
       },
     }
   );
-  if (data.value) {
-    let blobUrl = URL.createObjectURL(data.value);
-    const audioElement = new Audio(blobUrl);
-    audioElement.playbackRate = rate;
-    audioElement.play();
+  if (result.ok === true) {
+    const cache = await caches.open("flashCardCache");
+    cache.put(
+      `https://text-to-speech-api3.p.rapidapi.com/speak?text=${to}&lang=${langDetected}`,
+      result.clone()
+    );
+    const blob = await result.blob();
+    playBlobResponse(blob, rate);
+    return { play: true, error: null };
+  }
+  /* if (data.value) {
+    console.log("play with fetch", data.value);
+    playBlobResponse(data.value, rate);
     return { play: true, error: null };
   }
   if (error.value) {
     return { play: null, error: error.value };
-  }
+  } */
 }
 
 export function useWordPronounce(text) {

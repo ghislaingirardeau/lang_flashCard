@@ -72,7 +72,7 @@ export default {
         // common with swiper touch
         return elementWithId.includes("swipe-")
           ? cardsStore.removeItem(route.params.id, props.idClass.id)
-          : useTextToPlay(event, props.idClass.id, emit);
+          : useTextToPlay(event, props.idClass.id, emit, cardsStore.languages);
       }
     };
     const onCardHover = (param) => {
