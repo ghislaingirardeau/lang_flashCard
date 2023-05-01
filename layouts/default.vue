@@ -1,107 +1,101 @@
 <template>
-  <div>
-    <Html :lang="head.htmlAttrs.lang" :dir="head.htmlAttrs.dir">
-      <Head>
-        <Title>{{ title }}</Title>
-        <template v-for="link in head.link" :key="link.id">
-          <Link
-            :id="link.id"
-            :rel="link.rel"
-            :href="link.href"
-            :hreflang="link.hreflang"
-          />
-        </template>
-        <template v-for="meta in head.meta" :key="meta.id">
-          <Meta
-            :id="meta.id"
-            :property="meta.property"
-            :content="meta.content"
-          />
-        </template>
-      </Head>
-      <Body>
-        <div id="app_container">
-          <el-container :style="{ height: containerHeight }">
-            <el-header class="header-container">
-              <Transition name="fade" mode="out-in">
-                <h1 class="header-container-title" :key="$route.params.id">
-                  {{
-                    $route.params.id
-                      ? $route.params.id.replaceAll("_", " ")
-                      : "Flash Cards"
-                  }}
-                </h1>
-              </Transition>
-              <!-- <nuxt-link :to="localePath('test')">test</nuxt-link> -->
-              <Transition name="fade" mode="out-in">
-                <Icon
-                  v-if="$route.params.id"
-                  name="mdi:arrow-left-drop-circle-outline"
-                  size="34px"
-                  @click="$router.back()"
-                  class="header-icons"
-                />
-                <Icon
-                  v-else
-                  name="mdi:cog-outline"
-                  size="34px"
-                  class="header-icons"
-                  @click="dialogSettings = true"
-                />
-              </Transition>
-            </el-header>
-            <el-container class="main-container">
-              <el-main><slot /></el-main>
-            </el-container>
+  <Html :lang="head.htmlAttrs.lang" :dir="head.htmlAttrs.dir">
+    <Head>
+      <Title>{{ title }}</Title>
+      <template v-for="link in head.link" :key="link.id">
+        <Link
+          :id="link.id"
+          :rel="link.rel"
+          :href="link.href"
+          :hreflang="link.hreflang"
+        />
+      </template>
+      <template v-for="meta in head.meta" :key="meta.id">
+        <Meta :id="meta.id" :property="meta.property" :content="meta.content" />
+      </template>
+    </Head>
+    <Body>
+      <div id="app_container">
+        <el-container :style="{ height: containerHeight }">
+          <el-header class="header-container">
             <Transition name="fade" mode="out-in">
-              <el-footer
-                class="footer_container footer_container-nav"
-                v-if="$route.params.id"
-              >
-                <TheFooterNav />
-              </el-footer>
-              <el-footer class="footer_container footer_container-home" v-else>
-                <div class="footer_container-home-text">
-                  <p>{{ $t("footer.title") }} gG web dev</p>
-                </div>
-                <div>
-                  <p>
-                    {{ langFrom }}
-                  </p>
-                  <Icon
-                    name="mdi:arrow-up-down-bold-outline"
-                    size="34px"
-                    class="footer-icons"
-                    @click="switchLang"
-                  />
-                  <p>
-                    {{ langTo }}
-                  </p>
-                </div>
-              </el-footer>
+              <h1 class="header-container-title" :key="$route.params.id">
+                {{
+                  $route.params.id
+                    ? $route.params.id.replaceAll("_", " ")
+                    : "Flash Cards"
+                }}
+              </h1>
             </Transition>
-          </el-container>
-          <FormDialog
-            v-model:value="dialogSettings"
-            :doOnConfirm="registerSettings"
-            :title="$t('settings.title')"
-          >
-            <el-form-item :label="$t('settings.languages')">
-              <LazySetLanguage v-model:settings="settings" />
-            </el-form-item>
-            <el-form-item :label="$t('settings.voiceSpeed')">
-              <Lazyel-slider
-                v-model="settings.rate"
-                :step="0.1"
-                :min="0.6"
-                :max="1.2"
+            <nuxt-link :to="localePath('test')">test</nuxt-link>
+            <Transition name="fade" mode="out-in">
+              <Icon
+                v-if="$route.params.id"
+                name="mdi:arrow-left-drop-circle-outline"
+                size="34px"
+                @click="$router.back()"
+                class="header-icons"
               />
-            </el-form-item>
-          </FormDialog>
-        </div>
-      </Body>
-    </Html>
-  </div>
+              <Icon
+                v-else
+                name="mdi:cog-outline"
+                size="34px"
+                class="header-icons"
+                @click="dialogSettings = true"
+              />
+            </Transition>
+          </el-header>
+          <el-container class="main-container">
+            <el-main><slot /></el-main>
+          </el-container>
+          <Transition name="fade" mode="out-in">
+            <el-footer
+              class="footer_container footer_container-nav"
+              v-if="$route.params.id"
+            >
+              <TheFooterNav />
+            </el-footer>
+            <el-footer class="footer_container footer_container-home" v-else>
+              <div class="footer_container-home-text">
+                <p>{{ $t("footer.title") }} gG web dev</p>
+              </div>
+              <div>
+                <p>
+                  {{ langFrom }}
+                </p>
+                <Icon
+                  name="mdi:arrow-up-down-bold-outline"
+                  size="34px"
+                  class="footer-icons"
+                  @click="switchLang"
+                />
+                <p>
+                  {{ langTo }}
+                </p>
+              </div>
+            </el-footer>
+          </Transition>
+        </el-container>
+        <FormDialog
+          v-model:value="dialogSettings"
+          :doOnConfirm="registerSettings"
+          :title="$t('settings.title')"
+        >
+          <el-form-item :label="$t('settings.languages')">
+            <LazySetLanguage v-model:settings="settings" />
+          </el-form-item>
+          <el-form-item :label="$t('settings.voiceSpeed')">
+            <Lazyel-slider
+              v-model="settings.rate"
+              :step="0.1"
+              :min="0.6"
+              :max="1.2"
+            />
+          </el-form-item>
+        </FormDialog>
+      </div>
+    </Body>
+  </Html>
 </template>
 
 <script setup>

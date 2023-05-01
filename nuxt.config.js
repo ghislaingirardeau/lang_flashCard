@@ -47,11 +47,7 @@ export default defineNuxtConfig({
   ],
   // from nuxt module security, to set the rate limit for calling an API
   security: {
-    rateLimiter: {
-      tokensPerInterval: 200,
-      interval: "day",
-      fireImmediately: false,
-    },
+    rateLimiter: false,
   },
   runtimeConfig: {
     public: {
