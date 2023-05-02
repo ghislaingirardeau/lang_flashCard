@@ -43,7 +43,7 @@ export async function useTranslation(text, from, to) {
 export async function usePlayTranslation(to, rate, lang, loader, id) {
   const config = useRuntimeConfig();
 
-  let langDetected = lang ? lang : null;
+  let langDetected = lang ? lang : undefined;
 
   if (!langDetected) {
     //DETECT LANG
@@ -83,7 +83,7 @@ export async function usePlayTranslation(to, rate, lang, loader, id) {
   }
 
   //IF NOT IN CACHE, FETCH, STORE in CACHE & PLAY
-  loader.value = id;
+  loader ? (loader.value = id) : null;
   const result = await fetch(
     `https://text-to-speech-api3.p.rapidapi.com/speak?text=${to}&lang=${langDetected}`,
     {
@@ -103,15 +103,9 @@ export async function usePlayTranslation(to, rate, lang, loader, id) {
     const blob = await result.blob();
     playBlobResponse(blob, rate);
     return { play: true, error: null };
+  } else {
+    return { play: null, error: "Api is not available" };
   }
-  /* if (data.value) {
-    console.log("play with fetch", data.value);
-    playBlobResponse(data.value, rate);
-    return { play: true, error: null };
-  }
-  if (error.value) {
-    return { play: null, error: error.value };
-  } */
 }
 
 export function useWordPronounce(text) {

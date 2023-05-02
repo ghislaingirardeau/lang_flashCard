@@ -64,11 +64,19 @@ const loadCard = computed(() => {
 
 const playSound = async (payload) => {
   // envoie en params le payload de childNode emit onTap + le loader créer
+  const itemId = cardsStore.cardItems[route.params.id].find(
+    (e) => e.id == payload.id
+  );
+
+  let text = payload.side === "left" ? itemId.from : itemId.to;
+
+  let lang = payload.side === "left" ? itemId.langFrom : itemId.langTo;
+
   sideLoader.value = payload.side;
   const { play, error } = await usePlayTranslation(
-    payload.textToTranslate,
+    text,
     cardsStore.languages.rate,
-    payload.lang,
+    lang,
     loader,
     payload.id
   );

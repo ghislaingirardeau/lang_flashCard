@@ -38,6 +38,8 @@ export const useCardsStore = defineStore("cards", {
       useSaveToLs(this.cards, this.cardItems, this.languages);
     },
     addNewItem(category, item) {
+      item.langFrom = this.languages.from.slice(0, 2);
+      item.langTo = this.languages.to.slice(0, 2);
       this.cardItems[category].unshift(item);
       let cardToUpdate = this.cards.find((e) => e.title === category);
       cardToUpdate.lastUpdate = Date.now();

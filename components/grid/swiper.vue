@@ -88,8 +88,7 @@ const endDrag = (event) => {
         useTextToPlay(
           event,
           parseInt(elementWithId.replace("card-", "")),
-          emit,
-          cardsStore.languages
+          emit
         );
         return;
       }
