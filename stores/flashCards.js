@@ -46,7 +46,7 @@ export const useCardsStore = defineStore("cards", {
       cardToUpdate.lastUpdate = Date.now();
       this.cards.sort((a, b) => b.lastUpdate - a.lastUpdate);
 
-      if (this.lastAdded.length > 2) {
+      if (this.lastAdded.length > 6) {
         this.lastAdded.unshift(item);
         this.lastAdded.splice(-1);
       } else {

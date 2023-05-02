@@ -92,12 +92,16 @@
               :max="1.2"
             />
           </el-form-item>
-          <el-form-item label="Clear cache datas">
-            <span style="margin-right: 20px">(not reversible)</span>
+          <span
+            >This app use the browser's caches to give a fast user experience.
+            Currently {{ navigatorStorageUsed }} % is used</span
+          >
+          <el-form-item label="Clean Cache" style="padding-top: 5px">
             <Icon
               name="mdi:trash-can-outline"
-              size="40px"
+              size="34px"
               @click="deleteCache"
+              style="cursor: pointer"
             />
           </el-form-item>
         </FormDialog>
@@ -113,6 +117,7 @@ const { height } = useWindowSize();
 const switchLocalePath = useSwitchLocalePath();
 const i18n = useI18n();
 const settings = ref({});
+const navigatorStorageUsed = ref(0);
 
 // SET HEAD FOR I18N SEO
 const head = useLocaleHead({
@@ -190,6 +195,13 @@ onMounted(() => {
   });
 });
 
+navigator.storage.estimate().then((estimate) => {
+  navigatorStorageUsed.value = (
+    (estimate.usage / estimate.quota) *
+    100
+  ).toFixed(5);
+});
+
 const containerHeight = computed(() => {
   return height.value + "px";
 });
@@ -202,9 +214,11 @@ const langFrom = computed(() => {
 });
 
 const deleteCache = () => {
-  caches.delete("flashCardCache").then((isGone) => {
-    alert("cache has been removed");
-  });
+  if (window.confirm("Clean the audio file ?")) {
+    caches.delete("flashCardCache").then((isGone) => {
+      alert("Cache has been removed");
+    });
+  }
 };
 
 const switchLang = (e) => {
