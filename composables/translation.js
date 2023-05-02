@@ -11,7 +11,8 @@ export async function useTranslation(text, from, to) {
   // state encapsulated and managed by the composable
   const config = useRuntimeConfig();
 
-  const body = {
+  // GOOGLE TRANSLATOR MAX 1000 CALL PER MONTH
+  /* const body = {
     q: text,
     source: from,
     target: to,
@@ -32,6 +33,32 @@ export async function useTranslation(text, from, to) {
   if (data.value)
     return {
       text: data.value.data.translations[0].translatedText,
+      error: null,
+    };
+  if (error.value) {
+    console.log(error);
+    return { text: null, error: error.value };
+  } */
+
+  // TRANSLO MAX 500 000 CHARACTERS PER MONTHS
+  const url = "https://translo.p.rapidapi.com/api/v3/translate";
+  const options = {
+    method: "POST",
+    headers: {
+      "content-type": "application/x-www-form-urlencoded",
+      "X-RapidAPI-Key": config.public.XRAPIDAPIKEY,
+      "X-RapidAPI-Host": config.public.TRANSLO,
+    },
+    body: new URLSearchParams({
+      from: from,
+      to: to,
+      text: text,
+    }),
+  };
+  const { data, error } = await useFetch(url, options);
+  if (data.value)
+    return {
+      text: data.value.translated_text,
       error: null,
     };
   if (error.value) {

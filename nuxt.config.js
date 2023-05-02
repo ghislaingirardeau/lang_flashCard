@@ -55,6 +55,7 @@ export default defineNuxtConfig({
       XRAPIDAPIHOST: process.env.XRAPIDAPIHOST,
       XRAPIDAPIHOSTTTS: process.env.XRAPIDAPIHOSTTTS,
       XRAPIDAPIGOOGLE: process.env.XRAPIDAPIGOOGLE,
+      TRANSLO: process.env.TRANSLO,
     },
   },
   sitemap: {
