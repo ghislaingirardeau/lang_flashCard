@@ -92,6 +92,14 @@
               :max="1.2"
             />
           </el-form-item>
+          <el-form-item label="Clear cache datas">
+            <span style="margin-right: 20px">(not reversible)</span>
+            <Icon
+              name="mdi:trash-can-outline"
+              size="40px"
+              @click="deleteCache"
+            />
+          </el-form-item>
         </FormDialog>
       </div>
     </Body>
@@ -192,6 +200,12 @@ const langTo = computed(() => {
 const langFrom = computed(() => {
   return cardsStore.langFrom;
 });
+
+const deleteCache = () => {
+  caches.delete("flashCardCache").then((isGone) => {
+    alert("cache has been removed");
+  });
+};
 
 const switchLang = (e) => {
   let to = settings.value.to;
