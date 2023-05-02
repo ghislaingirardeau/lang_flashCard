@@ -10,6 +10,7 @@ export default {
   },
   home: {
     newCard: "Tambahkan kartu baru",
+    lastAdd: "penambahan terakhir",
     translation: "Kata-kata",
   },
   settings: {

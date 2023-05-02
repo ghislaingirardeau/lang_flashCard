@@ -1,14 +1,16 @@
 <template>
   <div class="home_container">
-    <el-row @click="openModal" class="newCard_block">
-      <el-col :span="12">
-        <Icon name="mdi:plus-box-outline" size="34px"
-      /></el-col>
-      <el-col :span="8">
-        <span class="newCard_block-text">
+    <el-row class="widget_block">
+      <el-col :span="12" class="widget_block_newCard" @click="openModal">
+        <Icon name="mdi:plus-box-outline" size="34px" />
+        <span class="widget_block_newCard-text">
           {{ $t("home.newCard") }}</span
         ></el-col
       >
+      <el-col :span="12" @click="goToLastAdd"
+        ><Icon name="ic:outline-history" size="34px" />
+        <span class="widget_block_newCard-text">{{ $t("home.lastAdd") }}</span>
+      </el-col>
     </el-row>
 
     <div class="cards_block">
@@ -71,18 +73,13 @@ watch(cardForm, (title) => {
     return (validNewCardTitle.value = true);
 });
 
-const goToItem = (title) => {
+const goToLastAdd = () => {
   navigateTo(
     localePath({
       name: "card-id",
-      params: { id: title },
+      params: { id: t("home.lastAdd") },
     })
   );
-};
-
-const getDate = (params) => {
-  let d = new Date(params);
-  return d.toString();
 };
 
 const cardNumberItems = (params) => {
@@ -119,20 +116,27 @@ const openModal = () => {
   position: relative;
 }
 .el-row {
-  padding: 10px;
+  padding: 0px;
   border-bottom: 1px solid white;
   align-items: center;
   min-height: 60px;
   text-align: center;
   width: 100%;
 }
-.newCard_block {
+
+.widget_block {
   position: sticky;
   background-color: $colorFourth;
   z-index: 10;
+
   cursor: pointer;
-  &-text {
+  &_newCard {
+    padding: 10px;
+    border-right: 1px solid white;
+  }
+  &_newCard-text {
     color: $colorThird;
+    margin-left: 10px;
   }
 }
 .newCard_content {

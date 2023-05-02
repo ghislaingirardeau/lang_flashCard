@@ -51,7 +51,7 @@
           <Transition name="fade" mode="out-in">
             <el-footer
               class="footer_container footer_container-nav"
-              v-if="$route.params.id"
+              v-if="$route.params.id && $route.params.id != $t('home.lastAdd')"
             >
               <TheFooterNav />
             </el-footer>

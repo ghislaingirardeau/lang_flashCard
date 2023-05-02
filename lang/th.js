@@ -10,6 +10,7 @@ export default {
   },
   home: {
     newCard: "เพิ่มการ์ดใหม่",
+    lastAdd: "เพิ่มครั้งสุดท้าย",
     translation: "คำ",
   },
   settings: {

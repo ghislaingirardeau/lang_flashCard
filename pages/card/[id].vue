@@ -47,7 +47,7 @@ const route = useRoute();
 useHead({
   titleTemplate: `Card-${route.params.id}`, // %s GET THE TITLE AND ADD THIS
 });
-
+const { t } = useI18n();
 const cardsStore = useCardsStore();
 const loader = ref(0);
 const sideLoader = ref(null);
@@ -59,14 +59,17 @@ const helpPronouce = computed(() => {
 });
 
 const loadCard = computed(() => {
-  return cardsStore.cardItems[route.params.id];
+  return route.params.id === t("home.lastAdd")
+    ? cardsStore.lastAdded
+    : cardsStore.cardItems[route.params.id];
 });
 
 const playSound = async (payload) => {
   // envoie en params le payload de childNode emit onTap + le loader créer
-  const itemId = cardsStore.cardItems[route.params.id].find(
-    (e) => e.id == payload.id
-  );
+  const itemId =
+    route.params.id === t("home.lastAdd")
+      ? cardsStore.lastAdded.find((e) => e.id == payload.id)
+      : cardsStore.cardItems[route.params.id].find((e) => e.id == payload.id);
 
   let text = payload.side === "left" ? itemId.from : itemId.to;
 

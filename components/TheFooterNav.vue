@@ -56,35 +56,35 @@
 </template>
 
 <script setup>
-    const route = useRoute();
-    const loader = ref(0);
-    const toInput = ref(false);
-    const cardsStore = useCardsStore();
-    const loadCard = computed(() => {
-      return cardsStore.cardItems[route.params.id];
-    });
+const route = useRoute();
+const loader = ref(0);
+const toInput = ref(false);
+const cardsStore = useCardsStore();
+const loadCard = computed(() => {
+  return cardsStore.cardItems[route.params.id];
+});
 
-    const switchToInput = (e) => {
-      toInput.value = !toInput.value;
-      let list = document.querySelectorAll(".rotate-icon");
-      list.forEach((element) => {
-        element.classList.add("rotate-icon-animate");
-      });
-    };
+const switchToInput = (e) => {
+  toInput.value = !toInput.value;
+  let list = document.querySelectorAll(".rotate-icon");
+  list.forEach((element) => {
+    element.classList.add("rotate-icon-animate");
+  });
+};
 
-    const playAllSound = async () => {
-      const allText = loadCard.value.map((e) => e.to);
+/* const playAllSound = async () => {
+  const allText = loadCard.value.map((e) => e.to);
 
-      loader.value = 1;
+  loader.value = 1;
 
-      for (let index = 0; index < allText.length; index++) {
-        const { play, error } = await usePlayTranslation(
-          allText[index],
-          cardsStore.languages.rate
-        );
-      }
-      loader.value = 0;
-    };
+  for (let index = 0; index < allText.length; index++) {
+    const { play, error } = await usePlayTranslation(
+      allText[index],
+      cardsStore.languages.rate
+    );
+  }
+  loader.value = 0;
+}; */
 </script>
 
 <style lang="scss" scoped>

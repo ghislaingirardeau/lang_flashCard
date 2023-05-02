@@ -10,6 +10,7 @@ export default {
   },
   home: {
     newCard: "ផែនទីថ្មី។",
+    lastAdd: "បន្ថែមចុងក្រោយ",
     translation: "ពាក្យ",
   },
   settings: {

@@ -10,6 +10,7 @@ export default {
   },
   home: {
     newCard: "Nouvelle carte",
+    lastAdd: "Derniers Ajouts",
     translation: "Mots",
   },
   settings: {
