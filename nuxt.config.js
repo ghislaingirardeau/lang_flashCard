@@ -30,9 +30,9 @@ export default defineNuxtConfig({
     "nuxt-icon",
     "@vite-pwa/nuxt",
     "@element-plus/nuxt",
-    "@nuxt/devtools",
+    /* "@nuxt/devtools", */ // if use, not possible to access vue inside devtool
     "nuxt-simple-sitemap",
-    "nuxt-security",
+    "nuxt-security", // il active => nuxt/devtools doesnt work
     /* "@nuxtjs/robots", */ // BUG
     "@nuxtjs/i18n",
     [
@@ -62,14 +62,14 @@ export default defineNuxtConfig({
   },
   pwa: {
     meta: {
-      title: "My Vocabulary Cardsuage",
+      title: "My Vocabulary Cards",
       author: "gg web dev",
     },
     manifest: {
-      name: "My Vocabulary Cardsuage",
+      name: "My Vocabulary Cards",
       short_name: "My Vocabulary Cards",
       lang: "en",
-      description: "My Vocabulary Cardsuage",
+      description: "My Vocabulary Cards",
       theme_color: "#6fffe9",
       icons: [
         {
