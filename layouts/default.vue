@@ -189,8 +189,6 @@ navigator.storage.estimate().then((estimate) => {
   ).toFixed(5);
 });
 
-console.log(useStorageEstimation());
-
 const containerHeight = computed(() => {
   return height.value + "px";
 });
@@ -252,4 +250,20 @@ const registerSettings = (payload) => {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.header-container {
+  background-color: $colorSecondary;
+  color: $colorPrimary;
+  padding-top: 10px;
+  position: relative;
+  height: 55px;
+  border-bottom: 1px solid rgb(255, 255, 255);
+  &-title {
+    padding-left: 10px;
+    font-size: 28px;
+    width: 50%;
+    display: inline;
+    font-family: $fontSecondary;
+  }
+}
+</style>
