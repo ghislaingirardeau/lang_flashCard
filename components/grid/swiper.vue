@@ -28,10 +28,10 @@ const idCard = (id) => {
     : cardsStore.cards.find((e) => e.id === parseInt(id));
 };
 
-const doOnClickDelete = (param, id) => {
+const doOnClickDelete = (param, id, remember) => {
   param
     ? cardsStore.removeCard(param, id)
-    : cardsStore.removeItem(route.params.id, id);
+    : cardsStore.removeItem(route.params.id, id, remember);
 };
 
 const startDrag = (event) => {
@@ -63,10 +63,17 @@ const endDrag = (event) => {
     // get the first parent with an id
     let cardDetails;
 
-    if (elementWithId.includes("swipe-")) {
+    if (elementWithId.includes("delete-")) {
       // if id includes swipe = so it's a click on delete block
-      cardDetails = idCard(elementWithId.replace("swipe-", ""));
-      doOnClickDelete(cardDetails.title, cardDetails.id);
+      cardDetails = idCard(elementWithId.replace("delete-", ""));
+      doOnClickDelete(cardDetails.title, cardDetails.id, false);
+      return;
+    }
+    if (elementWithId.includes("remember-")) {
+      // if id includes swipe = so it's a click on delete block
+      cardDetails = idCard(elementWithId.replace("remember-", ""));
+      console.log("memorise this element & delete", cardDetails);
+      doOnClickDelete(cardDetails.title, cardDetails.id, true);
       return;
     }
     if (elementWithId.includes("card-")) {
@@ -83,7 +90,10 @@ const endDrag = (event) => {
         // if on id route
         // common with row click
         document
-          .getElementById(`swipe-${elementWithId.replace("card-", "")}`)
+          .getElementById(`delete-${elementWithId.replace("card-", "")}`)
+          ?.classList.add("hide");
+        document
+          .getElementById(`remember-${elementWithId.replace("card-", "")}`)
           ?.classList.add("hide");
         useTextToPlay(
           event,
@@ -105,6 +115,7 @@ const scrollElement = (event) => {
 
   // si tu scroll sur un coté : hide or unhide the delete option et tu arretes la fonction
   if (defineTouchX > 50) {
+    console.log("hide");
     useAnimDeleteIcon(
       elementWithId.replace("card-", ""),
       onRouteHome.value,

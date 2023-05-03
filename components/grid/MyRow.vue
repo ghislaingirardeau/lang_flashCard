@@ -10,18 +10,26 @@
   >
     <slot></slot>
     <div
-      :id="`swipe-${idClass.id}`"
+      :id="`delete-${idClass.id}`"
       class="block_swipe_card hide"
       :class="{
-        'block_swipe_card-hide-bis': onRouteHome,
-        'block_swipe_card-hide': !onRouteHome,
+        'block_swipe_card-cross': onRouteHome,
+        'block_swipe_card-delete': !onRouteHome,
       }"
+      v-if="$route.params.id != $t('home.lastAdd')"
     >
       <Icon
         :name="`${append}`"
         size="34px"
         :class="{ 'anim-delete-enter': onRouteHome }"
       />
+    </div>
+    <div
+      :id="`remember-${idClass.id}`"
+      class="block_swipe_card block_swipe_card-memory hide"
+      v-if="$route.params.id != $t('home.lastAdd')"
+    >
+      <Icon name="mdi:thumb-up-outline" size="34px" />
     </div>
   </div>
 </template>
@@ -60,7 +68,7 @@ export default {
     const onCardClick = (event) => {
       let elementWithId = useFindEltId(event.target);
       if (onRouteHome.value) {
-        return elementWithId.includes("swipe-")
+        return elementWithId.includes("delete-")
           ? cardsStore.removeCard(props.idClass.title, props.idClass.id)
           : navigateTo(
               localePath({
@@ -70,9 +78,23 @@ export default {
             );
       } else {
         // common with swiper touch
-        return elementWithId.includes("swipe-")
-          ? cardsStore.removeItem(route.params.id, props.idClass.id)
-          : useTextToPlay(event, props.idClass.id, emit);
+        if (elementWithId.includes("remember-")) {
+          console.log("memorise this element & delete", props.idClass.id);
+          cardsStore.removeItem(route.params.id, props.idClass.id, true);
+          return;
+        }
+        if (elementWithId.includes("delete-")) {
+          cardsStore.removeItem(route.params.id, props.idClass.id, false);
+          return;
+        } else {
+          document
+            .getElementById(`delete-${props.idClass.id}`)
+            ?.classList.add("hide");
+          document
+            .getElementById(`remember-${props.idClass.id}`)
+            ?.classList.add("hide");
+          useTextToPlay(event, props.idClass.id, emit);
+        }
       }
     };
     const onCardHover = (param) => {
@@ -130,7 +152,15 @@ export default {
     font-size: 16px;
     transition: all 0.5s ease;
     padding: 3px 3px;
-    &-hide {
+    &-memory {
+      border-left: 2px solid $colorFourth;
+      background-color: $colorPrimary;
+      width: 16.66%;
+      & > svg {
+        color: $colorFourth;
+      }
+    }
+    &-delete {
       border-left: 2px solid $colorFith;
       background-color: $colorPrimary;
       border-radius: 70% 0% 0% 40%;
@@ -139,7 +169,7 @@ export default {
         color: $colorFourth;
       }
     }
-    &-hide-bis {
+    &-cross {
       width: 25%;
       overflow: hidden;
       & > svg {
