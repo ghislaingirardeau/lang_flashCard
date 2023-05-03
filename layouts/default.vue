@@ -57,7 +57,14 @@
             </el-footer>
             <el-footer class="footer_container footer_container-home" v-else>
               <div class="footer_container-home-text">
-                <p>{{ $t("footer.title") }} gG web dev</p>
+                <p v-if="remember > 0">
+                  {{
+                    $t("footer.remember", {
+                      number: remember,
+                    })
+                  }}
+                </p>
+                <p v-else>{{ $t("footer.title") }} gG web dev</p>
               </div>
               <div>
                 <p>
@@ -92,11 +99,13 @@
               :max="1.2"
             />
           </el-form-item>
-          <span
-            >This app use the browser's caches to give a fast user experience.
-            Currently {{ navigatorStorageUsed }} % is used</span
+          <span>{{
+            $t("settings.cacheNote", { percent: navigatorStorageUsed })
+          }}</span>
+          <el-form-item
+            :label="$t('settings.cacheLabel')"
+            style="padding-top: 5px"
           >
-          <el-form-item label="Clean Cache" style="padding-top: 5px">
             <Icon
               name="mdi:trash-can-outline"
               size="34px"
@@ -211,6 +220,11 @@ const langTo = computed(() => {
 });
 const langFrom = computed(() => {
   return cardsStore.langFrom;
+});
+const remember = computed(() => {
+  return cardsStore.languages.remember
+    ? cardsStore.languages.remember
+    : undefined;
 });
 
 const deleteCache = () => {

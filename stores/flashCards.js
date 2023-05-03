@@ -2,7 +2,7 @@ import { useSaveToLs } from "@/composables/saveToLS";
 
 export const useCardsStore = defineStore("cards", {
   state: () => ({
-    languages: { from: "fr-FR", to: "km-KM", recorder: false, rate: 1 },
+    languages: { from: "fr-FR", to: "km-KM", remember: 0, rate: 1 },
     cards: [],
     cardItems: {},
     lastAdded: [],
@@ -54,7 +54,9 @@ export const useCardsStore = defineStore("cards", {
       }
       useSaveToLs(this.cards, this.cardItems, this.languages, this.lastAdded);
     },
-    removeItem(category, id) {
+    removeItem(category, id, remember) {
+      this.languages.remember ? null : (this.languages.remember = 0);
+      remember ? this.languages.remember++ : null;
       this.cardItems[category] = this.cardItems[category].filter(
         (e) => e.id != id
       );
