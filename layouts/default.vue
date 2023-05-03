@@ -146,6 +146,7 @@ onMounted(() => {
   breakpoints.smallerOrEqual("xl").value
     ? (styleBody.marginInline = "0px")
     : (styleBody.marginInline = "300px");
+
   window.isUpdateAvailable = new Promise(function (resolve, reject) {
     // lazy way of disabling service workers while developing
     if ("serviceWorker" in navigator) {
@@ -188,10 +189,11 @@ navigator.storage.estimate().then((estimate) => {
   ).toFixed(5);
 });
 
+console.log(useStorageEstimation());
+
 const containerHeight = computed(() => {
   return height.value + "px";
 });
-
 
 const deleteCache = () => {
   if (window.confirm("Clean the audio file ?")) {
@@ -250,73 +252,4 @@ const registerSettings = (payload) => {
 };
 </script>
 
-<style lang="scss">
-.header-container {
-  background-color: $colorSecondary;
-  color: $colorPrimary;
-  padding-top: 10px;
-  position: relative;
-  height: 55px;
-  border-bottom: 1px solid rgb(255, 255, 255);
-  &-title {
-    padding-left: 10px;
-    font-size: 28px;
-    width: 50%;
-    display: inline;
-    font-family: $fontSecondary;
-  }
-}
-.main-container {
-  height: 50%;
-}
-.el-main {
-  padding: 0px;
-}
-.footer_container {
-  border-top: 1px solid rgb(255, 255, 255);
-  &-nav {
-    height: 120px;
-    background-color: $colorSecondary;
-    padding-top: 15px;
-  }
-  &-home {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: $colorSecondary;
-    color: $colorPrimary;
-    font-family: $fontSecondary;
-    font-size: 20px;
-    min-height: 64px;
-    & p {
-      display: inline;
-    }
-    &-text {
-      max-width: 200px;
-    }
-  }
-}
-.header-icons {
-  position: absolute;
-  cursor: pointer;
-  right: 20px;
-}
-.footer-icons {
-  cursor: pointer;
-  transform: translateY(-5px) rotateZ(90deg);
-  margin-inline: 10px 10px;
-  &-animate {
-    animation: rotate-switcher 1s ease both;
-  }
-}
-
-@keyframes rotate-switcher {
-  0% {
-    transform: translateY(-5px) rotateZ(90deg);
-    opacity: 0.2;
-  }
-  100% {
-    transform: translateY(-5px) rotateZ(270deg);
-  }
-}
-</style>
+<style lang="scss"></style>
