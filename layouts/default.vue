@@ -56,30 +56,7 @@
               <TheFooterNav />
             </el-footer>
             <el-footer class="footer_container footer_container-home" v-else>
-              <div class="footer_container-home-text">
-                <p v-if="remember > 0">
-                  {{
-                    $t("footer.remember", {
-                      number: remember,
-                    })
-                  }}
-                </p>
-                <p v-else>{{ $t("footer.title") }} gG web dev</p>
-              </div>
-              <div>
-                <p>
-                  {{ langFrom }}
-                </p>
-                <Icon
-                  name="mdi:arrow-up-down-bold-outline"
-                  size="34px"
-                  class="footer-icons"
-                  @click="switchLang"
-                />
-                <p>
-                  {{ langTo }}
-                </p>
-              </div>
+              <TheFooterHome :switchLang="switchLang" />
             </el-footer>
           </Transition>
         </el-container>
@@ -215,17 +192,6 @@ const containerHeight = computed(() => {
   return height.value + "px";
 });
 
-const langTo = computed(() => {
-  return cardsStore.langTo;
-});
-const langFrom = computed(() => {
-  return cardsStore.langFrom;
-});
-const remember = computed(() => {
-  return cardsStore.languages.remember
-    ? cardsStore.languages.remember
-    : undefined;
-});
 
 const deleteCache = () => {
   if (window.confirm("Clean the audio file ?")) {
@@ -268,7 +234,12 @@ const registerSettings = (payload) => {
   if (payload) {
     const { from, to, rate } = settings.value;
 
-    cardsStore.setParams({ from, to, rate, remember: cardsStore.languages.remember });
+    cardsStore.setParams({
+      from,
+      to,
+      rate,
+      remember: cardsStore.languages.remember,
+    });
     // if the from language change
     if (i18n.locale.value != settings.value.from.slice(0, 2)) {
       navigateTo(switchLocalePath(cardsStore.languages.from.slice(0, 2)));
