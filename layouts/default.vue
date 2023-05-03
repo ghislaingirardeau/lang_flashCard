@@ -268,7 +268,7 @@ const registerSettings = (payload) => {
   if (payload) {
     const { from, to, rate } = settings.value;
 
-    cardsStore.setParams({ from, to, rate });
+    cardsStore.setParams({ from, to, rate, remember: cardsStore.languages.remember });
     // if the from language change
     if (i18n.locale.value != settings.value.from.slice(0, 2)) {
       navigateTo(switchLocalePath(cardsStore.languages.from.slice(0, 2)));
