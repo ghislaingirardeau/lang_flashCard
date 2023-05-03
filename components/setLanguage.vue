@@ -4,7 +4,7 @@
       <el-col :span="10">
         <el-select v-model="settings.from" class="m-2" placeholder="Select">
           <el-option
-            v-for="item in options"
+            v-for="item in langList"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -15,7 +15,7 @@
       <el-col :span="10">
         <el-select v-model="settings.to" class="m-2" placeholder="Select">
           <el-option
-            v-for="item in options"
+            v-for="item in langList"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -26,40 +26,39 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    settings: Object,
+<script setup>
+const props = defineProps({
+  settings: {
+    type: Object,
+    required: true,
   },
-  setup() {
-    const options = reactive([
-      {
-        label: "French",
-        value: "fr-FR",
-      },
-      {
-        label: "Khmer",
-        value: "km-KM",
-      },
-      {
-        label: "English",
-        value: "en-GB",
-      },
-      {
-        label: "Thai",
-        value: "th-TH",
-      },
-      {
-        label: "Indonesian",
-        value: "id-ID",
-      },
-    ]);
+});
+const { t } = useI18n();
 
-    return {
-      options,
-    };
-  },
-};
+const langList = computed(() => {
+  return [
+    {
+      label: t("languages.fr"),
+      value: "fr-FR",
+    },
+    {
+      label: t("languages.km"),
+      value: "km-KM",
+    },
+    {
+      label: t("languages.en"),
+      value: "en-GB",
+    },
+    {
+      label: t("languages.th"),
+      value: "th-TH",
+    },
+    {
+      label: t("languages.id"),
+      value: "id-ID",
+    },
+  ];
+});
 </script>
 
 <style lang="scss" scoped>

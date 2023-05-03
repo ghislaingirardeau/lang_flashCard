@@ -4,8 +4,16 @@ export default {
     content:
       "Create and custom your own vocabulary. My vocabulary cards is a web app to help you learning a new langagues. My vocabulary cards translate, spell at cutom rates and save word or expression you want to learn into customable card.",
   },
+  languages: {
+    fr: "French",
+    en: "English",
+    km: "Khmer",
+    th: "Thai",
+    id: "Bahasa ind",
+  },
   footer: {
     title: "Create by",
+    remember: "You remember {number} words !",
     translate: "Text to translate",
   },
   home: {
@@ -18,6 +26,9 @@ export default {
     languages: "languages",
     to: "to",
     voiceSpeed: "Voice speed",
+    cacheLabel: "Clean cache",
+    cacheNote:
+      "This app use the browser's caches to give a fast user experience. Currently { percent }% is used.",
   },
   dialog: {
     confirm: "Confirm",
