@@ -2,9 +2,11 @@
   <div id="helpModal" class="modal_help">
     <div class="modal_action">
       <span class="modal_action-close">&times;</span>
-      <button class="modal_action-btn" @click="changeTuto">
-        {{ tutoPage === 2 ? "End" : "Next" }}
-      </button>
+      <Transition name="fade" mode="out-in">
+        <button :key="tutoPage" class="modal_action-btn" @click="changeTuto">
+          {{ switchContent }}
+        </button>
+      </Transition>
     </div>
 
     <div v-if="$route.params.id" class="modal_tuto">
@@ -102,103 +104,74 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      tutorialsAction: [
+<script setup>
+const tutoPage = ref(1);
+const route = useRoute();
+const emit = defineEmits();
+
+const tutoLength = computed(() => {
+  return route.params.id ? 3 : 2;
+});
+
+const switchContent = computed(() => {
+  return tutoPage.value === tutoLength.value ? "End" : "Next";
+});
+
+const changeTuto = () => {
+  tutoPage.value === tutoLength.value ? (tutoPage.value = 1) : tutoPage.value++;
+};
+
+const helpModal = () => {
+  let modal = document.getElementById("helpModal");
+  let span = document.getElementsByClassName("modal_action-close")[0];
+
+  const resetModal = (display, span, reverse) => {
+    display.animate(
+      [{ opacity: `${reverse ? 1 : 0}` }, { opacity: `${reverse ? 0 : 1}` }],
+      {
+        duration: 300,
+        fill: "both",
+      }
+    );
+    span.animate(
+      [
         {
-          title: "My location -->",
-          text: "Find my position",
+          transform: `rotateZ(${reverse ? 0 : -90}deg)`,
+          transformOrigin: "center",
         },
         {
-          title: "Track me -->",
-          text: "Track my position",
-        },
-        {
-          title: "Add manualy -->",
-          text: "Add one or multiple point",
+          transform: `rotateZ(${reverse ? -90 : 0}deg)`,
+          transformOrigin: "center",
         },
       ],
-      tutoPage: 1,
-    };
-  },
-  props: {
-    showTutorial: Boolean,
-  },
-  watch: {
-    showTutorial(newValue) {
-      newValue ? this.helpModal() : "";
-    },
-  },
-  methods: {
-    helpModal() {
-      // affiche un message lors du click
-      var modal = document.getElementById("helpModal");
-      var span = document.getElementsByClassName("modal_action-close")[0];
+      {
+        duration: 300,
+        fill: "both",
+      }
+    );
+  };
 
-      const resetModal = (display, span, reverse) => {
-        display.animate(
-          [
-            { opacity: `${reverse ? 1 : 0}` },
-            { opacity: `${reverse ? 0 : 1}` },
-          ],
-          {
-            duration: 400,
-            fill: "both",
-          }
-        );
-        span.animate(
-          [
-            { transform: `rotateZ(${reverse ? 0 : -90}deg)` },
-            { transform: `rotateZ(${reverse ? -90 : 0}deg)` },
-          ],
-          {
-            duration: 300,
-            fill: "both",
-          }
-        );
-        window.setTimeout(
-          () => {
-            display.style.display = reverse ? "none" : "block";
-          },
-          reverse ? 350 : 0
-        );
-      };
+  resetModal(modal, span, false);
 
-      resetModal(modal, span, false);
-
-      let element = document.getElementsByClassName("animationOpacityBtn");
-      span.onclick = () => {
-        resetModal(modal, span, true);
-        this.$emit("send-tuto", {
-          message: false,
-        });
-      };
-      window.onclick = (event) => {
-        if (event.target == modal) {
-          resetModal(modal, span, true);
-        }
-        this.$emit("send-tuto", {
-          message: false,
-        });
-      };
-    },
-    changeTuto() {
-      this.tutoPage === 3 ? (this.tutoPage = 1) : this.tutoPage++;
-    },
-  },
-  mounted() {
-    console.log(this.$route.params);
-  },
+  span.onclick = () => {
+    resetModal(modal, span, true);
+    setTimeout(() => {
+      emit("send-tuto", {
+        message: false,
+      });
+    }, 300);
+  };
 };
+onMounted(() => {
+  helpModal();
+});
 </script>
 
 <style lang="scss" scoped>
 // STYLE THE MODAL
 /* The Modal (background) */
 .modal_help {
-  display: none; /* Hidden by default */
+  display: block; /* Hidden by default */
   opacity: 0;
   position: fixed; /* Stay in place */
   z-index: 100; /* Sit on top */
@@ -365,9 +338,8 @@ export default {
   &-close {
     z-index: 101;
     position: absolute;
-    left: 3px;
+    left: 15px;
     top: -17px;
-    width: 60px;
     color: rgb(255, 255, 255);
     text-align: center;
     font-size: 62px;

@@ -3,40 +3,40 @@
     <el-container :style="{ height: containerHeight }">
       <el-header class="header-container">
         <Transition name="fade" mode="out-in">
-          <h1 class="header-container-title" :key="$route.params.id">
-            {{
-              $route.params.id
-                ? $route.params.id.replaceAll("_", " ")
-                : "Flash Cards"
-            }}
-          </h1>
+          <div :key="$route.params.id" style="display: unset">
+            <h1 class="header-container-title">
+              {{
+                $route.params.id
+                  ? $route.params.id.replaceAll("_", " ")
+                  : "Flash Cards"
+              }}
+            </h1>
+            <Icon
+              name="material-symbols:help-outline"
+              size="34px"
+              class="header-help"
+              @click="showTutorial = true"
+            />
+            <Icon
+              v-if="$route.params.id"
+              name="mdi:arrow-left-drop-circle-outline"
+              size="34px"
+              @click="$router.back()"
+              class="header-icons"
+            />
+            <Icon
+              v-else
+              name="mdi:cog-outline"
+              size="34px"
+              class="header-icons"
+              @click="dialogSettings = true"
+            />
+          </div>
         </Transition>
         <!-- <nuxt-link :to="localePath('test')">test</nuxt-link> -->
-        <Icon
-          name="material-symbols:help-outline"
-          size="34px"
-          class="header-help"
-          @click="showTutorial = true"
-        />
-        <Transition name="fade" mode="out-in">
-          <Icon
-            v-if="$route.params.id"
-            name="mdi:arrow-left-drop-circle-outline"
-            size="34px"
-            @click="$router.back()"
-            class="header-icons"
-          />
-          <Icon
-            v-else
-            name="mdi:cog-outline"
-            size="34px"
-            class="header-icons"
-            @click="dialogSettings = true"
-          />
-        </Transition>
       </el-header>
       <el-container class="main-container">
-        <LazyTheTutorial :showTutorial="showTutorial" @send-tuto="closeTuto" />
+        <LazyTheTutorial v-if="showTutorial" @send-tuto="closeTuto" />
         <el-main><slot /></el-main>
       </el-container>
       <Transition name="fade" mode="out-in">
