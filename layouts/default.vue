@@ -12,6 +12,12 @@
           </h1>
         </Transition>
         <!-- <nuxt-link :to="localePath('test')">test</nuxt-link> -->
+        <Icon
+          name="material-symbols:help-outline"
+          size="34px"
+          class="header-help"
+          @click="showTutorial = true"
+        />
         <Transition name="fade" mode="out-in">
           <Icon
             v-if="$route.params.id"
@@ -30,6 +36,7 @@
         </Transition>
       </el-header>
       <el-container class="main-container">
+        <LazyTheTutorial :showTutorial="showTutorial" @send-tuto="closeTuto" />
         <el-main><slot /></el-main>
       </el-container>
       <Transition name="fade" mode="out-in">
@@ -83,6 +90,7 @@ const switchLocalePath = useSwitchLocalePath();
 const i18n = useI18n();
 const settings = ref({});
 const navigatorStorageUsed = ref(0);
+const showTutorial = ref(false);
 
 // SET HEAD FOR I18N SEO
 const head = useLocaleHead({
@@ -183,6 +191,10 @@ const deleteCache = () => {
       alert("Cache has been removed");
     });
   }
+};
+
+const closeTuto = () => {
+  showTutorial.value = false;
 };
 
 const switchLang = (e) => {
