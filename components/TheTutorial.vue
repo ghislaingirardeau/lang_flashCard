@@ -96,7 +96,7 @@
               <h2>See qucikly your last added word</h2>
             </div>
             <div class="modal_tuto-lastRemember-contentDown">
-              <h2>Numbers of word you consider has known</h2>
+              <h2>Numbers of word you consider as known</h2>
             </div>
             <img
               src="@/assets/arrow4.svg"
