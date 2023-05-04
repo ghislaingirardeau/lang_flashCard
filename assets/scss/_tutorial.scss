@@ -1,0 +1,195 @@
+// STYLE THE MODAL
+/* The Modal (background) */
+.modal_help {
+    display: block; /* Hidden by default */
+    opacity: 0;
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+    font-family: "Architects Daughter", cursive;
+  }
+  
+  /* Modal Content/Box */
+  
+  .modal_tuto {
+    z-index: 101;
+  
+    height: 100%;
+    width: 100%;
+    &-cardSwitch {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      color: rgb(255, 255, 255);
+      &-arrowup {
+        position: absolute;
+        text-align: left;
+        left: 100px;
+        top: 50px;
+        width: 50%;
+      }
+      &-contentUp {
+        position: absolute;
+        text-align: left;
+        left: 30px;
+        top: 210px;
+        width: 70%;
+      }
+      &-contentDown {
+        position: absolute;
+        text-align: left;
+        right: 10px;
+        bottom: 140px;
+        width: 70%;
+      }
+      &-arrowdown {
+        position: absolute;
+        text-align: left;
+        right: 120px;
+        bottom: 20px;
+        width: 30%;
+        transform: rotateZ(180deg);
+      }
+    }
+    &-lastRemember {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      color: rgb(255, 255, 255);
+      &-arrowup {
+        position: absolute;
+        text-align: left;
+        left: 90px;
+        top: 60px;
+        width: 50%;
+        transform: rotateY(180deg);
+      }
+      &-contentUp {
+        position: absolute;
+        text-align: left;
+        left: 30px;
+        top: 240px;
+        width: 70%;
+      }
+      &-contentDown {
+        position: absolute;
+        text-align: left;
+        right: 20px;
+        bottom: 160px;
+        width: 70%;
+      }
+      &-arrowdown {
+        position: absolute;
+        text-align: left;
+        right: 70px;
+        bottom: 20px;
+        width: 30%;
+        transform: rotateZ(180deg) rotateY(180deg);
+      }
+    }
+    &-recorder {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      color: rgb(255, 255, 255);
+      &-arrowup {
+        position: absolute;
+        text-align: left;
+        right: -40px;
+        bottom: 90px;
+        width: 60%;
+        transform: rotateZ(160deg) rotateY(180deg);
+      }
+      &-contentUp {
+        position: absolute;
+        text-align: left;
+        right: 30px;
+        bottom: 320px;
+        width: 70%;
+      }
+      &-contentDown {
+        position: absolute;
+        text-align: left;
+        left: 10px;
+        bottom: 220px;
+        width: 70%;
+      }
+      &-arrowdown {
+        position: absolute;
+        text-align: left;
+        left: -40px;
+        bottom: 60px;
+        width: 50%;
+        transform: rotateZ(200deg);
+      }
+    }
+    &-word {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      color: rgb(255, 255, 255);
+      &-tap {
+        position: absolute;
+        text-align: left;
+        left: 240px;
+        top: 70px;
+      }
+      &-contentLeft {
+        position: absolute;
+        text-align: left;
+        left: 20px;
+        top: 150px;
+        width: 90%;
+      }
+      &-contentRight {
+        position: absolute;
+        text-align: left;
+        right: 5px;
+        top: 150px;
+        width: 90%;
+      }
+      &-swipe {
+        position: absolute;
+        text-align: left;
+        left: 80px;
+        top: 70px;
+      }
+    }
+  }
+  
+  /* The Close Button */
+  .modal_action {
+    &-close {
+      z-index: 101;
+      position: absolute;
+      left: 15px;
+      top: -17px;
+      color: rgb(255, 255, 255);
+      text-align: center;
+      font-size: 62px;
+      &:hover,
+      &:focus {
+        color: rgb(151, 151, 151);
+        text-decoration: none;
+        cursor: pointer;
+      }
+    }
+    &-btn {
+      z-index: 101;
+      position: absolute;
+      right: 60px;
+      top: 10px;
+      font-size: 20px;
+      padding: 6px 8px;
+      border: 2px white solid;
+      border-radius: 4px 4px;
+      background-color: $colorSecondary;
+      color: white;
+    }
+  }

@@ -34,3 +34,17 @@
 .fade-leave-to {
   opacity: 0;
 }
+
+.slideY-enter-active,
+.slideY-leave-active {
+  transition: all 0.4s ease;
+}
+
+.slideY-leave-to {
+  opacity: 0;
+  transform: translate(10px, 0px);
+}
+.slideY-enter-from {
+  opacity: 0;
+  transform: translate(-10px, 0px);
+}
