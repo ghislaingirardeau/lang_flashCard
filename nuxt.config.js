@@ -11,9 +11,9 @@ export default defineNuxtConfig({
     pageTransition: { name: "page", mode: "out-in" },
   },
   vite: {
+    runtimeOnly: false,
     define: {
       "process.env.DEBUG": false,
-      runtimeOnly: false,
     },
     css: {
       preprocessorOptions: {
