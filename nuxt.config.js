@@ -11,7 +11,6 @@ export default defineNuxtConfig({
     pageTransition: { name: "page", mode: "out-in" },
   },
   vite: {
-    runtimeOnly: false,
     define: {
       "process.env.DEBUG": false,
     },
@@ -19,6 +18,13 @@ export default defineNuxtConfig({
       preprocessorOptions: {
         scss: {
           additionalData: '@use "@/assets/scss/_main.scss" as *;',
+        },
+      },
+    },
+    resolve: {
+      alias: {
+        vueI18n: {
+          runtimeOnly: false,
         },
       },
     },

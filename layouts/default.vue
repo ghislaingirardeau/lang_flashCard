@@ -16,12 +16,14 @@
               size="34px"
               class="header-help"
               @click="showTutorial = true"
+              @touchStart="showTutorial = true"
             />
             <Icon
               v-if="$route.params.id"
               name="mdi:arrow-left-drop-circle-outline"
               size="34px"
               @click="$router.back()"
+              @touchStart="$router.back()"
               class="header-icons"
             />
             <Icon
@@ -30,6 +32,7 @@
               size="34px"
               class="header-icons"
               @click="dialogSettings = true"
+              @touchStart="dialogSettings = true"
             />
           </div>
         </Transition>
