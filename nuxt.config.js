@@ -13,6 +13,7 @@ export default defineNuxtConfig({
   vite: {
     define: {
       "process.env.DEBUG": false,
+      runtimeOnly: false,
     },
     css: {
       preprocessorOptions: {

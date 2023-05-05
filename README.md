@@ -1,4 +1,5 @@
-nuxt modules devtool
+import async component or import componenents
+tuto for laptop
 
 learn typescript
 
