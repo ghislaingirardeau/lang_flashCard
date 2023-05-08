@@ -131,6 +131,7 @@ const openModal = () => {
 
 .widget_block {
   position: sticky;
+  top: 0px;
   background-color: $colorFourth;
   z-index: 10;
 

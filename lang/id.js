@@ -13,7 +13,8 @@ export default {
   },
   footer: {
     title: "Dibuat oleh",
-    remember: "Anda ingat {number} kata!",
+    remember: "Anda ingat",
+    word: "kata!",
     translate: "Teks untuk diterjemahkan",
   },
   home: {

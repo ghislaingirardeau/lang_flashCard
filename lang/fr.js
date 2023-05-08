@@ -13,7 +13,8 @@ export default {
   },
   footer: {
     title: "Créer par",
-    remember: "Tu te souviens de {number} mots !",
+    remember: "Tu te souviens de",
+    word: "mots !",
     translate: "Texte à traduire",
   },
   home: {
@@ -29,6 +30,7 @@ export default {
     cacheLabel: "Nettoyer le cache",
     cacheNote:
       "Cette application utilise les caches du navigateur pour offrir une expérience plus rapide. Actuellement { percent }% est utilisé.",
+    test: "Zero test | One test | {n} tests",
   },
   dialog: {
     confirm: "Valider",

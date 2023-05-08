@@ -13,7 +13,8 @@ export default {
   },
   footer: {
     title: "Create by",
-    remember: "You remember {number} words !",
+    remember: "You remember",
+    word: "words !",
     translate: "Text to translate",
   },
   home: {

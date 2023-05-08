@@ -13,7 +13,8 @@ export default {
   },
   footer: {
     title: "បង្កើត​ឡើង​ដោយ",
-    remember: "អ្នកចាំ {number} ពាក្យ!",
+    remember: "អ្នកចាំ",
+    word: "ពាក្យ!",
     translate: "អត្ថបទដែលត្រូវបកប្រែ",
   },
   home: {

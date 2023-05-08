@@ -1,11 +1,9 @@
 <template>
   <div class="footer_container-home-text">
     <p v-if="remember > 0">
-      {{
-        $t("footer.remember", {
-          number: remember,
-        })
-      }}
+      {{ $t("footer.remember") }}
+      {{ remember }}
+      {{ $t("footer.word") }}
     </p>
     <p v-else>{{ $t("footer.title") }} gG web dev</p>
   </div>

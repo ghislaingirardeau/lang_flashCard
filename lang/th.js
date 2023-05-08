@@ -13,7 +13,8 @@ export default {
   },
   footer: {
     title: "สร้างโดย",
-    remember: "คุณจำ {number} คำ !",
+    remember: "คุณจำ",
+    word: "คำ !",
     translate: "ข้อความที่จะแปล",
   },
   home: {
