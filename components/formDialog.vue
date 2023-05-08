@@ -2,7 +2,7 @@
   <client-only>
     <el-dialog
       :model-value="value"
-      width="100%"
+      :width="modalWidht"
       :title="title"
       top="0px"
       @close="submitForm(false)"
@@ -41,6 +41,14 @@ const props = defineProps({
   disabled: {
     type: Boolean,
   },
+});
+
+const breakpoints = useBreakpoints({
+  xl: 1280,
+});
+
+const modalWidht = computed(() => {
+  return breakpoints.greaterOrEqual("xl").value ? "65%" : "100%";
 });
 
 const emit = defineEmits();

@@ -12,14 +12,13 @@
   overflow: hidden; /* Enable scroll if needed */
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
-  font-family: "Architects Daughter", cursive;
+  font-family: $fontSecondary;
 }
 
 /* Modal Content/Box */
 
 .modal_tuto {
   z-index: 101;
-
   height: 100%;
   width: 100%;
   &-cardSwitch {
@@ -169,10 +168,10 @@
     z-index: 101;
     position: absolute;
     left: 15px;
-    top: -17px;
+    top: -27px;
     color: rgb(255, 255, 255);
     text-align: center;
-    font-size: 62px;
+    font-size: 82px;
     &:hover,
     &:focus {
       color: $colorThird;
@@ -191,6 +190,8 @@
     border-radius: 4px 4px;
     background-color: $colorSecondary;
     color: white;
+    font-family: $fontSecondary;
+    font-size: 1.4rem;
     &:hover,
     &:focus {
       color: $colorThird;
@@ -247,6 +248,7 @@
       &-contentUp {
         left: 30%;
         top: 40%;
+        width: 50%;
       }
       &-contentDown {
         right: 10%;
@@ -305,6 +307,9 @@
       &-contentRight {
         left: 30%;
         width: 50%;
+      }
+      &-swipe {
+        left: 45%;
       }
     }
   }
