@@ -109,6 +109,10 @@ useHead({
   meta: [
     { charset: "utf-8" },
     {
+      name: "google-site-verification",
+      content: "TI69RjohqFY28V_7hg30Rkq7GMxQ2WrDgI2mYHNHnWc",
+    },
+    {
       name: "viewport",
       content: "width=device-width, initial-scale=1.0, maximum-scale=1.0",
     },
