@@ -21,13 +21,6 @@ export default defineNuxtConfig({
         },
       },
     },
-    resolve: {
-      alias: {
-        vueI18n: {
-          runtimeOnly: false,
-        },
-      },
-    },
   },
   imports: {
     dirs: ["stores"],
@@ -143,6 +136,7 @@ export default defineNuxtConfig({
       locale: "en",
       fallbackLocale: "en",
       messages: { en, fr, km, id, th },
+      runtimeOnly: false,
     },
     customRoutes: "config",
     pages: {
