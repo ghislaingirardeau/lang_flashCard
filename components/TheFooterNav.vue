@@ -37,17 +37,13 @@
         </div>
 
         <LazyMicRecord />
-        <div
-          class="footer_nav_btn footer_nav_btn-radius-right"
-          @click="playAllSound"
-        >
-          <LazyTheLoader v-if="loader === 1" size="44px" />
+        <div class="footer_nav_btn footer_nav_btn-radius-right">
           <Icon
-            v-else
-            name="mdi:play-outline"
-            size="54px"
+            name="mdi:arrow-left-right-bold-outline"
+            size="44px"
             color="#0b132b"
-            class="rotate-icon"
+            class="rotate-icon switcher-lang"
+            @click="switchLang"
           />
         </div>
       </div>
@@ -56,12 +52,13 @@
 </template>
 
 <script setup>
-const route = useRoute();
-const loader = ref(0);
 const toInput = ref(false);
-const cardsStore = useCardsStore();
-const loadCard = computed(() => {
-  return cardsStore.cardItems[route.params.id];
+
+const props = defineProps({
+  switchLang: {
+    type: Function,
+    required: true,
+  },
 });
 
 const switchToInput = (e) => {
@@ -71,20 +68,6 @@ const switchToInput = (e) => {
     element.classList.add("rotate-icon-animate");
   });
 };
-
-/* const playAllSound = async () => {
-  const allText = loadCard.value.map((e) => e.to);
-
-  loader.value = 1;
-
-  for (let index = 0; index < allText.length; index++) {
-    const { play, error } = await usePlayTranslation(
-      allText[index],
-      cardsStore.languages.rate
-    );
-  }
-  loader.value = 0;
-}; */
 </script>
 
 <style lang="scss" scoped>

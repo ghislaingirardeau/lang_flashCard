@@ -13,9 +13,9 @@
         {{ langFrom }}
       </p>
       <Icon
-        name="mdi:arrow-up-down-bold-outline"
+        name="mdi:arrow-left-right-bold-outline"
         size="34px"
-        class="footer-icons"
+        class="switcher-lang switcher-lang-home"
         @click="switchLang"
       />
       <p>

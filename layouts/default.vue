@@ -22,8 +22,8 @@
               v-if="$route.params.id"
               name="mdi:arrow-left-drop-circle-outline"
               size="34px"
-              @click="$router.back()"
-              @touchStart="$router.back()"
+              @click="backToHome"
+              @touchStart="backToHome"
               class="header-icons"
             />
             <Icon
@@ -89,6 +89,7 @@ const cardsStore = useCardsStore();
 const dialogSettings = ref(false);
 const { height } = useWindowSize();
 const switchLocalePath = useSwitchLocalePath();
+const localePath = useLocalePath();
 const i18n = useI18n();
 const settings = ref({});
 const navigatorStorageUsed = ref(0);
@@ -188,23 +189,39 @@ const switchLang = (e) => {
 
   registerSettings(true);
 
-  const eltToAnim = document.querySelector(".footer_container-home");
+  const element = e.target.nodeName === "svg" ? e.target : e.target.parentNode;
+  element.animate(
+    [
+      {
+        transform: `rotateZ(0deg)`,
+      },
+      {
+        transform: `rotateZ(180deg)`,
+      },
+    ],
+    {
+      duration: 400,
+      fill: "both",
+    }
+  );
+
+  /* const eltToAnim = document.querySelector(".footer_container-home");
   const textToFade = eltToAnim.querySelectorAll("p");
   const iconToFade = eltToAnim.querySelector("svg");
 
   i18n.onLanguageSwitched = (oldLocale, newLocale) => {
-    iconToFade.classList.add("footer-icons-animate");
+    iconToFade.classList.add("switcher-lang-animate");
     textToFade.forEach((element) => {
       element.classList.add("footer-text-animate");
     });
   };
 
   setTimeout(() => {
-    iconToFade.classList.remove("footer-icons-animate");
+    iconToFade.classList.remove("switcher-lang-animate");
     textToFade.forEach((element) => {
       element.classList.remove("footer-text-animate");
     });
-  }, 1000);
+  }, 1000); */
 };
 
 const registerSettings = (payload) => {
@@ -225,6 +242,14 @@ const registerSettings = (payload) => {
   } else {
     settings.value = { ...cardsStore.languages };
   }
+};
+
+const backToHome = () => {
+  navigateTo(
+    localePath({
+      name: "index",
+    })
+  );
 };
 </script>
 

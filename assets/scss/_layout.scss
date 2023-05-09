@@ -38,10 +38,12 @@
   cursor: pointer;
   right: 60px;
 }
-.footer-icons {
+.switcher-lang {
   cursor: pointer;
-  transform: translateY(-5px) rotateZ(90deg);
-  margin-inline: 10px 10px;
+  &-home {
+    transform: translateY(-4px);
+    margin-inline: 10px 10px;
+  }
   &-animate {
     animation: rotate-switcher 1s ease both;
   }
