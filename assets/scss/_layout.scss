@@ -44,17 +44,4 @@
     transform: translateY(-4px);
     margin-inline: 10px 10px;
   }
-  &-animate {
-    animation: rotate-switcher 1s ease both;
-  }
-}
-
-@keyframes rotate-switcher {
-  0% {
-    transform: translateY(-5px) rotateZ(90deg);
-    opacity: 0.2;
-  }
-  100% {
-    transform: translateY(-5px) rotateZ(270deg);
-  }
 }

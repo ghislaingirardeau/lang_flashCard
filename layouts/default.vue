@@ -187,41 +187,37 @@ const switchLang = (e) => {
   settings.value.from = to;
   settings.value.to = from;
 
-  registerSettings(true);
+  i18n.onBeforeLanguageSwitch = () => {
+    let keyframes;
+    let element;
+    if (route.params.id) {
+      element = e.target.nodeName === "svg" ? e.target : e.target.parentNode;
+      keyframes = [
+        {
+          transform: `rotateZ(0deg)`,
+        },
+        {
+          transform: `rotateZ(180deg)`,
+        },
+      ];
+    } else {
+      element = document.querySelector(".footer_container-home");
+      keyframes = [
+        {
+          opacity: 0,
+          transform: `translateY(10px)`,
+          offset: 0.2,
+        },
+      ];
+    }
 
-  const element = e.target.nodeName === "svg" ? e.target : e.target.parentNode;
-  element.animate(
-    [
-      {
-        transform: `rotateZ(0deg)`,
-      },
-      {
-        transform: `rotateZ(180deg)`,
-      },
-    ],
-    {
+    element.animate(keyframes, {
       duration: 400,
       fill: "both",
-    }
-  );
-
-  /* const eltToAnim = document.querySelector(".footer_container-home");
-  const textToFade = eltToAnim.querySelectorAll("p");
-  const iconToFade = eltToAnim.querySelector("svg");
-
-  i18n.onLanguageSwitched = (oldLocale, newLocale) => {
-    iconToFade.classList.add("switcher-lang-animate");
-    textToFade.forEach((element) => {
-      element.classList.add("footer-text-animate");
     });
   };
 
-  setTimeout(() => {
-    iconToFade.classList.remove("switcher-lang-animate");
-    textToFade.forEach((element) => {
-      element.classList.remove("footer-text-animate");
-    });
-  }, 1000); */
+  registerSettings(true);
 };
 
 const registerSettings = (payload) => {

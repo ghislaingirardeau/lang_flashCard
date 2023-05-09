@@ -13,7 +13,7 @@
         {{ langFrom }}
       </p>
       <Icon
-        name="mdi:arrow-left-right-bold-outline"
+        name="mdi:arrow-right-bold-outline"
         size="34px"
         class="switcher-lang switcher-lang-home"
         @click="switchLang"
