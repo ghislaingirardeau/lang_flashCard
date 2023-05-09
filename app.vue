@@ -8,3 +8,28 @@
     <NuxtPage />
   </NuxtLayout>
 </template>
+
+<script setup>
+const i18n = useI18n();
+// SET HEAD FOR I18N SEO
+const head = useLocaleHead({
+  addDirAttribute: true,
+  identifierAttribute: "id",
+  addSeoAttributes: true,
+});
+useHead({
+  title: i18n.t("headTag.title"),
+  htmlAttrs: {
+    ...head.value.htmlAttrs,
+  },
+  meta: [
+    {
+      hid: "description",
+      name: "description",
+      content: i18n.t("headTag.content"),
+    },
+    ...head.value.meta,
+  ],
+  link: [...head.value.link],
+});
+</script>

@@ -20,7 +20,8 @@ export default defineNuxtConfig({
         {
           hid: "description",
           name: "description",
-          content: "Vocabulary app description",
+          content:
+            "Créez et personnalisez votre propre vocabulaire. Mon vocabulaire en carte est une application web pour vous aider à apprendre une nouvelle langue. Mon vocabulaire en carte vous permet de traduire, écouter la prononciation à différente vitesse et enregistre le mot ou l'expression que vous souhaitez apprendre sous forme de catégories ou cartes personnalisables.Créez et personnalisez votre propre vocabulaire. Mon vocabulaire en carte est une application web pour vous aider à apprendre une nouvelle langue. Mon vocabulaire en carte vous permet de traduire, écouter la prononciation à différente vitesse et enregistre le mot ou l'expression que vous souhaitez apprendre sous forme de catégories ou cartes personnalisables.",
         },
         {
           name: "google-site-verification",
@@ -28,7 +29,7 @@ export default defineNuxtConfig({
         },
       ],
       htmlAttrs: {
-        lang: "en",
+        lang: "fr-FR",
       },
       link: [],
     },
