@@ -2,10 +2,10 @@
   <div class="modal_tuto">
     <TutorialArrowContent className="modal_tuto-recorder" v-if="tutoPage === 1">
       <template #contentUp>
-        <h2>Translate with voice</h2>
+        <h2>{{ $t("tutorial.card.page1.contentUp") }}</h2>
       </template>
       <template #contentDown>
-        <h2>Translate with keyboard</h2>
+        <h2>{{ $t("tutorial.card.page1.contentDown") }}</h2>
       </template>
     </TutorialArrowContent>
     <div class="modal_tuto-word" v-if="tutoPage === 2">
@@ -20,21 +20,16 @@
         class="modal_tuto-word-swipe"
       />
       <div class="modal_tuto-word-contentLeft">
-        <p>
-          Show options icons : <br />
-          Delete or Good*
-        </p>
+        <p v-html="$t('tutorial.card.contentLeft.text')"></p>
         <span>
-          *Good means that you remember the word now, so you don't need it
-          anymore. The app will count as a word you remember to see your
-          progress
+          {{ $t("tutorial.card.contentLeft.comment") }}
         </span>
       </div>
     </div>
     <div class="modal_tuto-word" v-if="tutoPage === 3">
       <div class="modal_tuto-word-contentRight">
-        <h2>Listen to the word</h2>
-        <p>You can change the rate inside settings, to listen it slowly</p>
+        <h2>{{ $t("tutorial.card.contentRight.title") }}</h2>
+        <p>{{ $t("tutorial.card.contentRight.text") }}</p>
       </div>
       <Icon
         :name="isTouchable ? 'ph:hand-tap' : 'ic:outline-ads-click'"

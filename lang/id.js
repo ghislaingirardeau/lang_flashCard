@@ -44,4 +44,41 @@ export default {
   store: {
     alert: "Kartu ini sudah ada, pilih nama baru",
   },
+  tutorial: {
+    button: {
+      end: "Akhir",
+      next: "Berikutnya",
+    },
+    home: {
+      page1: {
+        contentUp: {
+          title: "Tambahkan kartu baru",
+          text: "Beri nama carte Anda dengan isinya",
+        },
+        contentDown: {
+          title: "Beralih bahasa",
+          text: "Untuk membalikkan pembelajaran Anda dan mencoba bahasa baru Anda",
+        },
+      },
+      page2: {
+        contentUp: "Kata terakhir yang Anda tambahkan",
+        contentDown: "Jumlah kata yang Anda anggap diketahui",
+      },
+    },
+    card: {
+      page1: {
+        contentUp: "Terjemahkan dengan suara",
+        contentDown: "Terjemahkan dengan keyboard",
+      },
+      contentLeft: {
+        text: "Tampilkan ikon opsi : <br /> Hapus atau Baik*",
+        comment:
+          "*Baik berarti Anda mengingat kata itu sekarang, jadi Anda tidak membutuhkannya lagi dalam kosa kata Anda. Jadi Anda melihat kemajuan Anda juga!",
+      },
+      contentRight: {
+        title: "Dengarkan kata itu",
+        text: "Anda dapat mengubah kecepatan di dalam pengaturan, untuk mendengarkannya perlahan",
+      },
+    },
+  },
 };

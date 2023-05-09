@@ -45,4 +45,41 @@ export default {
   store: {
     alert: "Cette carte existe déjà",
   },
+  tutorial: {
+    button: {
+      end: "Fin",
+      next: "Suivant",
+    },
+    home: {
+      page1: {
+        contentUp: {
+          title: "Ajouter une carte",
+          text: "Donner un nom à la carte suivant ce qu'elle contient",
+        },
+        contentDown: {
+          title: "Changer de langue rapidement",
+          text: "Si vous voulez inverser l'apprentissage et tester votre nouvelle langue",
+        },
+      },
+      page2: {
+        contentUp: "Voir vos derniers ajouts",
+        contentDown: "Le nombre de mot ou expression dont vous vous souvenez",
+      },
+    },
+    card: {
+      page1: {
+        contentUp: "Traduction à l'aide de la voie",
+        contentDown: "Traduction avec le clavier",
+      },
+      contentLeft: {
+        text: "Voir les options : <br /> Supprimer ou Mémoriser*",
+        comment:
+          "*Mémoriser signifie que vous estimez connaitre le mot, vous en avez donc plus besoin dans votre vocabulaire et donc vous progessez !",
+      },
+      contentRight: {
+        title: "Ecoutez le mot",
+        text: "Vous pouvez changer la vitesse de lecture dans Paramètre, pour l'écouter plus lentement",
+      },
+    },
+  },
 };

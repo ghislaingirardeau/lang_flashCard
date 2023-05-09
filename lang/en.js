@@ -44,4 +44,41 @@ export default {
   store: {
     alert: "This card already exist, pick a new name",
   },
+  tutorial: {
+    button: {
+      end: "End",
+      next: "Next",
+    },
+    home: {
+      page1: {
+        contentUp: {
+          title: "Add a new card",
+          text: "Name your carte by what it's gonna contain",
+        },
+        contentDown: {
+          title: "Switch the language",
+          text: "To reverse your learning and try your new language",
+        },
+      },
+      page2: {
+        contentUp: "Your last added word",
+        contentDown: "Numbers of word you consider as known",
+      },
+    },
+    card: {
+      page1: {
+        contentUp: "Translate with voice",
+        contentDown: "Translate with keyboard",
+      },
+      contentLeft: {
+        text: "Show options icons : <br /> Delete or Good*",
+        comment:
+          "*Good means that you remember the word now, so you don't need it anymore in your vocabulary. So you see your progress as well !",
+      },
+      contentRight: {
+        title: "Listen to the word",
+        text: "You can change the rate inside settings, to listen it slowly",
+      },
+    },
+  },
 };

@@ -16,6 +16,7 @@ const props = defineProps({
     type: Number,
   },
 });
+const { t } = useI18n();
 const emit = defineEmits();
 const route = useRoute();
 
@@ -24,7 +25,9 @@ const tutoLength = computed(() => {
 });
 
 const switchContent = computed(() => {
-  return props.tutoPage === tutoLength.value ? "End" : "Next";
+  return props.tutoPage === tutoLength.value
+    ? t("tutorial.button.end")
+    : t("tutorial.button.next");
 });
 
 const changeTuto = () => {
