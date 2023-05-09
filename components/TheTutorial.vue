@@ -1,35 +1,21 @@
 <template>
   <div id="helpModal" class="modal_help">
-    <div class="modal_action">
-      <span class="modal_action-close">&times;</span>
-      <Transition name="slideY" mode="out-in">
-        <button :key="tutoPage" class="modal_action-btn" @click="changeTuto">
-          {{ switchContent }}
-        </button>
-      </Transition>
-    </div>
+    <TutorialButton v-model:tutoPage="tutoPage" />
 
     <Transition name="page" mode="out-in">
       <div :key="tutoPage" style="display: unset">
         <div v-if="$route.params.id" class="modal_tuto">
-          <div class="modal_tuto-recorder" v-if="tutoPage === 1">
-            <img
-              src="@/assets/arrow4.svg"
-              alt=""
-              class="modal_tuto-recorder-arrowup"
-            />
-            <div class="modal_tuto-recorder-contentUp">
+          <TutorialArrowContent
+            className="modal_tuto-recorder"
+            v-if="tutoPage === 1"
+          >
+            <template #contentUp>
               <h2>Translate with voice</h2>
-            </div>
-            <div class="modal_tuto-recorder-contentDown">
+            </template>
+            <template #contentDown>
               <h2>Translate with keyboard</h2>
-            </div>
-            <img
-              src="@/assets/arrow_up.svg"
-              alt=""
-              class="modal_tuto-recorder-arrowdown"
-            />
-          </div>
+            </template>
+          </TutorialArrowContent>
           <div class="modal_tuto-word" v-if="tutoPage === 2">
             <Icon
               :name="
@@ -70,44 +56,30 @@
         </div>
 
         <div v-else class="modal_tuto">
-          <div class="modal_tuto-cardSwitch" v-if="tutoPage === 1">
-            <img
-              src="@/assets/arrow_up.svg"
-              alt=""
-              class="modal_tuto-cardSwitch-arrowup"
-            />
-            <div class="modal_tuto-cardSwitch-contentUp">
+          <TutorialArrowContent
+            className="modal_tuto-cardSwitch"
+            v-if="tutoPage === 1"
+          >
+            <template #contentUp>
               <h2>Add a new card</h2>
               <p>Name your carte by what it's gonna contain</p>
-            </div>
-            <div class="modal_tuto-cardSwitch-contentDown">
+            </template>
+            <template #contentDown>
               <h2>Switch the language</h2>
               <p>If you want to save words from your new language</p>
-            </div>
-            <img
-              src="@/assets/arrow4.svg"
-              alt=""
-              class="modal_tuto-cardSwitch-arrowdown"
-            />
-          </div>
-          <div class="modal_tuto-lastRemember" v-if="tutoPage === 2">
-            <img
-              src="@/assets/arrow_up.svg"
-              alt=""
-              class="modal_tuto-lastRemember-arrowup"
-            />
-            <div class="modal_tuto-lastRemember-contentUp">
-              <h2>See qucikly your last added word</h2>
-            </div>
-            <div class="modal_tuto-lastRemember-contentDown">
+            </template>
+          </TutorialArrowContent>
+          <TutorialArrowContent
+            className="modal_tuto-lastRemember"
+            v-if="tutoPage === 2"
+          >
+            <template #contentUp>
+              <h2>See quickly your last added word</h2>
+            </template>
+            <template #contentDown>
               <h2>Numbers of word you consider as known</h2>
-            </div>
-            <img
-              src="@/assets/arrow4.svg"
-              alt=""
-              class="modal_tuto-lastRemember-arrowdown"
-            />
-          </div>
+            </template>
+          </TutorialArrowContent>
         </div>
       </div>
     </Transition>
@@ -116,24 +88,12 @@
 
 <script setup>
 const tutoPage = ref(1);
-const route = useRoute();
+
 const emit = defineEmits();
 
 const isTouchable = computed(() => {
   return navigator.maxTouchPoints || "ontouchstart" in document.documentElement;
 });
-
-const tutoLength = computed(() => {
-  return route.params.id ? 3 : 2;
-});
-
-const switchContent = computed(() => {
-  return tutoPage.value === tutoLength.value ? "End" : "Next";
-});
-
-const changeTuto = () => {
-  tutoPage.value === tutoLength.value ? (tutoPage.value = 1) : tutoPage.value++;
-};
 
 const helpModal = () => {
   let modal = document.getElementById("helpModal");

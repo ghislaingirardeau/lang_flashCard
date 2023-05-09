@@ -32,6 +32,7 @@
 const props = defineProps({
   value: {
     required: true,
+    type: Boolean,
   },
   doOnConfirm: Function,
   title: {

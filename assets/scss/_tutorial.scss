@@ -100,10 +100,10 @@
     &-arrowup {
       position: absolute;
       text-align: left;
-      right: -40px;
-      bottom: 13%;
-      width: 60%;
-      transform: rotateZ(160deg) rotateY(180deg);
+      left: -40px;
+      bottom: 8%;
+      width: 50%;
+      transform: rotateZ(200deg);
     }
     &-contentUp {
       position: absolute;
@@ -122,10 +122,10 @@
     &-arrowdown {
       position: absolute;
       text-align: left;
-      left: -40px;
-      bottom: 8%;
-      width: 50%;
-      transform: rotateZ(200deg);
+      right: -40px;
+      bottom: 13%;
+      width: 60%;
+      transform: rotateZ(160deg) rotateY(180deg);
     }
   }
   &-word {
