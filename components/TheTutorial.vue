@@ -12,7 +12,7 @@
 
 <script setup>
 import tutorialcard from "@/components/Tutorial/card.vue";
-import tutorialHome from "@/components/Tutorial/Home.vue";
+import tutorialHome from "@/components/Tutorial/home.vue";
 
 const route = useRoute();
 
