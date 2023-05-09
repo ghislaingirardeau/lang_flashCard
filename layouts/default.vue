@@ -43,15 +43,7 @@
         <el-main><slot /></el-main>
       </el-container>
       <Transition name="fade" mode="out-in">
-        <el-footer
-          class="footer_container footer_container-nav"
-          v-if="$route.params.id && $route.params.id != $t('home.lastAdd')"
-        >
-          <TheFooterNav />
-        </el-footer>
-        <el-footer class="footer_container footer_container-home" v-else>
-          <TheFooterHome :switchLang="switchLang" />
-        </el-footer>
+        <component :is="footerToLoad" :switchLang="switchLang" />
       </Transition>
     </el-container>
     <FormDialog
@@ -74,7 +66,6 @@
         $t("settings.cacheNote", { percent: navigatorStorageUsed })
       }}</span>
       <p>
-        {{ $t("settings.test", 0) }}<br />
         {{ $t("settings.test", 1) }}<br />
         {{ $t("settings.test", 2) }}<br />
       </p>
@@ -91,6 +82,9 @@
 </template>
 
 <script setup>
+import footerNav from "@/components/TheFooterNav.vue";
+import footerHome from "@/components/TheFooterHome.vue";
+
 const cardsStore = useCardsStore();
 const dialogSettings = ref(false);
 const { height } = useWindowSize();
@@ -99,6 +93,7 @@ const i18n = useI18n();
 const settings = ref({});
 const navigatorStorageUsed = ref(0);
 const showTutorial = ref(false);
+const route = useRoute();
 
 onBeforeMount(async () => {
   /* await device.nuxtServerInit(); */
@@ -154,6 +149,12 @@ onMounted(() => {
     }
   });
 });
+
+const footerToLoad = computed(() =>
+  route.params.id && route.params.id != i18n.t("home.lastAdd")
+    ? footerNav
+    : footerHome
+);
 
 navigator.storage.estimate().then((estimate) => {
   navigatorStorageUsed.value = (

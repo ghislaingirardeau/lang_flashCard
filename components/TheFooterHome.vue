@@ -1,26 +1,28 @@
 <template>
-  <div class="footer_container-home-text">
-    <p v-if="remember > 0">
-      {{ $t("footer.remember") }}
-      {{ remember }}
-      {{ $t("footer.word") }}
-    </p>
-    <p v-else>{{ $t("footer.title") }} gG web dev</p>
-  </div>
-  <div>
-    <p>
-      {{ langFrom }}
-    </p>
-    <Icon
-      name="mdi:arrow-up-down-bold-outline"
-      size="34px"
-      class="footer-icons"
-      @click="switchLang"
-    />
-    <p>
-      {{ langTo }}
-    </p>
-  </div>
+  <el-footer class="footer_container footer_container-home">
+    <div class="footer_container-home-text">
+      <p v-if="remember > 0">
+        {{ $t("footer.remember") }}
+        {{ remember }}
+        {{ $t("footer.word") }}
+      </p>
+      <p v-else>{{ $t("footer.title") }} gG web dev</p>
+    </div>
+    <div>
+      <p>
+        {{ langFrom }}
+      </p>
+      <Icon
+        name="mdi:arrow-up-down-bold-outline"
+        size="34px"
+        class="footer-icons"
+        @click="switchLang"
+      />
+      <p>
+        {{ langTo }}
+      </p>
+    </div>
+  </el-footer>
 </template>
 
 <script setup>
