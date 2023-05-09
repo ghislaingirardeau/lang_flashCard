@@ -8,6 +8,30 @@ import th from "./lang/th";
 export default defineNuxtConfig({
   ssr: false,
   app: {
+    head: {
+      title: "Vocabulary app",
+      meta: [
+        { charset: "utf-8" },
+
+        {
+          name: "viewport",
+          content: "width=device-width, initial-scale=1.0, maximum-scale=1.0",
+        },
+        {
+          hid: "description",
+          name: "description",
+          content: "Vocabulary app description",
+        },
+        {
+          name: "google-site-verification",
+          content: "TI69RjohqFY28V_7hg30Rkq7GMxQ2WrDgI2mYHNHnWc",
+        },
+      ],
+      htmlAttrs: {
+        lang: "en",
+      },
+      link: [],
+    },
     pageTransition: { name: "page", mode: "out-in" },
   },
   vite: {
@@ -131,10 +155,10 @@ export default defineNuxtConfig({
     baseUrl: "https://my-flashcard-lang.netlify.app",
     lazy: true,
     langDir: "lang",
-    defaultLocale: "en",
+    defaultLocale: "fr",
     vueI18n: {
-      locale: "en",
-      fallbackLocale: "en",
+      locale: "fr",
+      fallbackLocale: "fr",
       messages: { en, fr, km, id, th },
       runtimeOnly: false,
     },

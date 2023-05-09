@@ -101,7 +101,7 @@ const navigatorStorageUsed = ref(0);
 const showTutorial = ref(false);
 
 // SET HEAD FOR I18N SEO
-const head = useLocaleHead({
+/* const head = useLocaleHead({
   addDirAttribute: true,
   identifierAttribute: "id",
   addSeoAttributes: true,
@@ -113,10 +113,7 @@ useHead({
   },
   meta: [
     { charset: "utf-8" },
-    {
-      name: "google-site-verification",
-      content: "TI69RjohqFY28V_7hg30Rkq7GMxQ2WrDgI2mYHNHnWc",
-    },
+
     {
       name: "viewport",
       content: "width=device-width, initial-scale=1.0, maximum-scale=1.0",
@@ -126,10 +123,14 @@ useHead({
       name: "description",
       content: i18n.t("headTag.content"),
     },
+    {
+      name: "google-site-verification",
+      content: "TI69RjohqFY28V_7hg30Rkq7GMxQ2WrDgI2mYHNHnWc",
+    },
     ...head.value.meta,
   ],
   link: [...head.value.link],
-});
+}); */
 
 onBeforeMount(async () => {
   /* await device.nuxtServerInit(); */
