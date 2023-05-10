@@ -117,9 +117,31 @@ export default defineNuxtConfig({
       ],
     },
 
+    build: {
+      hmtl: {
+        minify: {
+          collapseBooleanAttributes: true,
+          decodeEntities: true,
+          minifyCSS: true,
+          minifyJS: true,
+          processConditionalComments: true,
+          removeEmptyAttributes: true,
+          removeRedundantAttributes: true,
+          trimCustomFragments: true,
+          useShortDoctype: true,
+        },
+      },
+      splitChunks: {
+        layouts: false,
+        pages: true,
+        commons: true,
+      },
+    },
+
     workbox: {
       navigateFallback: "/",
     },
+
     // TO TEST PWA ON DEV
     /* devOptions: {
       enabled: true,
