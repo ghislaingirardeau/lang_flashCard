@@ -102,16 +102,16 @@
     &-arrowup {
       position: absolute;
       text-align: left;
-      left: -40px;
-      bottom: 8%;
+      left: 35px;
+      bottom: 2%;
       width: 50%;
-      transform: rotateZ(200deg);
+      transform: rotateZ(180deg) rotateY(180deg);
     }
     &-contentUp {
       position: absolute;
       text-align: left;
       right: 10px;
-      bottom: 48%;
+      bottom: 38%;
       width: 60%;
       font-size: 1.3rem;
     }
@@ -119,17 +119,17 @@
       position: absolute;
       text-align: left;
       left: 10px;
-      bottom: 35%;
+      bottom: 27%;
       width: 70%;
       font-size: 1.3rem;
     }
     &-arrowdown {
       position: absolute;
       text-align: left;
-      right: -40px;
+      right: 20px;
       bottom: 13%;
-      width: 60%;
-      transform: rotateZ(160deg) rotateY(180deg);
+      width: 40%;
+      transform: rotateZ(170deg) rotateY(180deg);
     }
   }
   &-word {
@@ -234,12 +234,20 @@
       }
     }
     &-recorder {
+      &-arrowup {
+        left: 15px;
+        bottom: 0%;
+      }
       &-contentUp {
-        bottom: 55%;
+        bottom: 40%;
+      }
+      &-contentDown {
+        bottom: 35%;
       }
       &-arrowdown {
-        bottom: 2%;
-        left: -80px;
+        bottom: 8%;
+        right: 65px;
+        width: 40%;
       }
     }
   }
@@ -288,7 +296,8 @@
     &-recorder {
       &-arrowup {
         width: 15%;
-        right: 35%;
+        left: 25%;
+        bottom: 2%;
       }
       &-contentUp {
         left: 45%;
@@ -301,8 +310,8 @@
         width: 40%;
       }
       &-arrowdown {
-        width: 15%;
-        left: 18%;
+        width: 17%;
+        right: 30%;
       }
     }
     &-word {
