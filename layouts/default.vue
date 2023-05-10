@@ -3,7 +3,7 @@
     <el-container :style="{ height: containerHeight }">
       <el-header class="header-container">
         <Transition name="fade" mode="out-in">
-          <div :key="$route.params.id" style="display: unset">
+          <div :key="$route.params.id" class="header-container-nav">
             <h1 class="header-container-title">
               {{
                 $route.params.id
@@ -253,16 +253,19 @@ const backToHome = () => {
 .header-container {
   background-color: $colorSecondary;
   color: $colorPrimary;
-  padding-top: 10px;
   position: relative;
   height: 55px;
   border-bottom: 1px solid rgb(255, 255, 255);
   &-title {
-    padding-left: 10px;
     font-size: 28px;
-    width: 50%;
-    display: inline;
+    flex-grow: 10;
     font-family: $fontSecondary;
+    margin: 0px;
+  }
+  &-nav {
+    display: flex;
+    height: 54px;
+    align-items: center;
   }
 }
 </style>

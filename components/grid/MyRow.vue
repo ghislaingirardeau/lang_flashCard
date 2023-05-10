@@ -155,6 +155,7 @@ export default {
     &-memory {
       border-left: 2px solid $colorFourth;
       background-color: $colorPrimary;
+      padding-inline: 5px;
       width: 16.66%;
       & > svg {
         color: $colorFourth;
@@ -163,6 +164,7 @@ export default {
     &-delete {
       border-left: 2px solid $colorFith;
       background-color: $colorPrimary;
+      padding-inline: 5px;
       border-radius: 70% 0% 0% 40%;
       width: 16.66%;
       & > svg {

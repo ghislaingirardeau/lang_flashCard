@@ -12,7 +12,7 @@
         >
           <Icon
             name="mdi:microphone"
-            size="44px"
+            size="48px"
             color="#0b132b"
             class="rotate-icon"
           />
@@ -30,7 +30,7 @@
         >
           <Icon
             name="material-symbols:keyboard-alt-outline"
-            size="44px"
+            size="48px"
             color="#0b132b"
             class="rotate-icon"
           />
@@ -40,7 +40,7 @@
         <div class="footer_nav_btn footer_nav_btn-radius-right">
           <Icon
             name="mdi:arrow-left-right-bold-outline"
-            size="44px"
+            size="48px"
             color="#0b132b"
             class="rotate-icon switcher-lang"
             @click="switchLang"
