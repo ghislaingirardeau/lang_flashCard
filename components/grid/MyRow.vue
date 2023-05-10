@@ -173,6 +173,7 @@ export default {
     }
     &-cross {
       width: 25%;
+      padding-inline: 10px;
       overflow: hidden;
       & > svg {
         color: $colorPrimary;
