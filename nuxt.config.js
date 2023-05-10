@@ -15,8 +15,7 @@ export default defineNuxtConfig({
 
         {
           name: "viewport",
-          content:
-            "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+          content: "width=device-width, initial-scale=1.0, maximum-scale=1.0",
         },
         {
           hid: "description",
@@ -58,7 +57,7 @@ export default defineNuxtConfig({
     "@element-plus/nuxt",
     /* "@nuxt/devtools", */ // if use, not possible to access vue inside devtool
     "nuxt-simple-sitemap",
-    "nuxt-security", // il active => nuxt/devtools doesnt work
+    /* "nuxt-security", */ // il active => nuxt/devtools doesnt work
 
     "@nuxtjs/i18n",
     [
@@ -73,9 +72,9 @@ export default defineNuxtConfig({
     // "@nuxtjs/robots", BUG
   ],
   // from nuxt module security, to set the rate limit for calling an API
-  security: {
+  /* security: {
     rateLimiter: false,
-  },
+  }, */
   runtimeConfig: {
     public: {
       XRAPIDAPIKEY: process.env.XRAPIDAPIKEY,
