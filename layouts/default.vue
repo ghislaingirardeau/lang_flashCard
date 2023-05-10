@@ -257,7 +257,7 @@ const backToHome = () => {
   height: 55px;
   border-bottom: 1px solid rgb(255, 255, 255);
   &-title {
-    font-size: 28px;
+    font-size: 2rem;
     flex-grow: 10;
     font-family: $fontSecondary;
     margin: 0px;

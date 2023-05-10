@@ -180,7 +180,7 @@ export default {
       }
     }
     &-text {
-      font-size: 12px;
+      font-size: 1rem;
     }
   }
 }
