@@ -205,7 +205,7 @@ const switchLang = (e) => {
       keyframes = [
         {
           opacity: 0,
-          transform: `translateY(10px)`,
+          transform: `scale(0.95)`,
           offset: 0.2,
         },
       ];
