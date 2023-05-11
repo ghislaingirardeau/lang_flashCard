@@ -2,7 +2,7 @@
   <client-only>
     <el-dialog
       :model-value="value"
-      :width="modalWidth"
+      width="90%"
       :title="title"
       top="0px"
       @close="submitForm(false)"
