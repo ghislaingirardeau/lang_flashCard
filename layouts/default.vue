@@ -87,7 +87,6 @@ import footerHome from "@/components/TheFooterHome.vue";
 
 const cardsStore = useCardsStore();
 const dialogSettings = ref(false);
-const { height } = useWindowSize();
 const switchLocalePath = useSwitchLocalePath();
 const localePath = useLocalePath();
 const i18n = useI18n();
@@ -106,15 +105,19 @@ onBeforeMount(async () => {
   }
 });
 
-const breakpoints = useBreakpoints({
-  xl: 1280,
-});
+const innerWidth = window.innerWidth;
+const innerHeight = ref(window.innerHeight);
 
 onMounted(() => {
   const styleBody = document.querySelector("#app_container").style;
-  breakpoints.smallerOrEqual("xl").value
+  innerWidth <= 1280
     ? (styleBody.marginInline = "0px")
     : (styleBody.marginInline = "300px");
+
+  window.onresize = (event) => {
+    innerHeight.value = window.innerHeight;
+    console.log("window resize");
+  };
 
   window.isUpdateAvailable = new Promise(function (resolve, reject) {
     // lazy way of disabling service workers while developing
@@ -165,7 +168,7 @@ navigator.storage.estimate().then((estimate) => {
 });
 
 const containerHeight = computed(() => {
-  return height.value + "px";
+  return innerHeight.value + "px";
 });
 
 const deleteCache = () => {

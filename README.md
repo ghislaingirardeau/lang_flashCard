@@ -1,5 +1,5 @@
-import async component or import componenents
-tuto for laptop
+remove vueuse use only for useBreakpoints
+nuxt-compress npm ?
 
 learn typescript
 

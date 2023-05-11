@@ -50,18 +50,16 @@ export default {
     const route = useRoute();
     const localePath = useLocalePath();
     const cardsStore = useCardsStore();
-    const breakpoints = useBreakpoints({
-      lg: 800,
-    });
+    const innerWidth = window.innerWidth;
     const onRouteHome = computed(() => {
       return route.params.id ? false : true;
     });
 
     const rowWidth = computed(() => {
       if (onRouteHome.value) {
-        return breakpoints.smallerOrEqual("lg").value ? "45%" : "30%";
+        return innerWidth <= 800 ? "45%" : "30%";
       } else {
-        return breakpoints.smallerOrEqual("lg").value ? "95%" : "45%";
+        return innerWidth <= 800 ? "95%" : "45%";
       }
     });
     console.log(rowWidth.value);

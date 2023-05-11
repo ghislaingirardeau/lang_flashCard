@@ -44,12 +44,10 @@ const props = defineProps({
   },
 });
 
-const breakpoints = useBreakpoints({
-  xl: 1280,
-});
+const innerWidth = window.innerWidth;
 
 const modalWidht = computed(() => {
-  return breakpoints.greaterOrEqual("xl").value ? "65%" : "100%";
+  return innerWidth >= 1280 ? "65%" : "100%";
 });
 
 const emit = defineEmits();
