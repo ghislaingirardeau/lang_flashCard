@@ -1,9 +1,9 @@
 <template>
   <div
     class="container-swipe container-swipe-flex"
-    @touchstart.prevent="startDrag"
-    @touchend.prevent="endDrag"
-    @touchmove.prevent="scrollElement"
+    @touchstart.passive="startDrag"
+    @touchend.passive="endDrag"
+    @touchmove.passive="scrollElement"
   >
     <slot></slot>
   </div>

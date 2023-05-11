@@ -5,14 +5,14 @@
         :span="12"
         class="widget_block_newCard"
         @click="openModal"
-        @touchstart="openModal"
+        @touchstart.passive="openModal"
       >
         <Icon name="mdi:plus-box-outline" size="34px" />
         <span class="widget_block_newCard-text">
           {{ $t("home.newCard") }}</span
         ></el-col
       >
-      <el-col :span="12" @click="goToLastAdd" @touchstart="goToLastAdd"
+      <el-col :span="12" @click="goToLastAdd" @touchstart.passive="goToLastAdd"
         ><Icon name="ic:outline-history" size="34px" />
         <span class="widget_block_newCard-text">{{ $t("home.lastAdd") }}</span>
       </el-col>
