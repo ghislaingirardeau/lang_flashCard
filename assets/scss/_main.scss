@@ -11,12 +11,15 @@ a {
   color: $colorPrimary;
 }
 
+section {
+  width: 90%;
+}
+
 body {
   background-color: $colorSecondary;
   color: $colorPrimary;
   font-family: $fontPrimary;
   margin: 0px;
-  width: 95%;
 }
 #app_container {
   background-color: $colorFith;

@@ -9,7 +9,7 @@
     @mouseleave="onCardHover(false)"
   >
     <slot></slot>
-    <!-- <div
+    <div
       :id="`delete-${idClass.id}`"
       class="block_swipe_card hide"
       :class="{
@@ -30,7 +30,7 @@
       v-if="$route.params.id != $t('home.lastAdd')"
     >
       <Icon name="mdi:thumb-up-outline" size="34px" />
-    </div> -->
+    </div>
   </div>
 </template>
 
