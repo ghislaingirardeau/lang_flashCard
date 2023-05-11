@@ -1,18 +1,13 @@
 <template>
   <div class="home_container">
     <el-row class="widget_block">
-      <el-col
-        :span="12"
-        class="widget_block_newCard"
-        @click="openModal"
-        @touchstart.passive="openModal"
-      >
+      <el-col :span="12" class="widget_block_newCard" @click="openModal">
         <Icon name="mdi:plus-box-outline" size="34px" />
         <span class="widget_block_newCard-text">
           {{ $t("home.newCard") }}</span
         ></el-col
       >
-      <el-col :span="12" @click="goToLastAdd" @touchstart.passive="goToLastAdd"
+      <el-col :span="12" @click="goToLastAdd"
         ><Icon name="ic:outline-history" size="34px" />
         <span class="widget_block_newCard-text">{{ $t("home.lastAdd") }}</span>
       </el-col>

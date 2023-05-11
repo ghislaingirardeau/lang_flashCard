@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>test page</div>
-    <Icon
+    <!-- <Icon
       name="mdi:arrow-left-drop-circle-outline"
       size="34px"
       @click="backBtn"
@@ -22,7 +22,7 @@
     <h2>{{ child ? child.fromChild : "" }}</h2>
     <button @click="componentToLoad = testLazy">testLazy</button>
     <button @click="componentToLoad = testLazy2">testLazy2</button>
-    <TestLazy2 ref="child" />
+    <TestLazy2 ref="child" /> -->
     <!-- <KeepAlive>
       <component :is="componentToLoad" ref="child" />
     </KeepAlive> -->
