@@ -12,12 +12,12 @@
       <p>
         {{ langFrom }}
       </p>
-      <Icon
+      <!-- <Icon
         name="mdi:arrow-right-bold-outline"
         size="34px"
         class="switcher-lang switcher-lang-home"
         @click="switchLang"
-      />
+      /> -->
       <p>
         {{ langTo }}
       </p>

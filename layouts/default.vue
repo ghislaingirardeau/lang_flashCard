@@ -11,7 +11,7 @@
                   : "Flash Cards"
               }}
             </h1>
-            <Icon
+            <!-- <Icon
               name="material-symbols:help-outline"
               size="34px"
               class="header-help"
@@ -30,7 +30,7 @@
               size="34px"
               class="header-icons"
               @click="dialogSettings = true"
-            />
+            /> -->
           </div>
         </Transition>
         <!-- <nuxt-link :to="localePath('test')">test</nuxt-link> -->
