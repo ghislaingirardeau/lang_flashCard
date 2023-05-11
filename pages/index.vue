@@ -31,7 +31,7 @@
         </TransitionGroup>
       </GridSwiper>
     </div>
-    <FormDialog
+    <!-- <FormDialog
       v-model:value="dialogAddCard"
       :doOnConfirm="saveNewCard"
       :title="$t('newCard.title')"
@@ -47,7 +47,7 @@
           }}
         </span>
       </div>
-    </FormDialog>
+    </FormDialog> -->
   </div>
 </template>
 

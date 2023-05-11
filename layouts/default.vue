@@ -43,7 +43,7 @@
         <component :is="footerToLoad" :switchLang="switchLang" />
       </Transition>
     </el-container>
-    <FormDialog
+    <!-- <FormDialog
       v-model:value="dialogSettings"
       :doOnConfirm="registerSettings"
       :title="$t('settings.title')"
@@ -74,7 +74,7 @@
           style="cursor: pointer"
         />
       </el-form-item>
-    </FormDialog>
+    </FormDialog> -->
   </div>
 </template>
 
