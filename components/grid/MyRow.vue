@@ -157,6 +157,7 @@ export default {
       width: 16.66%;
       & > svg {
         color: $colorFourth;
+        transform: translateX(-10px);
       }
     }
     &-delete {
@@ -167,6 +168,7 @@ export default {
       width: 16.66%;
       & > svg {
         color: $colorFourth;
+        transform: translateX(-10px);
       }
     }
     &-cross {
@@ -175,6 +177,7 @@ export default {
       overflow: hidden;
       & > svg {
         color: $colorPrimary;
+        transform: translateX(-10px);
       }
     }
     &-text {
