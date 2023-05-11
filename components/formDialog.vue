@@ -2,7 +2,7 @@
   <client-only>
     <el-dialog
       :model-value="value"
-      :width="modalWidht"
+      :width="modalWidth"
       :title="title"
       top="0px"
       @close="submitForm(false)"
@@ -46,7 +46,7 @@ const props = defineProps({
 
 const innerWidth = window.innerWidth;
 
-const modalWidht = computed(() => {
+const modalWidth = computed(() => {
   return innerWidth >= 1280 ? "65%" : "100%";
 });
 
