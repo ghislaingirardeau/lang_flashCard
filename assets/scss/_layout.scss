@@ -24,7 +24,12 @@
       display: inline;
     }
     &-text {
-      max-width: 200px;
+      width: 65%;
+    }
+    &-switch {
+      width: 30%;
+      display: flex;
+      align-items: center;
     }
   }
 }
@@ -39,7 +44,6 @@
 .switcher-lang {
   cursor: pointer;
   &-home {
-    transform: translateY(-4px);
     margin-inline: 10px 10px;
   }
 }
