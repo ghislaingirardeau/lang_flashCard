@@ -222,22 +222,24 @@ const switchLang = (e) => {
   settings.value.from = to;
   settings.value.to = from;
 
-  /* i18n.onBeforeLanguageSwitch = () => {
-    let keyframes = [
-      {
-        transform: `rotateZ(0deg)`,
-      },
-      {
-        transform: `rotateZ(180deg)`,
-      },
-    ];
-    let element = e.target.nodeName === "svg" ? e.target : e.target.parentNode;
+  console.log(e.target);
 
-    element.animate(keyframes, {
-      duration: 400,
-      fill: "both",
-    });
+  /* i18n.onBeforeLanguageSwitch = () => {
+    
   }; */
+  let keyframes = [
+    {
+      opacity: 0,
+      transform: "rotateZ(20deg)",
+      offset: 0.5,
+    },
+  ];
+  let element = e.target.nodeName === "svg" ? e.target : e.target.parentNode;
+
+  element.animate(keyframes, {
+    duration: 400,
+    fill: "forwards",
+  });
 
   registerSettings(true);
 };

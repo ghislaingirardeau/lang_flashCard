@@ -37,14 +37,15 @@
         </div>
 
         <LazyMicRecord />
-        <div class="block_switcher" @click="switchLang">
+        <div class="block_switcher">
           <span style="margin-right: 10px">
             {{ langFrom }}
           </span>
           <Icon
             name="ph:arrow-arc-right-bold"
             size="44px"
-            class="block_switcher-icon"
+            class="rotate-icon block_switcher-icon"
+            @click="switchLang"
           />
           <span>
             {{ langTo }}
@@ -126,7 +127,8 @@ const switchToInput = (e) => {
     position: absolute;
     top: -15px;
     left: 17px;
-    transform: rotateZ(15deg);
+    // erase by rotate icon anim
+    /* transform: rotateZ(15deg); */
   }
   & > span {
     display: flex;
