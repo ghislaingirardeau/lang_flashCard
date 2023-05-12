@@ -39,7 +39,11 @@
     >
       <div class="newCard_content">
         <el-form-item :label="$t('newCard.label')">
-          <el-input v-model="cardForm.name" autocomplete="off" />
+          <el-input
+            v-model="cardForm.name"
+            autocomplete="off"
+            @keyup="checkName"
+          />
         </el-form-item>
         <span v-show="validNewCardTitle" class="newCard_content-alert"
           >{{
@@ -65,13 +69,22 @@ const loadCards = computed(() => {
   return cardsStore.cards;
 });
 
-watch(cardForm, (title) => {
+/* watch(cardForm, (title) => {
   let cardExist = loadCards.value.findIndex((e) => e.title === title.name);
   if (title.name.length >= 1 && cardExist === -1)
     return (validNewCardTitle.value = false);
   if (title.name.length < 1 || cardExist != -1)
     return (validNewCardTitle.value = true);
-});
+}); */
+
+const checkName = () => {
+  console.log(cardForm.name);
+  let cardExist = loadCards.value.findIndex((e) => e.title === cardForm.name);
+  if (cardForm.name.length >= 1 && cardExist === -1)
+    return (validNewCardTitle.value = false);
+  if (cardForm.name.length < 1 || cardExist != -1)
+    return (validNewCardTitle.value = true);
+};
 
 const goToLastAdd = () => {
   navigateTo(
