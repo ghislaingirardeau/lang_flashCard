@@ -3,7 +3,7 @@
     class="container-swipe container-swipe-flex"
     @touchstart.passive="startDrag"
     @touchend.passive="endDrag"
-    @touchmove.passive="scrollElement"
+    @touchmove.prevent="scrollElement"
   >
     <slot></slot>
   </div>
