@@ -222,11 +222,6 @@ const switchLang = (e) => {
   settings.value.from = to;
   settings.value.to = from;
 
-  console.log(e.target);
-
-  /* i18n.onBeforeLanguageSwitch = () => {
-    
-  }; */
   let keyframes = [
     {
       opacity: 0,
