@@ -37,6 +37,15 @@
         color="white"
         class="modal_tuto-word-tap"
       />
+      <div class="modal_tuto-switch-contentDown">
+        <h2>{{ $t("tutorial.home.page1.contentDown.title") }}</h2>
+        <p>{{ $t("tutorial.home.page1.contentDown.text") }}</p>
+      </div>
+      <img
+        src="@/assets/arrow4.svg"
+        alt=""
+        class="modal_tuto-switch-arrowdown"
+      />
     </div>
   </div>
 </template>

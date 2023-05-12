@@ -21,7 +21,7 @@
   z-index: 101;
   height: 100%;
   width: 100%;
-  &-cardSwitch {
+  &-card {
     position: relative;
     height: 100%;
     width: 100%;
@@ -41,6 +41,24 @@
       top: 32%;
       width: 70%;
     }
+    &-contentDown {
+      position: absolute;
+      text-align: left;
+      right: 10px;
+      bottom: 22%;
+      width: 70%;
+    }
+    &-arrowdown {
+      position: absolute;
+      text-align: left;
+      right: 30%;
+      bottom: 4%;
+      width: 30%;
+      transform: rotateZ(180deg);
+      display: none;
+    }
+  }
+  &-switch {
     &-contentDown {
       position: absolute;
       text-align: left;
@@ -208,13 +226,19 @@
 @media screen and (min-width: 700px) {
   .modal_tuto {
     font-size: 1.5rem;
-    &-cardSwitch {
+    &-card {
       &-arrowup {
         left: 20%;
         top: 3%;
       }
       &-arrowdown {
         bottom: 0%;
+      }
+    }
+    &-switch {
+      &-arrowdown {
+        bottom: 2%;
+        right: 16%;
       }
     }
     &-lastRemember {
@@ -253,7 +277,7 @@
 }
 @media screen and (min-width: 1280px) {
   .modal_tuto {
-    &-cardSwitch {
+    &-card {
       &-arrowup {
         left: 35%;
         width: 20%;
@@ -263,6 +287,18 @@
         top: 40%;
         width: 50%;
       }
+      &-contentDown {
+        right: 10%;
+        bottom: 35%;
+        width: 30%;
+      }
+      &-arrowdown {
+        bottom: 2%;
+        width: 15%;
+        right: 25%;
+      }
+    }
+    &-switch {
       &-contentDown {
         right: 10%;
         bottom: 35%;

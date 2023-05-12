@@ -1,17 +1,14 @@
 <template>
   <div class="modal_tuto">
-    <TutorialArrowContent
-      className="modal_tuto-cardSwitch"
-      v-if="tutoPage === 1"
-    >
+    <TutorialArrowContent className="modal_tuto-card" v-if="tutoPage === 1">
       <template #contentUp>
         <h2>{{ $t("tutorial.home.page1.contentUp.title") }}</h2>
         <p>{{ $t("tutorial.home.page1.contentUp.text") }}</p>
       </template>
-      <template #contentDown>
+      <!-- <template #contentDown>
         <h2>{{ $t("tutorial.home.page1.contentDown.title") }}</h2>
         <p>{{ $t("tutorial.home.page1.contentDown.text") }}</p>
-      </template>
+      </template> -->
     </TutorialArrowContent>
     <TutorialArrowContent
       className="modal_tuto-lastRemember"
