@@ -37,14 +37,18 @@
         </div>
 
         <LazyMicRecord />
-        <div class="footer_nav_btn footer_nav_btn-radius-right">
+        <div class="block_switcher" @click="switchLang">
+          <span style="margin-right: 10px">
+            {{ langFrom }}
+          </span>
           <Icon
-            name="mdi:arrow-left-right-bold-outline"
-            size="48px"
-            color="#0b132b"
-            class="rotate-icon switcher-lang"
-            @click="switchLang"
+            name="ph:arrow-arc-right-bold"
+            size="44px"
+            class="block_switcher-icon"
           />
+          <span>
+            {{ langTo }}
+          </span>
         </div>
       </div>
     </Transition>
@@ -59,6 +63,14 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+});
+
+const cardsStore = useCardsStore();
+const langTo = computed(() => {
+  return cardsStore.langTo;
+});
+const langFrom = computed(() => {
+  return cardsStore.langFrom;
 });
 
 const switchToInput = (e) => {
@@ -78,7 +90,7 @@ const switchToInput = (e) => {
 
   &-mic {
     align-items: flex-end;
-    justify-content: space-around;
+    justify-content: space-between;
   }
   &-input {
     align-items: center;
@@ -102,6 +114,31 @@ const switchToInput = (e) => {
     & > svg {
       margin-left: 5px;
     }
+  }
+}
+.block_switcher {
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  height: 60px;
+  position: relative;
+  &-icon {
+    position: absolute;
+    top: -15px;
+    left: 17px;
+    transform: rotateZ(15deg);
+  }
+  & > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid darken($color: $colorThird, $amount: 20%);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    background-color: $colorPrimary;
+    color: $colorSecondary;
+    padding-top: 4px;
   }
 }
 .rotate-icon {
