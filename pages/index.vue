@@ -42,7 +42,7 @@
           <el-input
             v-model="cardForm.name"
             autocomplete="off"
-            @keyup="checkName"
+            @input="checkName"
           />
           {{ validNewCardTitle }} {{ cardForm.name }}
         </el-form-item>
@@ -78,13 +78,11 @@ const loadCards = computed(() => {
     return (validNewCardTitle.value = true);
 }); */
 
-const checkName = () => {
-  console.log(cardForm.name);
-  let cardExist = loadCards.value.findIndex((e) => e.title === cardForm.name);
-  if (cardForm.name.length >= 1 && cardExist === -1)
+const checkName = (e) => {
+  let cardExist = loadCards.value.findIndex((elt) => elt.title === e);
+  if (e.length >= 1 && cardExist === -1)
     return (validNewCardTitle.value = false);
-  if (cardForm.name.length < 1 || cardExist != -1)
-    return (validNewCardTitle.value = true);
+  if (e.length < 1 || cardExist != -1) return (validNewCardTitle.value = true);
 };
 
 const goToLastAdd = () => {
