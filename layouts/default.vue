@@ -250,8 +250,10 @@ const registerSettings = (payload) => {
     if (i18n.locale.value != settings.value.from.slice(0, 2)) {
       navigateTo(switchLocalePath(cardsStore.languages.from.slice(0, 2)));
     }
+    dialogSettings.value = false;
   } else {
     settings.value = { ...cardsStore.languages };
+    dialogSettings.value = false;
   }
 };
 

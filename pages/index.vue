@@ -35,18 +35,12 @@
       v-model:value="dialogAddCard"
       :doOnConfirm="saveNewCard"
       :title="$t('newCard.title')"
-      :disabled="validNewCardTitle"
     >
       <div class="newCard_content">
         <el-form-item :label="$t('newCard.label')">
-          <el-input
-            v-model="cardForm.name"
-            autocomplete="off"
-            @input="checkName"
-          />
-          {{ validNewCardTitle }} {{ cardForm.name }}
+          <el-input v-model="cardForm.name" autocomplete="off" />
         </el-form-item>
-        <span v-show="validNewCardTitle" class="newCard_content-alert"
+        <span v-show="nameNotCorrect()" class="newCard_content-alert"
           >{{
             cardForm.name.length > 0 ? $t("newCard.hint1") : $t("newCard.hint2")
           }}
@@ -59,7 +53,7 @@
 <script setup>
 const cardsStore = useCardsStore();
 const dialogAddCard = ref(false);
-const validNewCardTitle = ref(true);
+const validNewCardTitle = ref(false);
 const cardForm = reactive({
   name: "",
 });
@@ -78,11 +72,12 @@ const loadCards = computed(() => {
     return (validNewCardTitle.value = true);
 }); */
 
-const checkName = (e) => {
-  let cardExist = loadCards.value.findIndex((elt) => elt.title === e);
-  if (e.length >= 1 && cardExist === -1)
-    return (validNewCardTitle.value = false);
-  if (e.length < 1 || cardExist != -1) return (validNewCardTitle.value = true);
+const nameNotCorrect = () => {
+  let cardExist = loadCards.value.findIndex(
+    (elt) => elt.title === cardForm.name
+  );
+  if (cardForm.name.length >= 1 && cardExist === -1) return false;
+  if (cardForm.name.length < 1 || cardExist != -1) return true;
 };
 
 const goToLastAdd = () => {
@@ -99,6 +94,10 @@ const cardNumberItems = (params) => {
 };
 
 const saveNewCard = (payload) => {
+  if (nameNotCorrect() && payload) {
+    return;
+  }
+
   if (cardForm.name.length >= 1 && payload) {
     const newCard = {
       id: Date.now(),
@@ -108,12 +107,11 @@ const saveNewCard = (payload) => {
     };
     cardsStore.addNewCard(newCard, t("store.alert"));
     cardForm.name = "";
+    dialogAddCard.value = false;
     return;
-  }
-  if (cardForm.name.length < 1 && payload) {
-    cardForm.name = "";
   } else {
     cardForm.name = "";
+    dialogAddCard.value = false;
   }
 };
 

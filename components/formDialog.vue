@@ -53,7 +53,7 @@ const modalWidth = computed(() => {
 const emit = defineEmits();
 const submitForm = (params) => {
   props.doOnConfirm(params);
-  emit("update:value", false);
+  /* emit("update:value", false); */
 };
 </script>
 
