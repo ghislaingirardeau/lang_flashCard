@@ -44,6 +44,7 @@
             autocomplete="off"
             @keyup="checkName"
           />
+          {{ validNewCardTitle }} {{ cardForm.name }}
         </el-form-item>
         <span v-show="validNewCardTitle" class="newCard_content-alert"
           >{{
