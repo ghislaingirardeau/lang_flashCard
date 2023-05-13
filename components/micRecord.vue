@@ -3,8 +3,8 @@
     <LazyTheLoader v-if="loading" size="80px" />
     <div v-else class="mic-circle">
       <Icon
-        @touchstart.passive="startDrag"
-        @touchend.passive="endDrag"
+        @touchstart.prevent="startDrag"
+        @touchend.prevent="endDrag"
         @mousedown="startDrag"
         @mouseup="endDrag"
         name="mdi:microphone"
