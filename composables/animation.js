@@ -1,7 +1,9 @@
 export function useBeforeLeave(el) {
   const { marginLeft, marginTop, width, height } = window.getComputedStyle(el);
+  const swipeBlock = document.querySelector(".el-main");
+  const getTopPosition = el.offsetTop - swipeBlock.scrollTop;
   el.style.left = `${el.offsetLeft - parseFloat(marginLeft, 10)}px`;
-  el.style.top = `${el.offsetTop - parseFloat(marginTop, 10)}px`;
+  el.style.top = `${getTopPosition - parseFloat(marginTop, 10)}px`;
   el.style.width = width;
   el.style.height = height;
 }

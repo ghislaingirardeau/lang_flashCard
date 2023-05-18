@@ -72,7 +72,6 @@ const endDrag = (event) => {
     if (elementWithId.includes("remember-")) {
       // if id includes swipe = so it's a click on delete block
       cardDetails = idCard(elementWithId.replace("remember-", ""));
-      console.log("memorise this element & delete", cardDetails);
       doOnClickDelete(cardDetails.title, cardDetails.id, true);
       return;
     }
