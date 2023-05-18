@@ -1,7 +1,10 @@
 <template>
   <div class="id_container">
     <GridSwiper @onTapPlay="playSound">
-      <TransitionGroup name="slide" @before-leave="useBeforeLeave">
+      <TransitionGroup
+        name="slide"
+        @before-leave="useBeforeLeave($event, false)"
+      >
         <GridMyRow
           v-for="item in loadCard"
           :key="item.id"

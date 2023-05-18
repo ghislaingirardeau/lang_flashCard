@@ -1,11 +1,16 @@
-export function useBeforeLeave(el) {
-  const { marginLeft, marginTop, width, height } = window.getComputedStyle(el);
+export function useBeforeLeave(event, home) {
+  const { marginLeft, marginTop, width, height } =
+    window.getComputedStyle(event);
   const swipeBlock = document.querySelector(".el-main");
-  const getTopPosition = el.offsetTop - swipeBlock.scrollTop;
-  el.style.left = `${el.offsetLeft - parseFloat(marginLeft, 10)}px`;
-  el.style.top = `${getTopPosition - parseFloat(marginTop, 10)}px`;
-  el.style.width = width;
-  el.style.height = height;
+
+  const getTopPosition = home
+    ? event.offsetTop
+    : event.offsetTop - swipeBlock.scrollTop;
+  console.log(event.offsetTop, swipeBlock.scrollTop, getTopPosition);
+  event.style.left = `${event.offsetLeft - parseFloat(marginLeft, 10)}px`;
+  event.style.top = `${getTopPosition - parseFloat(marginTop, 10)}px`;
+  event.style.width = width;
+  event.style.height = height;
 }
 
 export function useAnimDeleteIcon(id, home, fct1, fct2) {

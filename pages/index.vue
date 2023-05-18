@@ -15,7 +15,7 @@
 
     <div class="cards_block">
       <GridSwiper>
-        <TransitionGroup name="slide" @before-leave="useBeforeLeave">
+        <TransitionGroup name="slide" @before-leave="useBeforeLeave($event, true)">
           <GridMyRow
             v-for="card in loadCards"
             :key="card.id"
