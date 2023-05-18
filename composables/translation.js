@@ -12,7 +12,7 @@ export async function useTranslation(text, from, to) {
   const config = useRuntimeConfig();
 
   // GOOGLE TRANSLATOR MAX 1000 CALL PER MONTH
-  /* const body = {
+  const body = {
     q: text,
     source: from,
     target: to,
@@ -38,10 +38,10 @@ export async function useTranslation(text, from, to) {
   if (error.value) {
     console.log(error);
     return { text: null, error: error.value };
-  } */
+  }
 
   // TRANSLO MAX 500 000 CHARACTERS PER MONTHS
-  const url = "https://translo.p.rapidapi.com/api/v3/translate";
+  /* const url = "https://translo.p.rapidapi.com/api/v3/translate";
   const options = {
     method: "POST",
     headers: {
@@ -64,7 +64,7 @@ export async function useTranslation(text, from, to) {
   if (error.value) {
     console.log(error);
     return { text: null, error: error.value };
-  }
+  } */
 }
 
 export async function usePlayTranslation(to, rate, lang, loader, id) {
