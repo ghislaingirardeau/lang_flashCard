@@ -97,6 +97,7 @@
       <span>{{
         $t("settings.cacheNote", { percent: navigatorStorageUsed })
       }}</span>
+      {{ navigatorStorageUsed }}%
       <el-form-item :label="$t('settings.cacheLabel')" style="padding-top: 5px">
         <Icon
           name="mdi:trash-can-outline"

@@ -13,8 +13,8 @@ export default {
   },
   footer: {
     title: "Créer par",
-    remember: "Tu te souviens de",
-    word: "mots !",
+    remember: "Mémoriser",
+    total: "Total",
     translate: "Texte à traduire",
   },
   home: {
@@ -63,7 +63,8 @@ export default {
       },
       page2: {
         contentUp: "Voir vos derniers ajouts",
-        contentDown: "Le nombre de mot ou expression dont vous vous souvenez",
+        contentDown:
+          "Total de mot enregistré / Le nombre de mot dont vous vous souvenez",
       },
     },
     card: {

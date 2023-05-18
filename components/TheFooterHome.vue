@@ -2,10 +2,10 @@
   <el-footer class="footer_container footer_container-home">
     <div class="footer_container-home-text">
       <p v-if="remember > 0">
-        {{ $t("footer.remember") }}
+        {{ $t("footer.total") }} : {{ total }} / {{ $t("footer.remember") }} :
         {{ remember }}
-        {{ $t("footer.word") }}
       </p>
+
       <p>By gG web dev</p>
     </div>
   </el-footer>
@@ -19,6 +19,8 @@ const props = defineProps({
   },
 });
 const cardsStore = useCardsStore();
+
+const total = cardsStore.totalWord;
 
 const remember = computed(() => {
   return cardsStore.languages.remember

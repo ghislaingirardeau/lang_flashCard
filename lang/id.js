@@ -13,8 +13,8 @@ export default {
   },
   footer: {
     title: "Dibuat oleh",
-    remember: "Anda ingat",
-    word: "kata!",
+    remember: "Hafal",
+    total: "Total",
     translate: "Teks untuk diterjemahkan",
   },
   home: {
@@ -57,7 +57,7 @@ export default {
         },
         contentDown: {
           title: "Beralih bahasa",
-          text: "Untuk membalikkan pembelajaran Anda dan mencoba bahasa baru Anda",
+          text: "Total kata yang disimpan / Total kata yang Anda anggap telah dihafal",
         },
       },
       page2: {

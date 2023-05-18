@@ -13,8 +13,8 @@ export default {
   },
   footer: {
     title: "Create by",
-    remember: "You remember",
-    word: "words !",
+    remember: "Remember",
+    total: "Total",
     translate: "Text to translate",
   },
   home: {
@@ -62,7 +62,8 @@ export default {
       },
       page2: {
         contentUp: "Your last added word",
-        contentDown: "Numbers of word you consider as known",
+        contentDown:
+          "Total of word saved / Total of word you consider as memorized",
       },
     },
     card: {

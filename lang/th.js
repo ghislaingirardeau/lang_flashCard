@@ -13,8 +13,8 @@ export default {
   },
   footer: {
     title: "สร้างโดย",
-    remember: "คุณจำ",
-    word: "คำ !",
+    remember: "จดจำ",
+    total: "ทั้งหมด",
     translate: "ข้อความที่จะแปล",
   },
   home: {
@@ -62,7 +62,8 @@ export default {
       },
       page2: {
         contentUp: "คำที่คุณเพิ่มล่าสุด",
-        contentDown: "จำนวนคำที่คุณคิดว่ารู้จัก",
+        contentDown:
+          "จำนวนคำที่บันทึกทั้งหมด / จำนวนคำทั้งหมดที่คุณพิจารณาว่าจำได้",
       },
     },
     card: {

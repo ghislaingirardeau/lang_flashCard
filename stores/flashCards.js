@@ -10,6 +10,13 @@ export const useCardsStore = defineStore("cards", {
   getters: {
     langTo: (state) => state.languages.to.slice(-2),
     langFrom: (state) => state.languages.from.slice(-2),
+    totalWord: (state) => {
+      let count = 0;
+      state.cards.forEach((element) => {
+        count += state.cardItems[element.title].length;
+      });
+      return count;
+    },
   },
   actions: {
     nuxtServerInit() {
