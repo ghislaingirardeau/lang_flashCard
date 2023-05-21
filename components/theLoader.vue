@@ -2,7 +2,7 @@
   <Icon name="mdi:loading" :size="size" :color="color" id="load--rotate" />
 </template>
 
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
   color: {
     type: String,
