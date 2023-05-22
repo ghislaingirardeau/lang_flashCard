@@ -66,6 +66,7 @@ export default defineNuxtConfig({
     "nuxt-icon",
     "@vite-pwa/nuxt",
     "@element-plus/nuxt",
+    "nuxt-vuefire",
     /* "@nuxt/devtools", */ // if use, not possible to access vue inside devtool
     "nuxt-simple-sitemap",
     /* "nuxt-security", */ // il active => nuxt/devtools doesnt work
@@ -97,6 +98,18 @@ export default defineNuxtConfig({
   },
   sitemap: {
     siteUrl: "https://my-flashcard-lang.netlify.app",
+  },
+  vuefire: {
+    config: {
+      apiKey: process.env.APIKEY,
+      authDomain: process.env.AUTHDOMAIN,
+      projectId: process.env.PROJECTID,
+      appId: process.env.APPID,
+      storageBucket: process.env.STORAGEBUCKET,
+      messagingSenderId: process.env.MESSAGINGSENDERID,
+      measurementId: process.env.MEASUREMENTID,
+      databaseURL: process.env.DATABASEURL,
+    },
   },
   pwa: {
     meta: {
