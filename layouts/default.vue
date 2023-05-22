@@ -35,6 +35,12 @@
               ></path>
             </svg>
             <Icon
+              name="mdi:account-circle-outline"
+              size="34px"
+              @click="dialogLogin = true"
+              class="header-icons"
+            />
+            <Icon
               v-if="$route.params.id"
               name="mdi:arrow-left-drop-circle-outline"
               size="34px"
@@ -107,6 +113,18 @@
         />
       </el-form-item>
     </FormDialog>
+    <FormDialog
+      v-model:value="dialogLogin"
+      :doOnConfirm="logUser"
+      :title="signUp ? 'Sign-Up' : 'Sign-In'"
+    >
+      <SignIn
+        v-model:signUp="signUp"
+        v-model:email="userData.email"
+        v-model:name="userData.name"
+        v-model:password="userData.password"
+      />
+    </FormDialog>
   </div>
 </template>
 
@@ -116,6 +134,8 @@ import footerHome from "@/components/TheFooterHome.vue";
 
 const cardsStore = useCardsStore();
 const dialogSettings = ref(false);
+const dialogLogin = ref(false);
+const signUp = ref(false);
 const switchLocalePath = useSwitchLocalePath();
 const localePath = useLocalePath();
 const i18n = useI18n();
@@ -123,6 +143,11 @@ const settings = ref({});
 const navigatorStorageUsed = ref(0);
 const showTutorial = ref(false);
 const route = useRoute();
+const userData = ref({
+  email: "mail",
+  password: "cc",
+  name: "",
+});
 
 onBeforeMount(async () => {
   /* await device.nuxtServerInit(); */
@@ -255,6 +280,19 @@ const registerSettings = (payload) => {
   } else {
     settings.value = { ...cardsStore.languages };
     dialogSettings.value = false;
+  }
+};
+
+const logUser = (payload) => {
+  if (payload) {
+    if (signUp) {
+      console.log("Register the new user");
+    } else {
+      console.log("Login");
+    }
+    console.log("log the userData", userData.value);
+  } else {
+    dialogLogin.value = false;
   }
 };
 
