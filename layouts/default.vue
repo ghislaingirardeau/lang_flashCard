@@ -40,7 +40,7 @@
                 getUser ? 'mdi:logout-variant' : 'mdi:account-circle-outline'
               "
               size="34px"
-              @click="userSign"
+              @click="userAccount"
               class="header-icons"
             />
             <Icon
@@ -81,7 +81,10 @@
         <!-- <nuxt-link :to="localePath('test')">test</nuxt-link> -->
       </el-header>
       <el-container class="main-container">
-        <LazyTheTutorial v-if="showTutorial" @send-tuto="closeTuto" />
+        <LazyTheTutorial
+          v-if="showTutorial"
+          @send-tuto="showTutorial = false"
+        />
         <el-main><slot /></el-main>
       </el-container>
       <Transition name="fade" mode="out-in">
@@ -239,10 +242,6 @@ const deleteCache = () => {
   }
 };
 
-const closeTuto = () => {
-  showTutorial.value = false;
-};
-
 const switchLang = (e) => {
   const { from, to } = settings.value;
 
@@ -288,21 +287,12 @@ const registerSettings = (payload) => {
   }
 };
 
-const logUser = async (payload) => {
-  if (payload) {
-    if (signUp.value) {
-      const userLoad = await userStore.signin(userData);
-      userLoad.result ? console.log("success") : alert(userLoad.message);
-    } else {
-      const userLoad = await userStore.login(userData);
-      userLoad.result ? console.log("success") : alert(userLoad.message);
-    }
-  }
-  dialogLogin.value = false;
+const logUser = (payload) => {
+  useUserSign(payload, signUp, userStore, userData, dialogLogin);
 };
-
-const userSign = () => {
-  getUser.value ? userStore.signOut() : (dialogLogin.value = true);
+// SHOW ACCOUNT CONNECTION OR UNLOG
+const userAccount = () => {
+  useUserAccount(getUser, userStore, dialogLogin);
 };
 
 const backToHome = () => {
