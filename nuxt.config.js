@@ -100,6 +100,7 @@ export default defineNuxtConfig({
     siteUrl: "https://my-flashcard-lang.netlify.app",
   },
   vuefire: {
+    auth: true,
     config: {
       apiKey: process.env.APIKEY,
       authDomain: process.env.AUTHDOMAIN,

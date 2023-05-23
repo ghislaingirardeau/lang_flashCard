@@ -35,9 +35,12 @@
               ></path>
             </svg>
             <Icon
-              name="mdi:account-circle-outline"
+              v-if="!$route.params.id"
+              :name="
+                getUser ? 'mdi:logout-variant' : 'mdi:account-circle-outline'
+              "
               size="34px"
-              @click="dialogLogin = true"
+              @click="userSign"
               class="header-icons"
             />
             <Icon
@@ -47,6 +50,7 @@
               @click="backToHome"
               class="header-icons"
             />
+
             <!-- <Icon
               
               name="mdi:cog-outline"
@@ -133,6 +137,8 @@ import footerNav from "@/components/TheFooterNav.vue";
 import footerHome from "@/components/TheFooterHome.vue";
 
 const cardsStore = useCardsStore();
+const userStore = useUserStore();
+const getUser = useCurrentUser();
 const dialogSettings = ref(false);
 const dialogLogin = ref(false);
 const signUp = ref(false);
@@ -144,8 +150,8 @@ const navigatorStorageUsed = ref(0);
 const showTutorial = ref(false);
 const route = useRoute();
 const userData = ref({
-  email: "mail",
-  password: "cc",
+  email: "test@mail.com",
+  password: "azerty1",
   name: "",
 });
 
@@ -238,8 +244,7 @@ const closeTuto = () => {
 };
 
 const switchLang = (e) => {
-  let to = settings.value.to;
-  let from = settings.value.from;
+  const { from, to } = settings.value;
 
   settings.value.from = to;
   settings.value.to = from;
@@ -283,17 +288,21 @@ const registerSettings = (payload) => {
   }
 };
 
-const logUser = (payload) => {
+const logUser = async (payload) => {
   if (payload) {
-    if (signUp) {
-      console.log("Register the new user");
+    if (signUp.value) {
+      const userLoad = await userStore.signin(userData);
+      userLoad.result ? console.log("success") : alert(userLoad.message);
     } else {
-      console.log("Login");
+      const userLoad = await userStore.login(userData);
+      userLoad.result ? console.log("success") : alert(userLoad.message);
     }
-    console.log("log the userData", userData.value);
-  } else {
-    dialogLogin.value = false;
   }
+  dialogLogin.value = false;
+};
+
+const userSign = () => {
+  getUser.value ? userStore.signOut() : (dialogLogin.value = true);
 };
 
 const backToHome = () => {
