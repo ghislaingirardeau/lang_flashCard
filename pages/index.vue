@@ -15,7 +15,10 @@
 
     <div class="cards_block">
       <GridSwiper>
-        <TransitionGroup name="slide" @before-leave="useBeforeLeave($event, true)">
+        <TransitionGroup
+          name="slide"
+          @before-leave="useBeforeLeave($event, true)"
+        >
           <GridMyRow
             v-for="card in loadCards"
             :key="card.id"
@@ -53,7 +56,6 @@
 <script setup>
 const cardsStore = useCardsStore();
 const dialogAddCard = ref(false);
-const validNewCardTitle = ref(false);
 const cardForm = reactive({
   name: "",
 });
@@ -63,14 +65,6 @@ const { t } = useI18n();
 const loadCards = computed(() => {
   return cardsStore.cards;
 });
-
-/* watch(cardForm, (title) => {
-  let cardExist = loadCards.value.findIndex((e) => e.title === title.name);
-  if (title.name.length >= 1 && cardExist === -1)
-    return (validNewCardTitle.value = false);
-  if (title.name.length < 1 || cardExist != -1)
-    return (validNewCardTitle.value = true);
-}); */
 
 const nameNotCorrect = () => {
   let cardExist = loadCards.value.findIndex(
