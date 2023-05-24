@@ -77,7 +77,6 @@ export default {
       } else {
         // common with swiper touch
         if (elementWithId.includes("remember-")) {
-          console.log("memorise this element & delete", props.idClass.id);
           cardsStore.removeItem(route.params.id, props.idClass.id, true);
           return;
         }

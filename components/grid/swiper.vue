@@ -115,7 +115,6 @@ const scrollElement = (event) => {
   // si tu scroll sur un coté & pas sur l'axe Y
   //hide or unhide the delete option et tu arretes la fonction
   if ((defineTouchY > -10 || defineTouchY < 10) && defineTouchX > 50) {
-    console.log("hide");
     useAnimDeleteIcon(
       elementWithId.replace("card-", ""),
       onRouteHome.value,
@@ -125,7 +124,6 @@ const scrollElement = (event) => {
     return;
   }
   if ((defineTouchY > -10 || defineTouchY < 10) && defineTouchX < -50) {
-    console.log("show");
     useAnimDeleteIcon(
       elementWithId.replace("card-", ""),
       onRouteHome.value,

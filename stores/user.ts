@@ -6,8 +6,8 @@ import {
   signOut,
 } from "firebase/auth";
 import { useFirebaseAuth, useCurrentUser, getCurrentUser } from "vuefire";
+import { useSaveFirebase, useLoadDataToStore } from "@/composables/saveData";
 
-import { useSaveFirebase } from "@/composables/saveData";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -25,14 +25,16 @@ export const useUserStore = defineStore("user", {
           );
 
           if (userLog) {
+            // APPLY THE LISTENER
             this.authListener(auth);
+            // LOAD THE DATA FROM FIREBASE TO THE CARD STORE
+            useLoadDataToStore(userLog.user.uid);
             resolve({
               result: true,
               message: "",
             });
           }
         } catch (error) {
-          console.log("signUp", error);
           resolve({
             result: false,
             message: "This email or password doesn't exist",
@@ -53,7 +55,9 @@ export const useUserStore = defineStore("user", {
             await updateProfile(auth.currentUser, {
               displayName: userData.value.name,
             });
+            // APPLY THE LISTENER
             this.authListener(auth);
+            // SAVE THE DATA ALREADY SET WHEN NOT CONNECTED
             useSaveFirebase(newUser.user.uid);
             resolve({
               result: true,
@@ -71,7 +75,6 @@ export const useUserStore = defineStore("user", {
     authListener(auth: any) {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          console.log("Listen to auth", user);
           this.user = {
             name: user.displayName,
             id: user.uid,
@@ -84,8 +87,21 @@ export const useUserStore = defineStore("user", {
     },
     signOut() {
       const auth: any = useFirebaseAuth();
+      // RESET USER TO NULL
       this.user = null;
+      // FCT FROM FIREBASE TO UNLOG
       signOut(auth);
+      // RESET THE CARD STORE
+      const cardStore: CardStore = useCardsStore();
+      cardStore.languages = {
+        from: "fr-FR",
+        to: "km-KM",
+        remember: 0,
+        rate: 1,
+      };
+      cardStore.cards = [];
+      cardStore.cardItems = {};
+      cardStore.lastAdded = [];
     },
   },
 });

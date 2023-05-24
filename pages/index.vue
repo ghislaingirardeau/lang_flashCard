@@ -41,7 +41,11 @@
     >
       <div class="newCard_content">
         <el-form-item :label="$t('newCard.label')">
-          <el-input v-model="cardForm.name" autocomplete="off" />
+          <el-input
+            v-model="cardForm.name"
+            @keydown.enter.prevent="saveNewCard"
+            autocomplete="off"
+          />
         </el-form-item>
         <span v-show="nameNotCorrect()" class="newCard_content-alert"
           >{{

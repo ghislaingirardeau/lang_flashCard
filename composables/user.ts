@@ -1,12 +1,13 @@
+// ON CLICK ON ACCOUNT ICON OR LOGOUT
 export function useUserAccount(
   getUser: Type<object>,
   userStore: StoreInfo,
   dialogLogin: Type<boolean>
 ) {
-  console.log(getUser, dialogLogin);
   getUser.value ? userStore.signOut() : (dialogLogin.value = true);
 }
 
+// ON CLICK VALIDATE THE MODAL, SIGN IN OR UP
 export async function useUserSign(
   payload: boolean,
   signUp: Type<boolean>,

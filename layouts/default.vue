@@ -161,6 +161,7 @@ const userData = ref({
 onBeforeMount(async () => {
   const user = await getCurrentUser();
   await cardsStore.nuxtServerInit(user);
+
   settings.value = { ...cardsStore.languages };
   // check if app load on the right lang set
   if (i18n.locale.value != cardsStore.languages.from.slice(0, 2)) {
@@ -179,7 +180,6 @@ onMounted(() => {
 
   window.onresize = (event) => {
     innerHeight.value = window.innerHeight;
-    console.log("window resize");
   };
 
   window.isUpdateAvailable = new Promise(function (resolve, reject) {

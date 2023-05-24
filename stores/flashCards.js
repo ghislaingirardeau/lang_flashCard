@@ -1,5 +1,8 @@
-import { useSaveLocal, useSaveFirebase } from "@/composables/saveData";
-import { ref as dbRef, set as dbset } from "firebase/database";
+import {
+  useSaveLocal,
+  useSaveFirebase,
+  useLoadDataToStore,
+} from "@/composables/saveData";
 
 export const useCardsStore = defineStore("cards", {
   state: () => ({
@@ -28,19 +31,9 @@ export const useCardsStore = defineStore("cards", {
             name: user.displayName,
             id: user.uid,
           };
-          const database = useDatabase();
-          const { promise } = useDatabaseObject(dbRef(database, user.uid));
-          promise.value.then((datas) => {
-            console.log(datas);
-            const { languages, cards, cardItems, lastAdded } = datas;
-            this.languages = languages;
-            this.cards = cards;
-            this.cardItems = cardItems;
-            this.cards.sort((a, b) => b.lastUpdate - a.lastUpdate);
-            this.lastAdded = lastAdded ? lastAdded : [];
-          });
+          useLoadDataToStore(user.uid);
         } else {
-          const datas = localStorage.getItem("myFlashCards");
+          /* const datas = localStorage.getItem("myFlashCards");
           if (datas) {
             const { languages, cards, cardItems, lastAdded } =
               JSON.parse(datas);
@@ -49,7 +42,7 @@ export const useCardsStore = defineStore("cards", {
             this.cardItems = cardItems;
             this.cards.sort((a, b) => b.lastUpdate - a.lastUpdate);
             this.lastAdded = lastAdded ? lastAdded : [];
-          }
+          } */
         }
 
         resolve(true);
