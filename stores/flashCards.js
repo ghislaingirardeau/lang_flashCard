@@ -1,4 +1,5 @@
-import { useSaveToLs } from "@/composables/saveToLS";
+import { useSaveLocal, useSaveFirebase } from "@/composables/saveData";
+import { ref as dbRef, set as dbset } from "firebase/database";
 
 export const useCardsStore = defineStore("cards", {
   state: () => ({
@@ -19,16 +20,36 @@ export const useCardsStore = defineStore("cards", {
     },
   },
   actions: {
-    nuxtServerInit() {
-      return new Promise((resolve, reject) => {
-        const datas = localStorage.getItem("myFlashCards");
-        if (datas) {
-          const { languages, cards, cardItems, lastAdded } = JSON.parse(datas);
-          this.languages = languages;
-          this.cards = cards;
-          this.cardItems = cardItems;
-          this.cards.sort((a, b) => b.lastUpdate - a.lastUpdate);
-          this.lastAdded = lastAdded ? lastAdded : [];
+    nuxtServerInit(user) {
+      return new Promise(async (resolve, reject) => {
+        if (user) {
+          const userStore = useUserStore();
+          userStore.user = {
+            name: user.displayName,
+            id: user.uid,
+          };
+          const database = useDatabase();
+          const { promise } = useDatabaseObject(dbRef(database, user.uid));
+          promise.value.then((datas) => {
+            console.log(datas);
+            const { languages, cards, cardItems, lastAdded } = datas;
+            this.languages = languages;
+            this.cards = cards;
+            this.cardItems = cardItems;
+            this.cards.sort((a, b) => b.lastUpdate - a.lastUpdate);
+            this.lastAdded = lastAdded ? lastAdded : [];
+          });
+        } else {
+          const datas = localStorage.getItem("myFlashCards");
+          if (datas) {
+            const { languages, cards, cardItems, lastAdded } =
+              JSON.parse(datas);
+            this.languages = languages;
+            this.cards = cards;
+            this.cardItems = cardItems;
+            this.cards.sort((a, b) => b.lastUpdate - a.lastUpdate);
+            this.lastAdded = lastAdded ? lastAdded : [];
+          }
         }
 
         resolve(true);
@@ -37,13 +58,15 @@ export const useCardsStore = defineStore("cards", {
     addNewCard(card, message) {
       this.cards.unshift(card);
       this.cardItems[card.title] = [];
-      useSaveToLs(this.cards, this.cardItems, this.languages, this.lastAdded);
+      useSaveLocal();
+      useSaveFirebase();
     },
     removeCard(category, id) {
       const newCardArray = this.cards.filter((e) => e.id != id);
       this.cards = newCardArray;
       delete this.cardItems[category];
-      useSaveToLs(this.cards, this.cardItems, this.languages, this.lastAdded);
+      useSaveLocal();
+      useSaveFirebase();
     },
     addNewItem(category, item) {
       item.langFrom = this.languages.from.slice(0, 2);
@@ -59,7 +82,8 @@ export const useCardsStore = defineStore("cards", {
       } else {
         this.lastAdded.unshift(item);
       }
-      useSaveToLs(this.cards, this.cardItems, this.languages, this.lastAdded);
+      useSaveLocal();
+      useSaveFirebase();
     },
     removeItem(category, id, remember) {
       this.languages.remember ? null : (this.languages.remember = 0);
@@ -67,11 +91,13 @@ export const useCardsStore = defineStore("cards", {
       this.cardItems[category] = this.cardItems[category].filter(
         (e) => e.id != id
       );
-      useSaveToLs(this.cards, this.cardItems, this.languages, this.lastAdded);
+      useSaveLocal();
+      useSaveFirebase();
     },
     setParams(params) {
       this.languages = params;
-      useSaveToLs(this.cards, this.cardItems, this.languages, this.lastAdded);
+      useSaveLocal();
+      useSaveFirebase();
     },
   },
 });

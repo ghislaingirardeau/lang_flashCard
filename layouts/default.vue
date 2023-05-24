@@ -159,8 +159,8 @@ const userData = ref({
 });
 
 onBeforeMount(async () => {
-  /* await device.nuxtServerInit(); */
-  await cardsStore.nuxtServerInit();
+  const user = await getCurrentUser();
+  await cardsStore.nuxtServerInit(user);
   settings.value = { ...cardsStore.languages };
   // check if app load on the right lang set
   if (i18n.locale.value != cardsStore.languages.from.slice(0, 2)) {

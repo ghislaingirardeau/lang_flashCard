@@ -7,6 +7,8 @@ import {
 } from "firebase/auth";
 import { useFirebaseAuth, useCurrentUser, getCurrentUser } from "vuefire";
 
+import { useSaveFirebase } from "@/composables/saveData";
+
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: null as UserInfo | null,
@@ -42,25 +44,23 @@ export const useUserStore = defineStore("user", {
       return new Promise(async (resolve, reject) => {
         try {
           const auth: any = useFirebaseAuth();
-          console.log(auth, "signIn");
           const newUser = await createUserWithEmailAndPassword(
             auth,
             userData.value.email,
             userData.value.password
           );
           if (newUser) {
-            console.log("Register the new user", newUser);
             await updateProfile(auth.currentUser, {
               displayName: userData.value.name,
             });
             this.authListener(auth);
+            useSaveFirebase(newUser.user.uid);
             resolve({
               result: true,
               message: "",
             });
           }
         } catch (error) {
-          console.log("signIn error", error);
           resolve({
             result: false,
             message: error,
@@ -79,12 +79,12 @@ export const useUserStore = defineStore("user", {
           // ...
         } else {
           console.log("user is signed out");
-          this.user = null;
         }
       });
     },
     signOut() {
       const auth: any = useFirebaseAuth();
+      this.user = null;
       signOut(auth);
     },
   },
@@ -101,4 +101,11 @@ interface UserForm {
     email: string;
     password: string;
   };
+}
+
+interface CardStore {
+  languages: object;
+  cardItems: object;
+  cards: any[];
+  lastAdded: any[];
 }
