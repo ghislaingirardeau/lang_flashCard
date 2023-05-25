@@ -129,18 +129,18 @@
       </el-form-item>
     </FormDialog>
     <FormDialog
-      v-model:value="dialogLogin"
+      v-model:value="account.show"
       :doOnConfirm="logUser"
-      :title="signUp ? 'Sign-Up' : 'Sign-In'"
-      :btnText="signUp ? 'Sign-Up' : 'Log-In'"
-      :loadingBtn="loadingBtn"
+      :title="account.signUp ? 'Sign-Up' : 'Sign-In'"
+      :btnText="account.signUp ? 'Sign-Up' : 'Log-In'"
+      :loadingBtn="account.loading"
     >
       <SignIn
-        v-model:signUp="signUp"
+        v-model:signUp="account.signUp"
         v-model:email="userData.email"
         v-model:name="userData.name"
         v-model:password="userData.password"
-        :accountMessage="accountMessage"
+        :accountMessage="account.errorMessage"
       />
     </FormDialog>
   </div>
@@ -154,10 +154,12 @@ const cardsStore = useCardsStore();
 const userStore = useUserStore();
 const getUser = useCurrentUser();
 const dialogSettings = ref(false);
-const dialogLogin = ref(false);
-const loadingBtn = ref(false);
-const signUp = ref(false);
-const accountMessage = ref("");
+const account = reactive({
+  show: false,
+  loading: false,
+  signUp: false,
+  errorMessage: "",
+});
 const switchLocalePath = useSwitchLocalePath();
 const localePath = useLocalePath();
 const i18n = useI18n();
@@ -301,19 +303,11 @@ const registerSettings = (payload) => {
 };
 
 const logUser = (payload) => {
-  useUserSign(
-    payload,
-    signUp,
-    userStore,
-    userData,
-    dialogLogin,
-    loadingBtn,
-    accountMessage
-  );
+  useUserSign(payload, userStore, userData, account);
 };
 // SHOW ACCOUNT CONNECTION OR UNLOG
 const userAccount = () => {
-  useUserAccount(getUser, userStore, dialogLogin);
+  useUserAccount(getUser, userStore, account);
 };
 
 const backToHome = () => {
