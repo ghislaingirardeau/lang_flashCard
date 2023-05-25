@@ -33,7 +33,7 @@ export const useCardsStore = defineStore("cards", {
           };
           useLoadDataToStore(user.uid);
         } else {
-          /* const datas = localStorage.getItem("myFlashCards");
+          const datas = localStorage.getItem("myFlashCards");
           if (datas) {
             const { languages, cards, cardItems, lastAdded } =
               JSON.parse(datas);
@@ -42,7 +42,7 @@ export const useCardsStore = defineStore("cards", {
             this.cardItems = cardItems;
             this.cards.sort((a, b) => b.lastUpdate - a.lastUpdate);
             this.lastAdded = lastAdded ? lastAdded : [];
-          } */
+          }
         }
 
         resolve(true);
