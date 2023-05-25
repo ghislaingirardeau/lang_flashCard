@@ -19,8 +19,9 @@
             type="primary"
             @click="submitForm(true)"
             :disabled="disabled"
+            :loading="loadingBtn"
           >
-            {{ $t("dialog.confirm") }}
+            {{ btnText ? btnText : $t("dialog.confirm") }}
           </el-button>
         </span>
       </template>
@@ -40,6 +41,15 @@ const props = defineProps({
     type: String,
   },
   disabled: {
+    required: false,
+    type: Boolean,
+  },
+  btnText: {
+    required: false,
+    type: String,
+  },
+  loadingBtn: {
+    required: false,
     type: Boolean,
   },
 });

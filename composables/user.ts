@@ -13,18 +13,25 @@ export async function useUserSign(
   signUp: Type<boolean>,
   userStore: StoreInfo,
   userData: UserForm,
-  dialogLogin: Type<boolean>
+  dialogLogin: Type<boolean>,
+  loadingBtn: Type<boolean>,
+  accountMessage: Type<string>
 ) {
+  loadingBtn.value = true;
   if (payload) {
     if (signUp.value) {
       const userLoad = await userStore.signin(userData);
-      userLoad.result ? console.log("success") : alert(userLoad.message);
+      userLoad.result
+        ? (dialogLogin.value = false)
+        : (accountMessage.value = userLoad.message);
     } else {
       const userLoad = await userStore.login(userData);
-      userLoad.result ? console.log("success") : alert(userLoad.message);
+      userLoad.result
+        ? (dialogLogin.value = false)
+        : (accountMessage.value = userLoad.message);
     }
   }
-  dialogLogin.value = false;
+  loadingBtn.value = false;
 }
 
 interface StoreInfo {

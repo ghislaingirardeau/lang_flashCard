@@ -1,9 +1,14 @@
 <template>
   <div class="container-login">
     <div class="login-type">
-      <span @click="emit('update:signUp', !signUp)" class="login-btn"
-        >{{ signUp ? "Back to login" : "Create an account" }}
-      </span>
+      <Transition name="fade" mode="out-in">
+        <span
+          :key="signUp"
+          @click="emit('update:signUp', !signUp)"
+          class="login-btn"
+          >{{ signUp ? "Back to login" : "Create an account" }}
+        </span>
+      </Transition>
     </div>
     <div class="form-item">
       <label for="email">Email</label>
@@ -11,6 +16,7 @@
         :value="email"
         required
         name="email"
+        id="email"
         @input="emit('update:email', $event.target.value)"
       />
     </div>
@@ -20,6 +26,7 @@
         :value="password"
         required
         name="password"
+        id="password"
         :type="showPassword ? 'text' : 'password'"
         @input="emit('update:password', $event.target.value)"
       />
@@ -36,6 +43,7 @@
           :value="name"
           required
           name="name"
+          id="name"
           @input="emit('update:name', $event.target.value)"
         />
       </div>
@@ -44,6 +52,7 @@
         <span class="login-btn">Reset password</span>
       </div>
     </Transition>
+    <p v-if="accountMessage.length > 0">{{ accountMessage }}</p>
   </div>
 </template>
 
@@ -64,6 +73,10 @@ const props = defineProps({
   signUp: {
     type: Boolean,
     require: true,
+  },
+  accountMessage: {
+    require: true,
+    type: String,
   },
 });
 const emit = defineEmits();
