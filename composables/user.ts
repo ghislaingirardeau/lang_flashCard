@@ -3,7 +3,7 @@ export function useUserAccount(
   getUser: Type<object>,
   userStore: StoreInfo,
   account: Account
-) {
+): void {
   account.errorMessage = "";
   getUser.value ? userStore.signOut() : (account.show = true);
 }
@@ -14,7 +14,7 @@ export async function useUserSign(
   userStore: StoreInfo,
   userData: UserForm,
   account: Account
-) {
+): Promise<void> {
   account.loading = true;
   if (payload) {
     if (account.signUp) {

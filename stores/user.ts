@@ -8,13 +8,12 @@ import {
 import { useFirebaseAuth, useCurrentUser, getCurrentUser } from "vuefire";
 import { useSaveFirebase, useLoadDataToStore } from "@/composables/saveData";
 
-
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: null as UserInfo | null,
   }),
   actions: {
-    async login(userData: UserForm) {
+    async login(userData: UserForm): Promise<Resolve> {
       return new Promise(async (resolve, reject) => {
         try {
           const auth: any = useFirebaseAuth();
@@ -42,7 +41,7 @@ export const useUserStore = defineStore("user", {
         }
       });
     },
-    async signin(userData: UserForm) {
+    async signin(userData: UserForm): Promise<Resolve> {
       return new Promise(async (resolve, reject) => {
         try {
           const auth: any = useFirebaseAuth();
@@ -65,9 +64,10 @@ export const useUserStore = defineStore("user", {
             });
           }
         } catch (error) {
+          console.log(error);
           resolve({
             result: false,
-            message: error,
+            message: "Email already use Or not connected",
           });
         }
       });
@@ -124,4 +124,9 @@ interface CardStore {
   cardItems: object;
   cards: any[];
   lastAdded: any[];
+}
+
+interface Resolve {
+  result: boolean;
+  message: string;
 }

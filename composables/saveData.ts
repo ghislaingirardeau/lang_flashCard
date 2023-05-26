@@ -11,7 +11,7 @@ export function useSaveLocal() {
 }
 
 //SAVE IN FIREBASE
-export function useSaveFirebase(userUid: string) {
+export function useSaveFirebase(userUid: string): void {
   const userStore = useUserStore();
   if (userStore.user || userUid) {
     const database = useDatabase();
@@ -29,7 +29,7 @@ export function useSaveFirebase(userUid: string) {
 }
 
 // LOAD FROM FIREBASE TO STORE ON LOAD (flashcard store) OR ON LOGIN (user store)
-export async function useLoadDataToStore(uid: string) {
+export async function useLoadDataToStore(uid: string): Promise<void> {
   const cardStore: CardStore = useCardsStore();
   const database = useDatabase();
   const { promise } = useDatabaseObject(dbRef(database, uid));

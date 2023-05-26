@@ -1,4 +1,4 @@
-export function useBeforeLeave(event: HTMLElement, home: boolean) {
+export function useBeforeLeave(event: HTMLElement, home: boolean): void {
   const { marginLeft, marginTop, width, height } =
     window.getComputedStyle(event);
   const swipeBlock: HTMLElement = document.querySelector(".el-main")!;
@@ -18,7 +18,7 @@ export function useAnimDeleteIcon(
   home: boolean,
   fct1: string,
   fct2: string
-) {
+): void {
   document
     .getElementById(`delete-${id}`)
     ?.classList[fct1 as keyof IMyObj]("hide");
