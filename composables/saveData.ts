@@ -12,18 +12,20 @@ export function useSaveLocal() {
 
 //SAVE IN FIREBASE
 export function useSaveFirebase(userUid: string) {
-  const database = useDatabase();
-  const cardStore = useCardsStore();
-
-  // flashcard store, I don't have access to the user id
-  const uid: string = userUid ? userUid : (useUserStore()?.user?.id as string);
-  const { languages, cardItems, cards, lastAdded } = cardStore;
-  dbset(dbRef(database, uid), {
-    languages,
-    cardItems,
-    cards,
-    lastAdded,
-  });
+  const userStore = useUserStore();
+  if (userStore.user || userUid) {
+    const database = useDatabase();
+    const cardStore = useCardsStore();
+    // flashcard store, I don't have access to the user id
+    const uid = userUid ? userUid : (userStore.user?.id as string);
+    const { languages, cardItems, cards, lastAdded } = cardStore;
+    dbset(dbRef(database, uid), {
+      languages,
+      cardItems,
+      cards,
+      lastAdded,
+    });
+  }
 }
 
 // LOAD FROM FIREBASE TO STORE ON LOAD (flashcard store) OR ON LOGIN (user store)
