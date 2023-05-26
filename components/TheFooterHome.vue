@@ -14,7 +14,9 @@
 const cardsStore = useCardsStore();
 const userStore = useUserStore();
 
-const total = cardsStore.totalWord as number;
+const total = computed(() => {
+  return cardsStore.totalWord as number;
+});
 
 const remember = computed(() => {
   return cardsStore.languages.remember ? cardsStore.languages.remember : 0;
