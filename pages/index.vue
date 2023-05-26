@@ -37,6 +37,7 @@
     <FormDialog
       v-model:value="dialogAddCard"
       :doOnConfirm="saveNewCard"
+      :disabled="nameNotCorrect()"
       :title="$t('newCard.title')"
     >
       <div class="newCard_content">
@@ -155,6 +156,7 @@ const openModal = () => {
     position: absolute;
     bottom: 0px;
     right: 0px;
+    color: white;
   }
 }
 .cards_block {

@@ -11,25 +11,23 @@
                   : "Flash Cards"
               }}
             </h1>
-            <SvgHelp @click="showTutorial = true" />
+
             <div v-if="!$route.params.id">
               <Transition name="rotateZ" mode="out-in">
                 <Icon
-                  v-if="getUser"
-                  name="mdi:logout-variant"
-                  size="34px"
-                  @click="userAccount"
-                  class="header-icons"
-                />
-                <Icon
-                  v-else
-                  name="mdi:account-circle-outline"
+                  :key="userStore.user"
+                  :name="
+                    userStore.user
+                      ? 'mdi:logout-variant'
+                      : 'mdi:account-circle-outline'
+                  "
                   size="34px"
                   @click="userAccount"
                   class="header-icons"
                 />
               </Transition>
             </div>
+            <SvgHelp @click="showTutorial = true" />
             <Icon
               v-if="$route.params.id"
               name="mdi:arrow-left-drop-circle-outline"
@@ -96,6 +94,7 @@
         v-model:name="userData.name"
         v-model:password="userData.password"
         :accountMessage="account.errorMessage"
+        :loading="account.loading"
       />
     </FormDialog>
   </div>

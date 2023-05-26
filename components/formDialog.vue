@@ -15,13 +15,9 @@
           <el-button @click="submitForm(false)">
             {{ $t("dialog.cancel") }}</el-button
           >
-          <el-button
-            type="primary"
-            @click="submitForm(true)"
-            :disabled="disabled"
-            :loading="loadingBtn"
-          >
-            {{ btnText ? btnText : $t("dialog.confirm") }}
+          <el-button @click="submitForm(true)" :disabled="disabled">
+            <TheLoader v-if="loadingBtn" color="white" size="24px" />
+            <span v-else>{{ btnText ? btnText : $t("dialog.confirm") }}</span>
           </el-button>
         </span>
       </template>
@@ -67,4 +63,16 @@ const submitForm = (params) => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.el-button {
+  &:active {
+    background-color: $colorFourth;
+  }
+  &:hover {
+    background-color: $colorFourth;
+  }
+  &:focus {
+    background-color: $colorFourth;
+  }
+}
+</style>

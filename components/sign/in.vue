@@ -17,6 +17,7 @@
         required
         name="email"
         id="email"
+        :disabled="loading"
         @input="emit('update:email', $event.target.value)"
       />
     </div>
@@ -27,6 +28,7 @@
         required
         name="password"
         id="password"
+        :disabled="loading"
         :type="showPassword ? 'text' : 'password'"
         @input="emit('update:password', $event.target.value)"
       />
@@ -44,15 +46,18 @@
           required
           name="name"
           id="name"
+          :disabled="loading"
           @input="emit('update:name', $event.target.value)"
         />
       </div>
       <div v-else>
-        <p>You forgot your password ?</p>
+        <span>You forgot your password ?</span>
         <span class="login-btn">Reset password</span>
       </div>
     </Transition>
-    <p v-if="accountMessage.length > 0">{{ accountMessage }}</p>
+    <p v-if="accountMessage.length > 0" class="error-message">
+      {{ accountMessage }}
+    </p>
   </div>
 </template>
 
@@ -78,6 +83,9 @@ const props = defineProps({
     require: true,
     type: String,
   },
+  loading: {
+    type: Boolean,
+  },
 });
 const emit = defineEmits();
 
@@ -93,10 +101,13 @@ const showPassword = ref(false);
 }
 .login-btn {
   padding: 8px 15px;
-  color: #5bc0be;
-  border: 1px solid #5bc0be;
-  border-radius: 5px;
+  color: white;
+  font-style: italic;
+  text-decoration: underline;
   cursor: pointer;
+}
+.error-message {
+  color: white;
 }
 input {
   width: 80%;
