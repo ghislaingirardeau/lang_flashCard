@@ -18,17 +18,18 @@ export async function useTranslation(text: string, from: string, to: string) {
     target: to,
     format: "text",
   };
-  const { data, error } = await useFetch<DataT, Error, string, "post" | "get">(
+  const options = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "X-RapidAPI-Key": config.public.XRAPIDAPIKEY,
+      "X-RapidAPI-Host": config.public.XRAPIDAPIGOOGLE,
+    },
+    body: JSON.stringify(body),
+  };
+  const { data, error } = await useFetch<APIBody>(
     "https://google-translator9.p.rapidapi.com/v2",
-    {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "X-RapidAPI-Key": config.public.XRAPIDAPIKEY,
-        "X-RapidAPI-Host": config.public.XRAPIDAPIGOOGLE,
-      },
-      body: JSON.stringify(body),
-    }
+    options as object
   );
   if (data.value)
     return {
@@ -55,7 +56,7 @@ export async function useTranslation(text: string, from: string, to: string) {
       text: text,
     }),
   };
-  const { data, error } = await useFetch(url, options);
+  const { data, error } = await useFetch<APIBody>(url, options as object);
   if (data.value)
     return {
       text: data.value.translated_text,
@@ -81,7 +82,7 @@ export async function usePlayTranslation(
   if (!langDetected) {
     //DETECT LANG
     const { data: currenLang, error } = await useFetch<
-      APIBody,
+      DataT,
       Error,
       string,
       "post" | "get"
@@ -161,6 +162,13 @@ interface APIBody {
 }
 
 interface DataT {
+  data: {
+    detections: [[{ language: string }]];
+  };
+}
+
+// if want to be more clear than APIBody
+interface DataFetch {
   data: {
     translations: [
       {
