@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import tutorialcard from "@/components/Tutorial/card.vue";
 import tutorialHome from "@/components/Tutorial/home.vue";
 
@@ -22,13 +22,19 @@ const componentToLoad = computed(() =>
 
 const tutoPage = ref(1);
 
-const emit = defineEmits();
+const emit: Function = defineEmits();
 
 const helpModal = () => {
-  let modal = document.getElementById("helpModal");
-  let span = document.getElementsByClassName("modal_action-close")[0];
+  let modal = document.getElementById("helpModal") as HTMLElement;
+  let span = document.getElementsByClassName(
+    "modal_action-close"
+  )[0] as HTMLElement;
 
-  const resetModal = (display, span, reverse) => {
+  const resetModal = (
+    display: HTMLElement,
+    span: HTMLElement,
+    reverse: boolean
+  ) => {
     display.animate(
       [{ opacity: `${reverse ? 1 : 0}` }, { opacity: `${reverse ? 0 : 1}` }],
       {

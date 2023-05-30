@@ -31,14 +31,19 @@ export async function useTranslation(text: string, from: string, to: string) {
     "https://google-translator9.p.rapidapi.com/v2",
     options as object
   );
-  if (data.value)
+  if (data.value && navigator.onLine)
     return {
-      text: data.value.data.translations[0].translatedText,
+      text: data.value.data.translations[0].translatedText as string,
       error: null,
     };
-  if (error.value) {
+  else {
     console.log(error);
-    return { text: null, error: error.value };
+    return {
+      text: null,
+      error: navigator.onLine
+        ? error.value?.data.message
+        : ("You are not connected to internet" as string),
+    };
   }
 
   // TRANSLO MAX 500 000 CHARACTERS PER MONTHS
@@ -119,28 +124,36 @@ export async function usePlayTranslation(
   }
 
   //IF NOT IN CACHE, FETCH, STORE in CACHE & PLAY
-  loader ? (loader.value = id) : null;
-  const result = await fetch(
-    `https://text-to-speech-api3.p.rapidapi.com/speak?text=${to}&lang=${langDetected}`,
-    {
-      method: "GET",
-      headers: {
-        "X-RapidAPI-Key": config.public.XRAPIDAPIKEY,
-        "X-RapidAPI-Host": config.public.XRAPIDAPIHOSTTTS,
-      },
-    }
-  );
-  if (result.ok === true) {
-    const cache = await caches.open("flashCardCache");
-    cache.put(
+  try {
+    loader ? (loader.value = id) : null;
+    const result = await fetch(
       `https://text-to-speech-api3.p.rapidapi.com/speak?text=${to}&lang=${langDetected}`,
-      result.clone()
+      {
+        method: "GET",
+        headers: {
+          "X-RapidAPI-Key": config.public.XRAPIDAPIKEY,
+          "X-RapidAPI-Host": config.public.XRAPIDAPIHOSTTTS,
+        },
+      }
     );
-    const blob = await result.blob();
-    playBlobResponse(blob, rate);
-    return { play: true, error: null };
-  } else {
-    return { play: null, error: "Api is not available" };
+    if (result.ok === true && navigator.onLine) {
+      const cache = await caches.open("flashCardCache");
+      cache.put(
+        `https://text-to-speech-api3.p.rapidapi.com/speak?text=${to}&lang=${langDetected}`,
+        result.clone()
+      );
+      const blob = await result.blob();
+      playBlobResponse(blob, rate);
+      return { play: true, error: null };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      play: null,
+      error: navigator.onLine
+        ? "Api is not available"
+        : "Your are not connected",
+    };
   }
 }
 

@@ -15,13 +15,19 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const cardsStore = useCardsStore();
-const recognition = reactive({});
+const recognition: ObjectReact<any> = reactive({
+  value: null,
+});
 const loading = ref(false);
 const route = useRoute();
-const micAnimation = reactive({});
+const micAnimation: ObjectReact<Animation> = reactive({ value: null });
 const micAnimationDuration = ref(1000);
+
+interface ObjectReact<U> {
+  value: U | null;
+}
 
 const startDrag = async () => {
   const mic = document.querySelector(".mic-circle");
@@ -45,14 +51,17 @@ const startDrag = async () => {
   micAnimation.value.play();
 
   const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
+    (window as any).SpeechRecognition ||
+    (window as any).webkitSpeechRecognition;
   recognition.value = new SpeechRecognition();
   recognition.value.continuous = false;
   recognition.value.lang = cardsStore.languages.from;
   recognition.value.interimResults = false;
   recognition.value.maxAlternatives = 1;
   recognition.value.start();
-  recognition.value.onresult = async (event) => {
+  recognition.value.onresult = async (event: {
+    results: [[{ transcript: string }]];
+  }) => {
     recognition.value.stop();
     let transcriptResult = event.results[0][0].transcript;
     loading.value = true;
@@ -70,7 +79,7 @@ const startDrag = async () => {
       });
       useScrollTo("smooth");
     } else {
-      alert("Error from API, reload", error);
+      alert("Error from API, reload" + error);
     }
     loading.value = false;
   };
@@ -79,21 +88,21 @@ const startDrag = async () => {
 const endDrag = () => {
   recognition.value.stop();
   loading.value = false;
-  micAnimation.value.reverse();
+  micAnimation.value?.reverse();
 
   const getTime = () => {
-    if (micAnimation.value.currentTime < micAnimationDuration.value)
-      return micAnimation.value.currentTime;
-    if (micAnimation.value.currentTime > micAnimationDuration.value) {
-      while (micAnimation.value.currentTime > micAnimationDuration.value) {
-        micAnimation.value.currentTime -= micAnimationDuration.value;
+    let currentTime = micAnimation.value?.currentTime as number;
+    if (currentTime <= micAnimationDuration.value) return currentTime;
+    if (currentTime > micAnimationDuration.value) {
+      while (currentTime > micAnimationDuration.value) {
+        currentTime -= micAnimationDuration.value;
       }
-      return micAnimation.value.currentTime;
+      return currentTime;
     }
   };
 
   setTimeout(() => {
-    micAnimation.value.pause();
+    micAnimation.value?.pause();
   }, getTime());
 };
 </script>

@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
   tutoPage: {
     required: true,
@@ -17,7 +17,7 @@ const props = defineProps({
   },
 });
 const { t } = useI18n();
-const emit = defineEmits();
+const emit: Function = defineEmits();
 const route = useRoute();
 
 const tutoLength = computed(() => {

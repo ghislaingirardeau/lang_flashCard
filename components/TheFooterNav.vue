@@ -45,7 +45,7 @@
             name="ph:arrow-arc-right-bold"
             size="44px"
             class="rotate-icon block_switcher-icon"
-            @click="switchLang"
+            @click="switchLang($event)"
           />
           <span>
             {{ langTo }}
@@ -56,7 +56,7 @@
   </el-footer>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const toInput = ref(false);
 
 const props = defineProps({
@@ -74,7 +74,7 @@ const langFrom = computed(() => {
   return cardsStore.langFrom;
 });
 
-const switchToInput = (e) => {
+const switchToInput = () => {
   toInput.value = !toInput.value;
   let list = document.querySelectorAll(".rotate-icon");
   list.forEach((element) => {

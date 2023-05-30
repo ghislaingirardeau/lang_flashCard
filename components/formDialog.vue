@@ -25,13 +25,16 @@
   </client-only>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
   value: {
     required: true,
     type: Boolean,
   },
-  doOnConfirm: Function,
+  doOnConfirm: {
+    type: Function,
+    required: true,
+  },
   title: {
     required: true,
     type: String,
@@ -57,7 +60,7 @@ const modalWidth = computed(() => {
 });
 
 const emit = defineEmits();
-const submitForm = (params) => {
+const submitForm = (params: Boolean) => {
   props.doOnConfirm(params);
   /* emit("update:value", false); */
 };
