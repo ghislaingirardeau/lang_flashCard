@@ -176,19 +176,7 @@ const switchLang = (e) => {
   settings.value.from = to;
   settings.value.to = from;
 
-  let keyframes = [
-    {
-      opacity: 0,
-      transform: "rotateZ(20deg)",
-      offset: 0.5,
-    },
-  ];
-  let element = e.target.nodeName === "svg" ? e.target : e.target.parentNode;
-
-  element.animate(keyframes, {
-    duration: 400,
-    fill: "forwards",
-  });
+  useAnimSwitchArrow(e);
 
   registerSettings(true);
 };

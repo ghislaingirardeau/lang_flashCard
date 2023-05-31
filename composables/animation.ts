@@ -33,6 +33,24 @@ export function useAnimDeleteIcon(
         ?.classList[fct1 as keyof IMyObj]("hide");
 }
 
+export function useAnimSwitchArrow(event: Event) {
+  let keyframes = [
+    {
+      opacity: 0,
+      transform: "rotateZ(20deg)",
+      offset: 0.5,
+    },
+  ];
+  const target = event.target as HTMLElement;
+  let element =
+    target.nodeName === "svg" ? target : (target.parentNode as HTMLElement);
+
+  element.animate(keyframes, {
+    duration: 400,
+    fill: "forwards",
+  });
+}
+
 interface IMyObj {
   add: string;
   remove: string;
