@@ -20,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+import { TypeItem } from "@/assets/interface";
 const cardsStore = useCardsStore();
 const loading = ref(false);
 const route = useRoute();
@@ -33,12 +34,17 @@ const translate = async () => {
     cardsStore.languages.to
   );
   if (text) {
-    cardsStore.addNewItem(route.params.id, {
-      id: Date.now(),
-      from: TextToTranslate.value,
-      to: text,
-      pronouce: "xxx",
-    });
+    cardsStore.addNewItem(
+      route.params.id as string,
+      {
+        id: Date.now(),
+        from: TextToTranslate.value,
+        to: text,
+        pronouce: "xxx",
+        langFrom: "",
+        langTo: "",
+      } as TypeItem
+    );
     useScrollTo("smooth");
   } else {
     alert("Error from API " + error);

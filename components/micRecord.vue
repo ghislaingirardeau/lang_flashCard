@@ -16,6 +16,8 @@
 </template>
 
 <script setup lang="ts">
+import { TypeItem } from "@/assets/interface";
+
 const cardsStore = useCardsStore();
 const recognition: ObjectReact<any> = reactive({
   value: null,
@@ -71,12 +73,15 @@ const startDrag = async () => {
       cardsStore.languages.to
     );
     if (text) {
-      cardsStore.addNewItem(route.params.id, {
+      const category = route.params.id as string;
+      cardsStore.addNewItem(category, {
         id: Date.now(),
         from: transcriptResult,
         to: text,
         pronouce: "xxx",
-      });
+        langFrom: "",
+        langTo: "",
+      } as TypeItem);
       useScrollTo("smooth");
     } else {
       alert("Error from API, reload" + error);

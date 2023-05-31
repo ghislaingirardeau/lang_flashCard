@@ -46,6 +46,8 @@
 </template>
 
 <script setup lang="ts">
+import { TypeItem } from "@/assets/interface";
+
 const route = useRoute();
 useHead({
   titleTemplate: `Card-${route.params.id}`, // %s GET THE TITLE AND ADD THIS
@@ -68,14 +70,13 @@ const loadCard = computed(() => {
 });
 
 const playSound = async (payload: PlaySound) => {
-  console.log(payload);
   // envoie en params le payload de childNode emit onTap + le loader créer
   const itemId =
     route.params.id === t("home.lastAdd")
-      ? (cardsStore.lastAdded.find((e) => e.id == payload.id) as Item)
+      ? (cardsStore.lastAdded.find((e) => e.id == payload.id) as TypeItem)
       : (cardsStore.cardItems[route.params.id as string].find(
           (e) => e.id == payload.id
-        ) as Item);
+        ) as TypeItem);
 
   let text = payload.side === "left" ? itemId.from : itemId.to;
 
@@ -106,15 +107,6 @@ interface PlaySound {
 interface PlayResponse {
   play: boolean;
   error: string | null;
-}
-
-interface Item {
-  from: string;
-  id: number;
-  langFrom: string;
-  langTo: string;
-  pronouce: string;
-  to: string;
 }
 </script>
 

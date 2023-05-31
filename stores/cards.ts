@@ -3,6 +3,7 @@ import {
   useSaveFirebase,
   useLoadDataToStore,
 } from "@/composables/saveData";
+import { TypeItem } from "@/assets/interface";
 
 interface Cards {
   createOn: number;
@@ -11,17 +12,8 @@ interface Cards {
   title: string;
 }
 
-interface Item {
-  from: string;
-  id: number;
-  langFrom: string;
-  langTo: string;
-  pronouce: string;
-  to: string;
-}
-
 interface CardItem {
-  [key: string]: Item[];
+  [key: string]: TypeItem[];
 }
 
 interface User {
@@ -39,7 +31,7 @@ export const useCardsStore = defineStore("cards", {
     },
     cards: [] as Cards[],
     cardItems: {} as CardItem,
-    lastAdded: [] as Item[],
+    lastAdded: [] as TypeItem[],
   }),
   getters: {
     langTo: (state) => state.languages.to.slice(-2),
@@ -90,7 +82,7 @@ export const useCardsStore = defineStore("cards", {
       useSaveLocal();
       useSaveFirebase();
     },
-    addNewItem(category: string, item: Item) {
+    addNewItem(category: string, item: TypeItem) {
       item.langFrom = this.languages.from.slice(0, 2);
       item.langTo = this.languages.to.slice(0, 2);
       this.cardItems[category].unshift(item);
