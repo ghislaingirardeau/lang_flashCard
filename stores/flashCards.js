@@ -6,7 +6,12 @@ import {
 
 export const useCardsStore = defineStore("cards", {
   state: () => ({
-    languages: { from: "fr-FR", to: "km-KM", remember: 0, rate: 1 },
+    languages: {
+      from: "fr-FR",
+      to: "km-KM",
+      remember: 0,
+      rate: 1,
+    },
     cards: [],
     cardItems: {},
     lastAdded: [],
@@ -31,7 +36,7 @@ export const useCardsStore = defineStore("cards", {
             name: user.displayName,
             id: user.uid,
           };
-          useLoadDataToStore(user.uid);
+          await useLoadDataToStore(user.uid);
         } else {
           const datas = localStorage.getItem("myFlashCards");
           if (datas) {
@@ -44,7 +49,6 @@ export const useCardsStore = defineStore("cards", {
             this.lastAdded = lastAdded ? lastAdded : [];
           }
         }
-
         resolve(true);
       });
     },

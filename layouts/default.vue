@@ -127,21 +127,12 @@ const userData = ref({
   name: "",
 });
 
-onBeforeMount(async () => {
-  const user = await getCurrentUser();
-  await cardsStore.nuxtServerInit(user);
-
-  settings.value = { ...cardsStore.languages };
-  // check if app load on the right lang set
-  if (i18n.locale.value != cardsStore.languages.from.slice(0, 2)) {
-    navigateTo(switchLocalePath(cardsStore.languages.from.slice(0, 2)));
-  }
-});
-
 const innerWidth = window.innerWidth;
 const innerHeight = ref(window.innerHeight);
 
 onMounted(() => {
+  settings.value = { ...cardsStore.languages };
+
   const styleBody = document.querySelector("#app_container").style;
   innerWidth <= 1280
     ? (styleBody.marginInline = "0px")
@@ -164,13 +155,7 @@ onMounted(() => {
                 case "installed":
                   if (navigator.serviceWorker.controller) {
                     // new update available
-                    if (
-                      window.confirm(
-                        "New update available ! Reload the app now ?"
-                      )
-                    ) {
-                      window.location.reload();
-                    }
+                    alert("New update available ! Reload the app now ?");
                     resolve(true);
                   } else {
                     // no update available
