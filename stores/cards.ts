@@ -4,6 +4,31 @@ import {
   useLoadDataToStore,
 } from "@/composables/saveData";
 
+interface Cards {
+  createOn: number;
+  id: number;
+  lastUpdate: number;
+  title: string;
+}
+
+interface Item {
+  from: string;
+  id: number;
+  langFrom: string;
+  langTo: string;
+  pronouce: string;
+  to: string;
+}
+
+interface CardItem {
+  [key: string]: Item[];
+}
+
+interface User {
+  displayName: string;
+  uid: string;
+}
+
 export const useCardsStore = defineStore("cards", {
   state: () => ({
     languages: {
@@ -12,9 +37,9 @@ export const useCardsStore = defineStore("cards", {
       remember: 0,
       rate: 1,
     },
-    cards: [],
-    cardItems: {},
-    lastAdded: [],
+    cards: [] as Cards[],
+    cardItems: {} as CardItem,
+    lastAdded: [] as Item[],
   }),
   getters: {
     langTo: (state) => state.languages.to.slice(-2),
@@ -28,7 +53,7 @@ export const useCardsStore = defineStore("cards", {
     },
   },
   actions: {
-    nuxtServerInit(user) {
+    nuxtServerInit(user: User) {
       return new Promise(async (resolve, reject) => {
         if (user) {
           const userStore = useUserStore();
@@ -52,24 +77,24 @@ export const useCardsStore = defineStore("cards", {
         resolve(true);
       });
     },
-    addNewCard(card, message) {
+    addNewCard(card: Cards) {
       this.cards.unshift(card);
       this.cardItems[card.title] = [];
       useSaveLocal();
       useSaveFirebase();
     },
-    removeCard(category, id) {
+    removeCard(category: string, id: number) {
       const newCardArray = this.cards.filter((e) => e.id != id);
       this.cards = newCardArray;
       delete this.cardItems[category];
       useSaveLocal();
       useSaveFirebase();
     },
-    addNewItem(category, item) {
+    addNewItem(category: string, item: Item) {
       item.langFrom = this.languages.from.slice(0, 2);
       item.langTo = this.languages.to.slice(0, 2);
       this.cardItems[category].unshift(item);
-      let cardToUpdate = this.cards.find((e) => e.title === category);
+      let cardToUpdate = this.cards.find((e) => e.title === category) as Cards;
       cardToUpdate.lastUpdate = Date.now();
       this.cards.sort((a, b) => b.lastUpdate - a.lastUpdate);
 
@@ -82,7 +107,7 @@ export const useCardsStore = defineStore("cards", {
       useSaveLocal();
       useSaveFirebase();
     },
-    removeItem(category, id, remember) {
+    removeItem(category: string, id: number, remember: boolean) {
       this.languages.remember ? null : (this.languages.remember = 0);
       remember ? this.languages.remember++ : null;
       this.cardItems[category] = this.cardItems[category].filter(
@@ -91,7 +116,7 @@ export const useCardsStore = defineStore("cards", {
       useSaveLocal();
       useSaveFirebase();
     },
-    setParams(params) {
+    setParams(params: typeof this.languages) {
       this.languages = params;
       useSaveLocal();
       useSaveFirebase();

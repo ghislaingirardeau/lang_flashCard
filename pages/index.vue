@@ -44,7 +44,7 @@
         <el-form-item :label="$t('newCard.label')">
           <el-input
             v-model="cardForm.name"
-            @keydown.enter.prevent="saveNewCard"
+            @keydown.enter.prevent="saveNewCard(true)"
             autocomplete="off"
           />
         </el-form-item>
@@ -58,7 +58,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const cardsStore = useCardsStore();
 const dialogAddCard = ref(false);
 const cardForm = reactive({
@@ -88,11 +88,11 @@ const goToLastAdd = () => {
   );
 };
 
-const cardNumberItems = (params) => {
+const cardNumberItems = (params: string) => {
   return cardsStore.cardItems[params].length;
 };
 
-const saveNewCard = (payload) => {
+const saveNewCard = (payload: boolean) => {
   if (nameNotCorrect() && payload) {
     return;
   }
@@ -104,7 +104,7 @@ const saveNewCard = (payload) => {
       lastUpdate: Date.now(),
       createOn: Date.now(),
     };
-    cardsStore.addNewCard(newCard, t("store.alert"));
+    cardsStore.addNewCard(newCard);
     cardForm.name = "";
     dialogAddCard.value = false;
     return;

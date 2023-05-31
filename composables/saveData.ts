@@ -11,7 +11,7 @@ export function useSaveLocal() {
 }
 
 //SAVE IN FIREBASE
-export function useSaveFirebase(userUid: string): void {
+export function useSaveFirebase(userUid?: string): void {
   const userStore = useUserStore();
   if (userStore.user || userUid) {
     const database = useDatabase();

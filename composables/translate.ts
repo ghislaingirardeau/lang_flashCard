@@ -104,7 +104,7 @@ export async function usePlayTranslation(
       langDetected = currenLang.value.data.detections[0][0].language;
     }
     if (error.value) {
-      return { play: null, error: "Could not detect the lang" };
+      return { play: false, error: "Could not detect the lang" };
     }
   }
 
@@ -149,7 +149,7 @@ export async function usePlayTranslation(
   } catch (error) {
     console.log(error);
     return {
-      play: null,
+      play: false,
       error: navigator.onLine
         ? "Api is not available"
         : "Your are not connected",

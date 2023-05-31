@@ -3,11 +3,11 @@
     <el-container :style="{ height: containerHeight }">
       <el-header class="header-container">
         <Transition name="fade" mode="out-in">
-          <div :key="$route.params.id" class="header-container-nav">
+          <div :key="($route.params.id as string)" class="header-container-nav">
             <h1 class="header-container-title">
               {{
                 $route.params.id
-                  ? $route.params.id.replaceAll("_", " ")
+                  ? ($route.params.id as string).replaceAll("_", " ")
                   : "Flash Cards"
               }}
             </h1>
@@ -15,7 +15,7 @@
             <div v-if="!$route.params.id">
               <Transition name="rotateZ" mode="out-in">
                 <Icon
-                  :key="userStore.user"
+                  :key="userStore.user?.id"
                   :name="
                     userStore.user
                       ? 'mdi:logout-variant'
@@ -100,13 +100,12 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import footerNav from "@/components/TheFooterNav.vue";
 import footerHome from "@/components/TheFooterHome.vue";
 
 const cardsStore = useCardsStore();
 const userStore = useUserStore();
-const getUser = useCurrentUser();
 const dialogSettings = ref(false);
 const account = reactive({
   show: false,
@@ -117,12 +116,17 @@ const account = reactive({
 const switchLocalePath = useSwitchLocalePath();
 const localePath = useLocalePath();
 const i18n = useI18n();
-const settings = ref({});
-const navigatorStorageUsed = ref(0);
+const settings = ref({
+  from: "fr-FR",
+  to: "km-KM",
+  remember: 0,
+  rate: 1,
+});
+const navigatorStorageUsed: Ref<number | string> = ref(0);
 const showTutorial = ref(false);
 const route = useRoute();
 const userData = ref({
-  email: "test@mail.com",
+  email: "tes@mail.com",
   password: "azerty1",
   name: "",
 });
@@ -133,7 +137,8 @@ const innerHeight = ref(window.innerHeight);
 onMounted(() => {
   settings.value = { ...cardsStore.languages };
 
-  const styleBody = document.querySelector("#app_container").style;
+  const styleBody = (document.querySelector("#app_container") as HTMLElement)
+    .style;
   innerWidth <= 1280
     ? (styleBody.marginInline = "0px")
     : (styleBody.marginInline = "300px");
@@ -151,9 +156,9 @@ const footerToLoad = computed(() =>
     : footerHome
 );
 
-navigator.storage.estimate().then((estimate) => {
+navigator.storage.estimate().then((estimate: StorageEstimate) => {
   navigatorStorageUsed.value = (
-    (estimate.usage / estimate.quota) *
+    ((estimate.usage as number) / (estimate.quota as number)) *
     100
   ).toFixed(5);
 });
@@ -170,7 +175,7 @@ const deleteCache = () => {
   }
 };
 
-const switchLang = (e) => {
+const switchLang = (e: Event) => {
   const { from, to } = settings.value;
 
   settings.value.from = to;
@@ -181,7 +186,7 @@ const switchLang = (e) => {
   registerSettings(true);
 };
 
-const registerSettings = (payload) => {
+const registerSettings = (payload: boolean) => {
   // need to desconstruct the object otherwise cardsStore.languages strict equal to settings.value on every changes
   if (payload) {
     const { from, to, rate } = settings.value;
@@ -203,12 +208,12 @@ const registerSettings = (payload) => {
   }
 };
 
-const logUser = (payload) => {
+const logUser = (payload: boolean) => {
   useUserSign(payload, userStore, userData, account);
 };
 // SHOW ACCOUNT CONNECTION OR UNLOG
 const userAccount = () => {
-  useUserAccount(getUser, userStore, account);
+  useUserAccount(userStore, account);
 };
 
 const backToHome = () => {

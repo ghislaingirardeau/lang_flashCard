@@ -1,9 +1,6 @@
 // ON CLICK ON ACCOUNT ICON OR LOGOUT
-export function useUserAccount(
-  getUser: Type<object>,
-  userStore: StoreInfo,
-  account: Account
-): void {
+export function useUserAccount(userStore: StoreInfo, account: Account): void {
+  const getUser = useCurrentUser();
   account.errorMessage = "";
   getUser.value ? userStore.signOut() : (account.show = true);
 }

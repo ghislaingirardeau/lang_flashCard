@@ -1,16 +1,20 @@
-export function useBeforeLeave(event: HTMLElement, home: boolean): void {
+export function useBeforeLeave(event: Element, home: boolean): void {
+  console.log(event);
   const { marginLeft, marginTop, width, height } =
     window.getComputedStyle(event);
   const swipeBlock: HTMLElement = document.querySelector(".el-main")!;
 
   const getTopPosition = home
-    ? event.offsetTop
-    : event.offsetTop - swipeBlock.scrollTop;
-  console.log(event.offsetTop, swipeBlock.scrollTop, getTopPosition);
-  event.style.left = `${event.offsetLeft - parseFloat(marginLeft)}px`;
-  event.style.top = `${getTopPosition - parseFloat(marginTop)}px`;
-  event.style.width = width;
-  event.style.height = height;
+    ? (event as HTMLElement).offsetTop
+    : (event as HTMLElement).offsetTop - swipeBlock.scrollTop;
+  (event as HTMLElement).style.left = `${
+    (event as HTMLElement).offsetLeft - parseFloat(marginLeft)
+  }px`;
+  (event as HTMLElement).style.top = `${
+    getTopPosition - parseFloat(marginTop)
+  }px`;
+  (event as HTMLElement).style.width = width;
+  (event as HTMLElement).style.height = height;
 }
 
 export function useAnimDeleteIcon(

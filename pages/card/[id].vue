@@ -3,7 +3,7 @@
     <GridSwiper @onTapPlay="playSound">
       <TransitionGroup
         name="slide"
-        @before-leave="useBeforeLeave($event, false)"
+        @before-leave="useBeforeLeave($event, true)"
       >
         <GridMyRow
           v-for="item in loadCard"
@@ -45,7 +45,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const route = useRoute();
 useHead({
   titleTemplate: `Card-${route.params.id}`, // %s GET THE TITLE AND ADD THIS
@@ -53,7 +53,7 @@ useHead({
 const { t } = useI18n();
 const cardsStore = useCardsStore();
 const loader = ref(0);
-const sideLoader = ref(null);
+const sideLoader = ref("");
 
 const helpPronouce = computed(() => {
   return cardsStore.langFrom === "KM" || cardsStore.langTo === "KM"
@@ -64,28 +64,31 @@ const helpPronouce = computed(() => {
 const loadCard = computed(() => {
   return route.params.id === t("home.lastAdd")
     ? cardsStore.lastAdded
-    : cardsStore.cardItems[route.params.id];
+    : cardsStore.cardItems[route.params.id as string];
 });
 
-const playSound = async (payload) => {
+const playSound = async (payload: PlaySound) => {
+  console.log(payload);
   // envoie en params le payload de childNode emit onTap + le loader créer
   const itemId =
     route.params.id === t("home.lastAdd")
-      ? cardsStore.lastAdded.find((e) => e.id == payload.id)
-      : cardsStore.cardItems[route.params.id].find((e) => e.id == payload.id);
+      ? (cardsStore.lastAdded.find((e) => e.id == payload.id) as Item)
+      : (cardsStore.cardItems[route.params.id as string].find(
+          (e) => e.id == payload.id
+        ) as Item);
 
   let text = payload.side === "left" ? itemId.from : itemId.to;
 
   let lang = payload.side === "left" ? itemId.langFrom : itemId.langTo;
 
   sideLoader.value = payload.side;
-  const { play, error } = await usePlayTranslation(
+  const { play, error } = (await usePlayTranslation(
     text,
     cardsStore.languages.rate,
     lang,
     loader,
     payload.id
-  );
+  )) as PlayResponse;
   if (play) {
     loader.value = 0;
   }
@@ -94,6 +97,25 @@ const playSound = async (payload) => {
     alert(error);
   }
 };
+
+interface PlaySound {
+  id: number;
+  side: string;
+}
+
+interface PlayResponse {
+  play: boolean;
+  error: string | null;
+}
+
+interface Item {
+  from: string;
+  id: number;
+  langFrom: string;
+  langTo: string;
+  pronouce: string;
+  to: string;
+}
 </script>
 
 <style lang="scss" scoped>
