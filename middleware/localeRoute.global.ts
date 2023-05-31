@@ -1,4 +1,6 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
+  // for the load page & if locale are != , to set the store and go to the correct navigation locale
+  // otherwise load the default locale then navigate again to the correct local
   if (from.fullPath === to.fullPath) {
     const switchLocalePath = useSwitchLocalePath();
     const i18nLocale = useNuxtApp().$i18n.locale.value;
