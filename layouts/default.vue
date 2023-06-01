@@ -25,7 +25,7 @@
                 id="account-icon"
               />
             </div>
-            <SvgHelp @touchstart.passive="showTutorial = true" />
+            <SvgHelp @click="showTutorial = true" />
             <Icon
               v-if="$route.params.id"
               name="mdi:arrow-left-drop-circle-outline"
@@ -33,7 +33,7 @@
               @click="backToHome"
               class="header-icons"
             />
-            <SvgSettings v-else @touchstart="dialogSettings = true" />
+            <SvgSettings v-else @click="dialogSettings = true" />
           </div>
         </Transition>
         <!-- <nuxt-link :to="localePath('test')">test</nuxt-link> -->
