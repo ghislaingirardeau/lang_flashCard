@@ -34,8 +34,72 @@
   </div>
 </template>
 
-<script>
-export default {
+<script setup lang="ts">
+const props = defineProps({
+  idClass: {
+    required: true,
+    type: Object,
+  },
+  append: {
+    required: true,
+    type: String,
+  },
+});
+const emit: Function = defineEmits();
+
+const route = useRoute();
+const localePath = useLocalePath();
+const cardsStore = useCardsStore();
+const innerWidth = window.innerWidth;
+const onRouteHome = computed(() => {
+  return route.params.id ? false : true;
+});
+
+const rowWidth = computed(() => {
+  if (onRouteHome.value) {
+    return innerWidth <= 800 ? "45%" : "30%";
+  } else {
+    return innerWidth <= 800 ? "95%" : "45%";
+  }
+});
+
+const onCardClick = (event: Event) => {
+  let elementWithId = useFindEltId(event.target as HTMLElement) as string;
+  if (onRouteHome.value) {
+    return elementWithId.includes("delete-")
+      ? cardsStore.removeCard(props.idClass.title, props.idClass.id)
+      : navigateTo(
+          localePath({
+            name: "card-id",
+            params: { id: props.idClass.title },
+          })
+        );
+  } else {
+    // common with swiper touch
+    if (elementWithId.includes("remember-")) {
+      cardsStore.removeItem(route.params.id as string, props.idClass.id, true);
+      return;
+    }
+    if (elementWithId.includes("delete-")) {
+      cardsStore.removeItem(route.params.id as string, props.idClass.id, false);
+      return;
+    } else {
+      document
+        .getElementById(`delete-${props.idClass.id}`)
+        ?.classList.add("hide");
+      document
+        .getElementById(`remember-${props.idClass.id}`)
+        ?.classList.add("hide");
+      useTextToPlay(event, props.idClass.id, emit);
+    }
+  }
+};
+const onCardHover = (param: boolean) => {
+  param
+    ? useAnimDeleteIcon(props.idClass.id, onRouteHome.value, "remove", "add")
+    : useAnimDeleteIcon(props.idClass.id, onRouteHome.value, "add", "remove");
+};
+/* export default {
   props: {
     idClass: {
       required: true,
@@ -112,7 +176,7 @@ export default {
 
     return { onRouteHome, onCardClick, onCardHover, rowWidth };
   },
-};
+}; */
 </script>
 
 <style lang="scss">

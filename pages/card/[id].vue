@@ -3,7 +3,7 @@
     <GridSwiper @onTapPlay="playSound">
       <TransitionGroup
         name="slide"
-        @before-leave="useBeforeLeave($event, true)"
+        @before-leave="useBeforeLeave($event, false)"
       >
         <GridMyRow
           v-for="item in loadCard"

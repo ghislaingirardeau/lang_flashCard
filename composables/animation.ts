@@ -3,17 +3,15 @@ export function useBeforeLeave(event: Element, home: boolean): void {
     window.getComputedStyle(event);
   const swipeBlock: HTMLElement = document.querySelector(".el-main")!;
 
+  let element = event as HTMLElement;
+
   const getTopPosition = home
-    ? (event as HTMLElement).offsetTop
-    : (event as HTMLElement).offsetTop - swipeBlock.scrollTop;
-  (event as HTMLElement).style.left = `${
-    (event as HTMLElement).offsetLeft - parseFloat(marginLeft)
-  }px`;
-  (event as HTMLElement).style.top = `${
-    getTopPosition - parseFloat(marginTop)
-  }px`;
-  (event as HTMLElement).style.width = width;
-  (event as HTMLElement).style.height = height;
+    ? element.offsetTop
+    : element.offsetTop - swipeBlock.scrollTop;
+  element.style.left = `${element.offsetLeft - parseFloat(marginLeft)}px`;
+  element.style.top = `${getTopPosition - parseFloat(marginTop)}px`;
+  element.style.width = width;
+  element.style.height = height;
 }
 
 export function useAnimDeleteIcon(

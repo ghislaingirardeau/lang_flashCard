@@ -1,14 +1,11 @@
-export function useTextToPlay(
-  event: Element,
-  id: number,
-  emit: Function
-): void {
-  let element: HTMLElement =
-    event.target.tagName === "DIV"
-      ? event.target!
-      : (event.target.parentNode! as HTMLElement);
+export function useTextToPlay(event: Event, id: number, emit: Function): void {
+  let target = event.target as HTMLElement;
+  let element =
+    target.tagName === "DIV" ? target : (target.parentNode! as HTMLElement);
 
-  let side = element.className.includes("text-left") ? "left" : "right";
+  let side = (element as HTMLElement).className.includes("text-left")
+    ? "left"
+    : "right";
 
   emit("onTapPlay", {
     id,

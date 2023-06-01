@@ -9,8 +9,10 @@
   </div>
 </template>
 
-<script setup>
-const emit = defineEmits();
+<script setup lang="ts">
+import { TypeItem } from "@/assets/interface";
+
+const emit: Function = defineEmits();
 const scrollStartX = ref(0);
 const scrollStartY = ref(0);
 const scrollEndY = ref(0);
@@ -22,28 +24,30 @@ const onRouteHome = computed(() => {
   return route.params.id ? false : true;
 });
 
-const idCard = (id) => {
+const idCard = (id: string) => {
   return route.params.id
-    ? cardsStore.cardItems[route.params.id].find((e) => e.id === parseInt(id))
+    ? cardsStore.cardItems[route.params.id as string].find(
+        (e) => e.id === parseInt(id)
+      )
     : cardsStore.cards.find((e) => e.id === parseInt(id));
 };
 
-const doOnClickDelete = (param, id, remember) => {
+const doOnClickDelete = (param: string, id: number, remember: boolean) => {
   param
     ? cardsStore.removeCard(param, id)
-    : cardsStore.removeItem(route.params.id, id, remember);
+    : cardsStore.removeItem(route.params.id as string, id, remember);
 };
 
-const startDrag = (event) => {
+const startDrag = (event: TouchEvent) => {
   scrollStartX.value = event.changedTouches[0].clientX;
   scrollStartY.value = event.changedTouches[0].clientY;
 };
-const endDrag = (event) => {
+const endDrag = (event: TouchEvent) => {
   const defineTouchX = event.changedTouches[0].clientX - scrollStartX.value;
   const defineTouchY = event.changedTouches[0].clientY - scrollStartY.value;
 
   // get id to find the elements
-  let elementWithId = useFindEltId(event.target);
+  let elementWithId = useFindEltId(event.target as HTMLElement) as string;
   // set scrollendY = so when swipe again, it start from where it ended
   // stop counting when the scroll is over the main container
   if (defineTouchX > -50 && defineTouchX < 50) {
@@ -61,24 +65,24 @@ const endDrag = (event) => {
   // on touch TAP
   if (defineTouchY === 0 && defineTouchX === 0) {
     // get the first parent with an id
-    let cardDetails;
+    let cardDetails: Cards;
 
     if (elementWithId.includes("delete-")) {
       // if id includes swipe = so it's a click on delete block
-      cardDetails = idCard(elementWithId.replace("delete-", ""));
+      cardDetails = idCard(elementWithId.replace("delete-", "")) as Cards;
       doOnClickDelete(cardDetails.title, cardDetails.id, false);
       return;
     }
     if (elementWithId.includes("remember-")) {
       // if id includes swipe = so it's a click on delete block
-      cardDetails = idCard(elementWithId.replace("remember-", ""));
+      cardDetails = idCard(elementWithId.replace("remember-", "")) as Cards;
       doOnClickDelete(cardDetails.title, cardDetails.id, true);
       return;
     }
     if (elementWithId.includes("card-")) {
       // if on home route
       if (onRouteHome.value) {
-        cardDetails = idCard(elementWithId.replace("card-", ""));
+        cardDetails = idCard(elementWithId.replace("card-", "")) as Cards;
         return navigateTo(
           localePath({
             name: "card-id",
@@ -105,12 +109,12 @@ const endDrag = (event) => {
   }
 };
 
-const scrollElement = (event) => {
+const scrollElement = (event: TouchEvent) => {
   const defineTouchY = event.changedTouches[0].clientY - scrollStartY.value;
   const defineTouchX = event.changedTouches[0].clientX - scrollStartX.value;
   // if scrollY long enough detected
 
-  let elementWithId = useFindEltId(event.target);
+  let elementWithId = useFindEltId(event.target as HTMLElement) as string;
 
   // si tu scroll sur un coté & pas sur l'axe Y
   //hide or unhide the delete option et tu arretes la fonction
@@ -138,12 +142,19 @@ const scrollElement = (event) => {
     (defineTouchY < -10 || defineTouchY > 10) &&
     (defineTouchX > -50 || defineTouchX < 50)
   ) {
-    document.querySelector(".el-main").scroll(
+    (document.querySelector(".el-main") as HTMLElement).scroll(
       0,
       scrollEndY.value + (event.changedTouches[0].clientY - scrollStartY.value) // position it ended + dynamic scroll - depart position of the scroll
     );
   }
 };
+
+interface Cards {
+  createOn: number;
+  id: number;
+  lastUpdate: number;
+  title: string;
+}
 
 onMounted(() => {
   useScrollTo("auto");
