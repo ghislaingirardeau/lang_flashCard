@@ -2,7 +2,27 @@
 export function useUserAccount(userStore: StoreInfo, account: Account): void {
   const getUser = useCurrentUser();
   account.errorMessage = "";
-  getUser.value ? userStore.signOut() : (account.show = true);
+  /* getUser.value ? userStore.signOut() : (account.show = true); */
+  if (getUser.value) {
+    setTimeout(() => {
+      userStore.signOut();
+    }, 400);
+    const accountIcon = document.getElementById("account-icon") as HTMLElement;
+    console.log(accountIcon);
+    let keyframes = [
+      {
+        opacity: 0,
+        transform: "rotateZ(45deg)",
+        offset: 0.5,
+      },
+    ];
+    accountIcon.animate(keyframes, {
+      duration: 800,
+      fill: "forwards",
+    });
+  } else {
+    account.show = true;
+  }
 }
 
 // ON CLICK VALIDATE THE MODAL, SIGN IN OR UP

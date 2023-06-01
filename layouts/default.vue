@@ -13,19 +13,17 @@
             </h1>
 
             <div v-if="!$route.params.id">
-              <Transition name="rotateZ" mode="out-in">
-                <Icon
-                  :key="userStore.user?.id"
-                  :name="
-                    userStore.user
-                      ? 'mdi:logout-variant'
-                      : 'mdi:account-circle-outline'
-                  "
-                  size="34px"
-                  @click="userAccount"
-                  class="header-icons"
-                />
-              </Transition>
+              <Icon
+                :name="
+                  userStore.user
+                    ? 'mdi:logout-variant'
+                    : 'mdi:account-circle-outline'
+                "
+                size="34px"
+                @click="userAccount"
+                class="header-icons"
+                id="account-icon"
+              />
             </div>
             <SvgHelp @click="showTutorial = true" />
             <Icon
@@ -126,7 +124,7 @@ const navigatorStorageUsed: Ref<number | string> = ref(0);
 const showTutorial = ref(false);
 const route = useRoute();
 const userData = ref({
-  email: "tes@mail.com",
+  email: "test@mail.com",
   password: "azerty1",
   name: "",
 });
