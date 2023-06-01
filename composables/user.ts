@@ -37,10 +37,6 @@ interface StoreInfo {
   login: Function;
 }
 
-interface Type<U> {
-  value: U;
-}
-
 interface UserForm {
   value: {
     name: string;

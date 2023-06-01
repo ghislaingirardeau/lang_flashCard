@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { TypeItem } from "@/assets/interface";
+import { TypeItem, PlaySound, PlayResponse } from "@/assets/interface";
 
 const route = useRoute();
 useHead({
@@ -98,16 +98,6 @@ const playSound = async (payload: PlaySound) => {
     alert(error);
   }
 };
-
-interface PlaySound {
-  id: number;
-  side: string;
-}
-
-interface PlayResponse {
-  play: boolean;
-  error: string | null;
-}
 </script>
 
 <style lang="scss" scoped>

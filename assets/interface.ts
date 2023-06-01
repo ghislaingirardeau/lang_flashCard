@@ -6,3 +6,13 @@ export interface TypeItem {
   langFrom: string;
   langTo: string;
 }
+
+export interface PlaySound {
+  id: number;
+  side: string;
+}
+
+export interface PlayResponse {
+  play: boolean;
+  error: string | null;
+}

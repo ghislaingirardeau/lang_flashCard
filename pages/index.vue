@@ -117,6 +117,7 @@ const saveNewCard = (payload: boolean) => {
 const openModal = () => {
   dialogAddCard.value = true;
 };
+
 </script>
 
 <style lang="scss" scoped>

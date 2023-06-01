@@ -1,5 +1,4 @@
 export function useBeforeLeave(event: Element, home: boolean): void {
-  console.log(event);
   const { marginLeft, marginTop, width, height } =
     window.getComputedStyle(event);
   const swipeBlock: HTMLElement = document.querySelector(".el-main")!;
@@ -58,8 +57,4 @@ export function useAnimSwitchArrow(event: Event) {
 interface IMyObj {
   add: string;
   remove: string;
-}
-
-interface InputFileEvent extends Event {
-  target: HTMLInputElement;
 }

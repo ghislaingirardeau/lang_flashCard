@@ -3,7 +3,7 @@
     <div class="login-type">
       <Transition name="fade" mode="out-in">
         <span
-          :key="signUp"
+          :key="signTypeBtn"
           @click="emit('update:signUp', !signUp)"
           class="login-btn"
           >{{ signUp ? "Back to login" : "Create an account" }}
@@ -18,7 +18,7 @@
         name="email"
         id="email"
         :disabled="loading"
-        @input="emit('update:email', $event.target.value)"
+        @input="emit('update:email', ($event.target as HTMLInputElement).value)"
       />
     </div>
     <div class="form-item">
@@ -30,7 +30,9 @@
         id="password"
         :disabled="loading"
         :type="showPassword ? 'text' : 'password'"
-        @input="emit('update:password', $event.target.value)"
+        @input="
+          emit('update:password', ($event.target as HTMLInputElement).value)
+        "
       />
       <Icon
         :name="showPassword ? 'mdi:eye-off-outline' : 'mdi:eye-outline'"
@@ -47,7 +49,9 @@
           name="name"
           id="name"
           :disabled="loading"
-          @input="emit('update:name', $event.target.value)"
+          @input="
+            emit('update:name', ($event.target as HTMLInputElement).value)
+          "
         />
       </div>
       <div v-else>
@@ -55,13 +59,13 @@
         <span class="login-btn">Reset password</span>
       </div>
     </Transition>
-    <p v-if="accountMessage.length > 0" class="error-message">
+    <p v-if="(accountMessage as string).length > 0" class="error-message">
       {{ accountMessage }}
     </p>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
   email: {
     require: true,
@@ -87,9 +91,13 @@ const props = defineProps({
     type: Boolean,
   },
 });
-const emit = defineEmits();
+const emit: Function = defineEmits();
 
 const showPassword = ref(false);
+
+const signTypeBtn = computed(() => {
+  return props.signUp ? 1 : 0;
+});
 </script>
 
 <style lang="scss" scoped>
