@@ -46,27 +46,6 @@ export default defineNuxtConfig({
     },
     pageTransition: { name: "page", mode: "out-in" },
   },
-  build: {
-    hmtl: {
-      minify: {
-        collapseBooleanAttributes: true,
-        decodeEntities: true,
-        minifyCSS: true,
-        minifyJS: true,
-        processConditionalComments: true,
-        removeEmptyAttributes: true,
-        removeRedundantAttributes: true,
-        trimCustomFragments: true,
-        useShortDoctype: true,
-      },
-    },
-    splitChunks: {
-      layouts: false,
-      pages: true,
-      commons: true,
-    },
-    extractCSS: true,
-  },
   vite: {
     define: {
       "process.env.DEBUG": false,
