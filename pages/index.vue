@@ -7,7 +7,7 @@
           {{ $t("home.newCard") }}</span
         ></el-col
       >
-      <el-col :span="12" @click="goToLastAdd"
+      <el-col :span="12" @click="goToLastAdd" class="widget_block_lastAdd"
         ><Icon name="ic:outline-history" size="34px" />
         <span class="widget_block_newCard-text">{{ $t("home.lastAdd") }}</span>
       </el-col>
@@ -117,7 +117,6 @@ const saveNewCard = (payload: boolean) => {
 const openModal = () => {
   dialogAddCard.value = true;
 };
-
 </script>
 
 <style lang="scss" scoped>
@@ -144,6 +143,15 @@ const openModal = () => {
   &_newCard {
     padding: 10px;
     border-right: 1px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &_lastAdd {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   &_newCard-text {
     color: $colorThird;

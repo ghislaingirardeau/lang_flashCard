@@ -32,9 +32,9 @@ export default defineNuxtConfig({
         lang: "fr-FR",
       },
       link: [
-        { rel: "preconnect", href: "https://fonts.googleapis.com" },
+        /* { rel: "preconnect", href: "https://fonts.googleapis.com" },
         { rel: "preconnect", href: "https://fonts.gstatic.com" },
-        /* {
+        {
           href: "https://fonts.googleapis.com/css2?family=Alkatra&display=swap",
           rel: "stylesheet",
         },
