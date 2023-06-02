@@ -58,9 +58,18 @@ export default defineNuxtConfig({
       },
     },
   },
+
   imports: {
     dirs: ["stores"],
   },
+  buildModules: [
+    [
+      "@nuxt-modules/compression",
+      {
+        algorithm: "brotliCompress",
+      },
+    ],
+  ],
   modules: [
     "@vueuse/nuxt",
     "nuxt-icon",
