@@ -30,7 +30,7 @@
               v-if="$route.params.id"
               name="mdi:arrow-left-drop-circle-outline"
               size="34px"
-              @click="backToHome"
+              @click="$router.back()"
               class="header-icons"
             />
             <SvgSettings v-else @click="dialogSettings = true" />
@@ -66,10 +66,7 @@
           id="rate"
         />
       </el-form-item>
-      <span>{{
-        $t("settings.cacheNote", { percent: navigatorStorageUsed })
-      }}</span>
-      {{ navigatorStorageUsed }}%
+      <span>{{ $t("settings.cacheNote") }}</span>
       <el-form-item :label="$t('settings.cacheLabel')" style="padding-top: 5px">
         <Icon
           name="mdi:trash-can-outline"
@@ -120,7 +117,6 @@ const settings = ref({
   remember: 0,
   rate: 1,
 });
-const navigatorStorageUsed: Ref<number | string> = ref(0);
 const showTutorial = ref(false);
 const route = useRoute();
 const userData = ref({
@@ -153,13 +149,6 @@ const footerToLoad = computed(() =>
     ? footerNav
     : footerHome
 );
-
-navigator.storage.estimate().then((estimate: StorageEstimate) => {
-  navigatorStorageUsed.value = (
-    ((estimate.usage as number) / (estimate.quota as number)) *
-    100
-  ).toFixed(5);
-});
 
 const containerHeight = computed(() => {
   return innerHeight.value + "px";
