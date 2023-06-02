@@ -1,16 +1,2 @@
-$Acme-font-path: "../assets/fonts";
-$DeliciousHandrawn-font-path: "../assets/fonts";
-@font-face {
-  font-family: Acme;
-  src: url("#{$Acme-font-path}/Acme-Regular.ttf");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: DeliciousHandrawn;
-  src: url("#{$DeliciousHandrawn-font-path}/DeliciousHandrawn-Regular.ttf");
-  font-display: swap;
-}
-
-$fontPrimary: "Acme", cursive;
-$fontSecondary: "DeliciousHandrawn", cursive;
+$fontPrimary: "Acme", sans-serif;
+$fontSecondary: "Delicious Handrawn", cursive;
