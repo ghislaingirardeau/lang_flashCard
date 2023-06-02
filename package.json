@@ -1,7 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "build": "nuxt build",
+    "build:modern": "nuxt build --modern=server",
+    "start:modern": "nuxt start --modern=server",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",

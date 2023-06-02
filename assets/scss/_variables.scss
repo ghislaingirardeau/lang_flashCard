@@ -3,11 +3,13 @@ $DeliciousHandrawn-font-path: "../assets/fonts";
 @font-face {
   font-family: Alkatra;
   src: url("#{$Alkatra-font-path}/Alkatra-VariableFont_wght.ttf");
+  font-display: swap;
 }
 
 @font-face {
   font-family: DeliciousHandrawn;
   src: url("#{$DeliciousHandrawn-font-path}/DeliciousHandrawn-Regular.ttf");
+  font-display: swap;
 }
 
 $fontPrimary: "Alkatra", cursive;

@@ -16,7 +16,7 @@
             {{ $t("dialog.cancel") }}</el-button
           >
           <el-button @click="submitForm(true)" :disabled="disabled">
-            <TheLoader v-if="loadingBtn" color="white" size="24px" />
+            <LazyTheLoader v-if="loadingBtn" color="white" size="24px" />
             <span v-else>{{ btnText ? btnText : $t("dialog.confirm") }}</span>
           </el-button>
         </span>
