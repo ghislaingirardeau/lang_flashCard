@@ -1,2 +1,14 @@
+$Alkatra-font-path: "../assets/fonts";
+$DeliciousHandrawn-font-path: "../assets/fonts";
+@font-face {
+  font-family: Alkatra;
+  src: url("#{$Alkatra-font-path}/Alkatra-VariableFont_wght.ttf");
+}
+
+@font-face {
+  font-family: DeliciousHandrawn;
+  src: url("#{$DeliciousHandrawn-font-path}/DeliciousHandrawn-Regular.ttf");
+}
+
 $fontPrimary: "Alkatra", cursive;
-$fontSecondary: "Delicious Handrawn", cursive;
+$fontSecondary: "DeliciousHandrawn", cursive;
