@@ -1,4 +1,5 @@
 require("dotenv").config();
+/* import en from "./lang/en"; */
 import en from "./lang/en";
 import fr from "./lang/fr";
 import km from "./lang/km";
@@ -119,27 +120,27 @@ const config: NuxtConfig = {
       {
         code: "en",
         iso: "en-US",
-        file: "en.js",
+        file: "en.ts",
       },
       {
         code: "fr",
         iso: "fr-FR",
-        file: "fr.js",
+        file: "fr.ts",
       },
       {
         code: "km",
         iso: "km-KM",
-        file: "km.js",
+        file: "km.ts",
       },
       {
         code: "id",
         iso: "id-ID",
-        file: "id.js",
+        file: "id.ts",
       },
       {
         code: "th",
         iso: "th-TH",
-        file: "th.js",
+        file: "th.ts",
       },
     ],
     baseUrl: "https://my-flashcard-lang.netlify.app",
