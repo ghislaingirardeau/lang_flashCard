@@ -5,7 +5,9 @@ import km from "./lang/km";
 import id from "./lang/id";
 import th from "./lang/th";
 
-export default defineNuxtConfig({
+import type { NuxtConfig } from "@nuxt/types";
+
+const config: NuxtConfig = {
   ssr: false,
   app: {
     head: {
@@ -54,7 +56,6 @@ export default defineNuxtConfig({
       },
     },
   },
-
   imports: {
     dirs: ["stores"],
   },
@@ -88,10 +89,6 @@ export default defineNuxtConfig({
     ],
     // "@nuxtjs/robots", BUG
   ],
-  // from nuxt module security, to set the rate limit for calling an API
-  /* security: {
-    rateLimiter: false,
-  }, */
   runtimeConfig: {
     public: {
       XRAPIDAPIKEY: process.env.XRAPIDAPIKEY,
@@ -115,6 +112,51 @@ export default defineNuxtConfig({
       messagingSenderId: process.env.MESSAGINGSENDERID,
       measurementId: process.env.MEASUREMENTID,
       databaseURL: process.env.DATABASEURL,
+    },
+  },
+  i18n: {
+    locales: [
+      {
+        code: "en",
+        iso: "en-US",
+        file: "en.js",
+      },
+      {
+        code: "fr",
+        iso: "fr-FR",
+        file: "fr.js",
+      },
+      {
+        code: "km",
+        iso: "km-KM",
+        file: "km.js",
+      },
+      {
+        code: "id",
+        iso: "id-ID",
+        file: "id.js",
+      },
+      {
+        code: "th",
+        iso: "th-TH",
+        file: "th.js",
+      },
+    ],
+    baseUrl: "https://my-flashcard-lang.netlify.app",
+    lazy: true,
+    langDir: "lang",
+    defaultLocale: "fr",
+    vueI18n: {
+      locale: "fr",
+      fallbackLocale: "fr",
+      messages: { en, fr, km, id, th },
+    },
+    customRoutes: "config",
+    pages: {
+      "card/[id]": {
+        en: "/card/[id]",
+        fr: "/carte/[id]",
+      },
     },
   },
   pwa: {
@@ -157,50 +199,6 @@ export default defineNuxtConfig({
       type: "module",
     }, */
   },
-  i18n: {
-    locales: [
-      {
-        code: "en",
-        iso: "en-US",
-        file: "en.js",
-      },
-      {
-        code: "fr",
-        iso: "fr-FR",
-        file: "fr.js",
-      },
-      {
-        code: "km",
-        iso: "km-KM",
-        file: "km.js",
-      },
-      {
-        code: "id",
-        iso: "id-ID",
-        file: "id.js",
-      },
-      {
-        code: "th",
-        iso: "th-TH",
-        file: "th.js",
-      },
-    ],
-    baseUrl: "https://my-flashcard-lang.netlify.app",
-    lazy: true,
-    langDir: "lang",
-    defaultLocale: "fr",
-    vueI18n: {
-      locale: "fr",
-      fallbackLocale: "fr",
-      messages: { en, fr, km, id, th },
-      runtimeOnly: false,
-    },
-    customRoutes: "config",
-    pages: {
-      "card/[id]": {
-        en: "/card/[id]",
-        fr: "/carte/[id]",
-      },
-    },
-  },
-});
+};
+
+export default config;

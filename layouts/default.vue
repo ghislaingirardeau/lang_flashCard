@@ -54,10 +54,10 @@
       :doOnConfirm="registerSettings"
       :title="$t('settings.title')"
     >
-      <el-form-item :label="$t('settings.languages')">
+      <el-form-item>
         <LazySetLanguage v-model:settings="settings" />
       </el-form-item>
-      <el-form-item for="rate" :label="$t('settings.voiceSpeed')">
+      <el-form-item for="rate">
         <Lazyel-slider
           v-model="settings.rate"
           :step="0.1"
@@ -67,7 +67,7 @@
         />
       </el-form-item>
       <span>{{ $t("settings.cacheNote") }}</span>
-      <el-form-item :label="$t('settings.cacheLabel')" style="padding-top: 5px">
+      <el-form-item style="padding-top: 5px">
         <Icon
           name="mdi:trash-can-outline"
           size="34px"
