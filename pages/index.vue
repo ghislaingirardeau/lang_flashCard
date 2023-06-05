@@ -41,13 +41,14 @@
       :title="$t('newCard.title')"
     >
       <div class="newCard_content">
-        <el-form-item :label="$t('newCard.label')">
+        <div class="d-item">
+          <span>{{ $t("newCard.label") }}:</span>
           <el-input
             v-model="cardForm.name"
             @keydown.enter.prevent="saveNewCard(true)"
             autocomplete="off"
           />
-        </el-form-item>
+        </div>
         <span v-show="nameNotCorrect()" class="newCard_content-alert"
           >{{
             cardForm.name.length > 0 ? $t("newCard.hint1") : $t("newCard.hint2")
@@ -163,7 +164,7 @@ const openModal = () => {
   height: 80px;
   &-alert {
     position: absolute;
-    bottom: 0px;
+    top: 45px;
     right: 0px;
     color: white;
   }

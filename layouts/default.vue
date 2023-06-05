@@ -54,10 +54,12 @@
       :doOnConfirm="registerSettings"
       :title="$t('settings.title')"
     >
-      <el-form-item>
+      <div class="d-item">
+        <span>{{ $t("settings.languages") }}:</span>
         <LazySetLanguage v-model:settings="settings" />
-      </el-form-item>
-      <el-form-item for="rate">
+      </div>
+      <div class="d-item">
+        <span>{{ $t("settings.voiceSpeed") }}:</span>
         <Lazyel-slider
           v-model="settings.rate"
           :step="0.1"
@@ -65,16 +67,18 @@
           :max="1.2"
           id="rate"
         />
-      </el-form-item>
-      <span>{{ $t("settings.cacheNote") }}</span>
-      <el-form-item style="padding-top: 5px">
+      </div>
+
+      <div class="d-item">
+        <span>Memory Usage</span>
         <Icon
           name="mdi:trash-can-outline"
           size="34px"
           @click="deleteCache"
           style="cursor: pointer"
         />
-      </el-form-item>
+      </div>
+      <p>{{ $t("settings.cacheNote") }}</p>
     </FormDialog>
     <FormDialog
       v-model:value="account.show"
@@ -229,6 +233,14 @@ const backToHome = () => {
     display: flex;
     height: 54px;
     align-items: center;
+  }
+}
+.d-item {
+  display: flex;
+  align-items: center;
+  margin-block: 20px;
+  & > span {
+    width: 40%;
   }
 }
 </style>

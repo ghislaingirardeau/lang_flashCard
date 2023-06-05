@@ -7,15 +7,15 @@
       top="0px"
       @close="submitForm(false)"
     >
-      <el-form>
+      <div>
         <slot></slot>
-      </el-form>
+      </div>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="submitForm(false)">
             {{ $t("dialog.cancel") }}</el-button
           >
-          <el-button @click="submitForm(true)" :disabled="disabled">
+          <el-button @click="submitForm(true)">
             <LazyTheLoader v-if="loadingBtn" color="white" size="24px" />
             <span v-else>{{ btnText ? btnText : $t("dialog.confirm") }}</span>
           </el-button>

@@ -24,7 +24,7 @@ export default {
   },
   settings: {
     title: "SETTINGS",
-    languages: "languages",
+    languages: "Languages",
     to: "to",
     voiceSpeed: "Voice speed",
     cacheLabel: "Clean cache",
@@ -39,7 +39,7 @@ export default {
     title: "NEW CARD",
     label: "Card name",
     hint1: "Title already exist",
-    hint2: "Ce titre existe déjà",
+    hint2: "Tap at least one character",
   },
   store: {
     alert: "This card already exist, pick a new name",
