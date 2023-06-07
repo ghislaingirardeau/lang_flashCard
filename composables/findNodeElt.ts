@@ -6,3 +6,7 @@ export function useFindEltId(el: HTMLElement): null | string {
   }
   return null;
 }
+
+export function testSum(a: number, b: number): number {
+  return a + b;
+}
