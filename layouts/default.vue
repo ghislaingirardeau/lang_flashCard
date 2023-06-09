@@ -30,7 +30,7 @@
               v-if="$route.params.id"
               name="mdi:arrow-left-drop-circle-outline"
               size="34px"
-              @click="$router.back()"
+              @click="backToHome"
               class="header-icons"
             />
             <SvgSettings v-else @click="dialogSettings = true" />

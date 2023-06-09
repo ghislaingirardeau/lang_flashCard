@@ -1,5 +1,5 @@
 <template>
-  <el-footer class="footer_container footer_container-home">
+  <div class="footer_container footer_container-home">
     <div class="footer_container-home-text">
       <p>
         {{ $t("footer.total") }} : {{ total }} / {{ $t("footer.remember") }} :
@@ -7,7 +7,7 @@
       </p>
       <p>{{ userName }}</p>
     </div>
-  </el-footer>
+  </div>
 </template>
 
 <script setup lang="ts">

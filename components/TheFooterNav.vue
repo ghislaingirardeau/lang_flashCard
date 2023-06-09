@@ -1,5 +1,5 @@
 <template>
-  <el-footer class="footer_container footer_container-nav">
+  <div class="footer_container footer_container-nav">
     <Transition name="fade-slideY" mode="out-in">
       <div
         class="container_footer_nav container_footer_nav-input"
@@ -53,7 +53,7 @@
         </div>
       </div>
     </Transition>
-  </el-footer>
+  </div>
 </template>
 
 <script setup lang="ts">

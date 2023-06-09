@@ -1,17 +1,15 @@
 <template>
   <div class="home_container">
-    <el-row class="widget_block">
-      <el-col :span="12" class="widget_block_newCard" @click="openModal">
+    <div class="widget_block">
+      <div class="widget_block_newCard" @click="openModal">
         <Icon name="mdi:plus-box-outline" size="34px" />
-        <span class="widget_block_newCard-text">
-          {{ $t("home.newCard") }}</span
-        ></el-col
-      >
-      <el-col :span="12" @click="goToLastAdd" class="widget_block_lastAdd"
-        ><Icon name="ic:outline-history" size="34px" />
+        <span class="widget_block_newCard-text"> {{ $t("home.newCard") }}</span>
+      </div>
+      <div @click="goToLastAdd" class="widget_block_lastAdd">
+        <Icon name="ic:outline-history" size="34px" />
         <span class="widget_block_newCard-text">{{ $t("home.lastAdd") }}</span>
-      </el-col>
-    </el-row>
+      </div>
+    </div>
 
     <div class="cards_block">
       <GridSwiper>
@@ -125,20 +123,15 @@ const openModal = () => {
   height: 100%;
   position: relative;
 }
-.el-row {
-  padding: 0px;
-  border-bottom: 1px solid white;
-  align-items: center;
-  min-height: 60px;
-  text-align: center;
-  width: 100%;
-}
 
 .widget_block {
   position: sticky;
+  display: flex;
+  flex-wrap: nowrap;
   top: 0px;
   background-color: $colorFourth;
   z-index: 10;
+  border-bottom: 1px solid white;
 
   cursor: pointer;
   &_newCard {
@@ -147,12 +140,14 @@ const openModal = () => {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 50%;
   }
   &_lastAdd {
     padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 50%;
   }
   &_newCard-text {
     color: $colorThird;
