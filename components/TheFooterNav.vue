@@ -36,7 +36,7 @@
           />
         </div>
 
-        <LazyMicRecord />
+        <MicRecord />
         <div class="block_switcher">
           <span style="margin-right: 10px">
             {{ langFrom }}

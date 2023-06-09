@@ -1,5 +1,5 @@
 <template>
-  <div class="mic-block">
+  <div class="mic-block" ref="elMic">
     <LazyTheLoader v-if="loading" size="80px" />
     <div v-else class="mic-circle">
       <Icon
@@ -26,6 +26,7 @@ const loading = ref(false);
 const route = useRoute();
 const micAnimation: ObjectReact<Animation> = reactive({ value: null });
 const micAnimationDuration = ref(1000);
+const elMic: Ref<HTMLElement | null> = ref(null);
 
 interface ObjectReact<U> {
   value: U | null;
@@ -110,6 +111,29 @@ const endDrag = () => {
     micAnimation.value?.pause();
   }, getTime());
 };
+
+onMounted(() => {
+  if (elMic.value) {
+    elMic.value.animate(
+      [
+        {
+          transform: "scale(0.9)",
+        },
+        {
+          transform: "scale(1.1)",
+        },
+        {
+          transform: "scale(1)",
+        },
+      ],
+      {
+        duration: 400,
+        fill: "both",
+        easing: "ease-in",
+      }
+    );
+  }
+});
 </script>
 
 <style lang="scss" scoped>
