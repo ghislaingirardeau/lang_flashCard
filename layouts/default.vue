@@ -3,11 +3,7 @@
     <el-container :style="{ height: containerHeight }">
       <el-header class="header-container">
         <Transition name="fade" mode="out-in">
-          <div
-            @click="navigateTo('test')"
-            :key="($route.params.id as string)"
-            class="header-container-nav"
-          >
+          <div :key="($route.params.id as string)" class="header-container-nav">
             <h1 class="header-container-title">
               {{
                 $route.params.id

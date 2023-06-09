@@ -106,6 +106,7 @@ const saveNewCard = (payload: boolean) => {
     cardsStore.addNewCard(newCard);
     cardForm.name = "";
     dialogAddCard.value = false;
+    useScrollTo("smooth");
     return;
   } else {
     cardForm.name = "";
@@ -120,7 +121,7 @@ const openModal = () => {
 
 <style lang="scss" scoped>
 .home_container {
-  height: 100%;
+  min-height: 100%;
   position: relative;
 }
 

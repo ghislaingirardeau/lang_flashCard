@@ -1,9 +1,8 @@
 <template>
   <div
     class="container-swipe container-swipe-flex"
-    @touchstart.prevent="startDrag"
-    @touchend.prevent="endDrag"
-    @touchmove.passive="scrollElement"
+    @touchstart.passive="startDrag"
+    @touchend.passive="endDrag"
   >
     <slot></slot>
   </div>
@@ -50,7 +49,7 @@ const endDrag = (event: TouchEvent) => {
   let elementWithId = useFindEltId(event.target as HTMLElement) as string;
   // set scrollendY = so when swipe again, it start from where it ended
   // stop counting when the scroll is over the main container
-  if (defineTouchX > -50 && defineTouchX < 50) {
+  /* if (defineTouchX > -50 && defineTouchX < 50) {
     let newScroll =
       scrollEndY.value + (event.changedTouches[0].clientY - scrollStartY.value);
     if (newScroll < 0) {
@@ -60,6 +59,28 @@ const endDrag = (event: TouchEvent) => {
     } else {
       scrollEndY.value = newScroll;
     }
+  } */
+
+  console.log(defineTouchY);
+  //swipe left: show icon
+  if (defineTouchX < -50) {
+    useAnimDeleteIcon(
+      elementWithId.replace("card-", ""),
+      onRouteHome.value,
+      "remove",
+      "add"
+    );
+    return;
+  }
+  //swipe right: hide icon
+  if (defineTouchX > 50) {
+    useAnimDeleteIcon(
+      elementWithId.replace("card-", ""),
+      onRouteHome.value,
+      "add",
+      "remove"
+    );
+    return;
   }
 
   // on touch TAP
@@ -157,7 +178,7 @@ interface Cards {
 }
 
 onMounted(() => {
-  useScrollTo("auto");
+  /* useScrollTo("auto"); */
 });
 </script>
 
