@@ -45,6 +45,9 @@
             v-model="cardForm.name"
             @keydown.enter.prevent="saveNewCard(true)"
             autocomplete="off"
+            maxlength="12"
+            show-word-limit
+            type="text"
           />
         </div>
         <span v-show="nameNotCorrect()" class="newCard_content-alert"
@@ -96,7 +99,7 @@ const saveNewCard = (payload: boolean) => {
     return;
   }
 
-  if (cardForm.name.length >= 1 && payload) {
+  if (!nameNotCorrect() && payload) {
     const newCard = {
       id: Date.now(),
       title: cardForm.name.trim().replaceAll(" ", "_"),

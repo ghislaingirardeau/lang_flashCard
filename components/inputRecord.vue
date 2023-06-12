@@ -7,6 +7,9 @@
         label="text-to-translate"
         :placeholder="$t('footer.translate')"
         @keydown.enter="translate"
+        maxlength="40"
+        show-word-limit
+        type="text"
       >
       </el-input>
       <Icon
