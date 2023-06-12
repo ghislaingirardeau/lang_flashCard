@@ -118,7 +118,7 @@ const switchToInput = () => {
   }
 }
 .block_switcher {
-  cursor: pointer;
+  cursor: var(--device-cursor);
   display: flex;
   align-items: flex-end;
   height: 60px;
@@ -144,7 +144,7 @@ const switchToInput = () => {
   }
 }
 .rotate-icon {
-  cursor: pointer;
+  cursor: var(--device-cursor);
   animation: rotate-enter 0.4s both 1;
 }
 .rotate-icon-animate {

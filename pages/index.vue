@@ -134,7 +134,7 @@ const openModal = () => {
   z-index: 10;
   border-bottom: 1px solid white;
 
-  cursor: pointer;
+  cursor: var(--device-cursor);
   &_newCard {
     padding: 10px;
     border-right: 1px solid white;

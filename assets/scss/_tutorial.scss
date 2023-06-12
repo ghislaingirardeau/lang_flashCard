@@ -200,7 +200,7 @@
     &:focus {
       color: $colorThird;
       text-decoration: none;
-      cursor: pointer;
+      cursor: var(--device-cursor);
     }
   }
   &-btn {
@@ -218,7 +218,7 @@
     &:hover,
     &:focus {
       color: $colorThird;
-      cursor: pointer;
+      cursor: var(--device-cursor);
     }
   }
 }

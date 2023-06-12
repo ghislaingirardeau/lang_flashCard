@@ -146,7 +146,10 @@ onMounted(() => {
 
   window.onresize = (event) => {
     innerHeight.value = window.innerHeight;
+    useSetRootCss();
   };
+
+  useSetRootCss();
 
   useServiceWorkerOnUpadte();
 });

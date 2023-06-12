@@ -68,6 +68,6 @@ const translate = async () => {
   }
 }
 .valid-text-icon {
-  cursor: pointer;
+  cursor: var(--device-cursor);
 }
 </style>

@@ -5,7 +5,7 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     aria-hidden="true"
     role="img"
-    class="icon header-help"
+    class="icon header-icons"
     width="34px"
     height="34px"
     viewBox="0 0 24 24"

@@ -112,7 +112,7 @@ const signTypeBtn = computed(() => {
   color: white;
   font-style: italic;
   text-decoration: underline;
-  cursor: pointer;
+  cursor: var(--device-cursor);
 }
 .error-message {
   color: white;

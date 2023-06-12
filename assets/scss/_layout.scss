@@ -36,10 +36,6 @@
   }
 }
 .header-icons {
-  cursor: pointer;
   padding: 10px;
-}
-.header-help {
-  cursor: pointer;
-  padding: 10px;
+  cursor: var(--device-cursor);
 }

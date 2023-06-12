@@ -127,7 +127,7 @@ const onCardHover = (param: boolean) => {
   &_card {
     display: flex;
     flex-direction: column;
-    cursor: pointer;
+    cursor: var(--device-cursor);
     align-items: center;
     justify-content: center;
     min-height: 60px;
