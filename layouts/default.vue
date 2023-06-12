@@ -46,7 +46,8 @@
         <el-main><slot /></el-main>
       </el-container>
       <Transition name="fade" mode="out-in">
-        <component :is="footerToLoad" :switchLang="switchLang" />
+        <component v-if="online" :is="footerToLoad" :switchLang="switchLang" />
+        <component v-else :is="footerOffline" />
       </Transition>
     </el-container>
     <FormDialog
@@ -131,6 +132,7 @@ const userData = ref({
 });
 
 const innerWidth = window.innerWidth;
+const online = useOnline();
 const innerHeight = ref(window.innerHeight);
 
 onMounted(() => {
@@ -148,15 +150,11 @@ onMounted(() => {
 
   useServiceWorkerOnUpadte();
 });
-
 const footerToLoad = computed(() =>
-  navigator.onLine
-    ? route.params.id && route.params.id != i18n.t("home.lastAdd")
-      ? footerNav
-      : footerHome
-    : footerOffline
+  route.params.id && route.params.id != i18n.t("home.lastAdd")
+    ? footerNav
+    : footerHome
 );
-
 const containerHeight = computed(() => {
   return innerHeight.value + "px";
 });

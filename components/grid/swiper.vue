@@ -66,8 +66,9 @@ const endDrag = (event: TouchEvent) => {
     return;
   }
 
+  // FEAT REMOVE BECAUSE ALREADY CALL WITH THE CLICK ON ROW COMPONENT
   // on touch TAP
-  if (defineTouchY === 0 && defineTouchX === 0) {
+  /* if (defineTouchY === 0 && defineTouchX === 0) {
     // get the first parent with an id
     let cardDetails: Cards;
 
@@ -110,7 +111,7 @@ const endDrag = (event: TouchEvent) => {
         return;
       }
     }
-  }
+  } */
 };
 
 interface Cards {
