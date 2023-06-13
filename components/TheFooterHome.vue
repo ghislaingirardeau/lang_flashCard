@@ -1,12 +1,11 @@
 <template>
   <div class="footer_container footer_container-home">
-    <div class="footer_container-home-text">
-      <p>
-        {{ $t("footer.total") }} : {{ total }} / {{ $t("footer.remember") }} :
-        {{ remember }}
-      </p>
-      <p>{{ userName }}</p>
-    </div>
+    <p class="footer_container-home-summary">
+      {{ $t("footer.total") }} : {{ total }} <br />
+      {{ $t("footer.remember") }} :
+      {{ remember }}
+    </p>
+    <p class="footer_container-home-user">{{ userName }}</p>
   </div>
 </template>
 

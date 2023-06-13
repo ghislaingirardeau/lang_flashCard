@@ -22,16 +22,17 @@
     font-family: $fontSecondary;
     font-size: 20px;
     min-height: 64px;
-    &-text {
-      width: 100%;
+    &-summary {
+      width: 35%;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    &-switch {
-      width: 30%;
+    &-user {
+      width: 65%;
       display: flex;
       align-items: center;
+      justify-content: flex-end;
     }
   }
 }
