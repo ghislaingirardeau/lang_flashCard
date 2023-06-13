@@ -109,9 +109,9 @@
 </template>
 
 <script setup lang="ts">
-import footerNav from "@/components/TheFooterNav.vue";
-import footerHome from "@/components/TheFooterHome.vue";
-import footerOffline from "@/components/TheFooterOffLine.vue";
+import footerAction from "@/components/footer/action.vue";
+import footerHome from "@/components/footer/home.vue";
+import footerOffline from "@/components/footer/offLine.vue";
 
 const cardsStore = useCardsStore();
 const userStore = useUserStore();
@@ -163,7 +163,7 @@ onMounted(() => {
 });
 const footerToLoad = computed(() =>
   route.params.id && route.params.id != i18n.t("home.lastAdd")
-    ? footerNav
+    ? footerAction
     : footerHome
 );
 const containerHeight = computed(() => {
