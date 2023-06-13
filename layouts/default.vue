@@ -96,6 +96,14 @@
         :accountMessage="account.errorMessage"
         :loading="account.loading"
       />
+      <div class="Sign_google_block" @click="googleAuth">
+        <img
+          src="@/assets/google.png"
+          alt="google sign in"
+          class="Sign_google_block-icon"
+        />
+        <span class="Sign_google_block-title">Or Sign with Google</span>
+      </div>
     </FormDialog>
   </div>
 </template>
@@ -209,6 +217,10 @@ const logUser = (payload: boolean) => {
 // SHOW ACCOUNT CONNECTION OR UNLOG
 const userAccount = () => {
   useUserAccount(userStore, account);
+};
+
+const googleAuth = () => {
+  useUserSignWithGoogle(userStore, account);
 };
 
 const backToHome = () => {

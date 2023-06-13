@@ -8,7 +8,6 @@ export function useUserAccount(userStore: StoreInfo, account: Account): void {
       userStore.signOut();
     }, 400);
     const accountIcon = document.getElementById("account-icon") as HTMLElement;
-    console.log(accountIcon);
     let keyframes = [
       {
         opacity: 0,
@@ -51,10 +50,27 @@ export async function useUserSign(
   account.loading = false;
 }
 
+export async function useUserSignWithGoogle(
+  userStore: StoreInfo,
+  account: Account
+): Promise<void> {
+  try {
+    account.loading = true;
+    const userLoad = await userStore.signWithGoogle();
+    userLoad.result
+      ? (account.show = false)
+      : (account.errorMessage = userLoad.message);
+    account.loading = false;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 interface StoreInfo {
   signOut: Function;
   signin: Function;
   login: Function;
+  signWithGoogle: Function;
 }
 
 interface UserForm {

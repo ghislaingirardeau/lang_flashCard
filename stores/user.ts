@@ -3,10 +3,16 @@ import {
   updateProfile,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  browserSessionPersistence,
+  setPersistence,
+  GoogleAuthProvider, // if we want to add other form of login
+  GithubAuthProvider, // if we want to add other form of login
+  signInWithPopup, // if we want to add other form of login
   signOut,
 } from "firebase/auth";
 import { useFirebaseAuth, useCurrentUser, getCurrentUser } from "vuefire";
 import { useSaveFirebase, useLoadDataToStore } from "@/composables/saveData";
+import { ref as dbRef, set as dbset } from "firebase/database";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -17,6 +23,12 @@ export const useUserStore = defineStore("user", {
       return new Promise(async (resolve, reject) => {
         try {
           const auth: any = useFirebaseAuth();
+          // IF I WANT TO SET THE PERSISTENCE FO THE CONNECTION
+          /* const persistence = await setPersistence(
+            auth,
+            browserSessionPersistence
+          ); */
+
           const userLog = await signInWithEmailAndPassword(
             auth,
             userData.value.email,
@@ -68,6 +80,40 @@ export const useUserStore = defineStore("user", {
           resolve({
             result: false,
             message: "Email already use Or not connected",
+          });
+        }
+      });
+    },
+    async signWithGoogle(): Promise<Resolve> {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const auth: any = useFirebaseAuth();
+          // LOG / SIGN WITH GOOGLE
+          const googleProvider = new GoogleAuthProvider();
+          const userGoogle = await signInWithPopup(auth, googleProvider);
+          console.log(userGoogle);
+          if (userGoogle) {
+            this.authListener(auth);
+            // CHECK IF THE USER ALREADY EXIST BY CHECKING THE UID IN DATABASE
+            const database = useDatabase();
+            const { promise } = useDatabaseObject(
+              dbRef(database, userGoogle.user.uid)
+            );
+            const datas: CardStore | any = await promise.value;
+            datas
+              ? useLoadDataToStore(userGoogle.user.uid) // User already exist
+              : useSaveFirebase(userGoogle.user.uid); // New user
+
+            resolve({
+              result: true,
+              message: "",
+            });
+          }
+        } catch (error) {
+          console.log(error);
+          resolve({
+            result: false,
+            message: "auth/popup-closed-by-user",
           });
         }
       });

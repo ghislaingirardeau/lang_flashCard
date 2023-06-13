@@ -39,3 +39,24 @@
   padding: 10px;
   cursor: var(--device-cursor);
 }
+.Sign_google_block {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin: 10% 10% 0% 10%;
+  border: 2px solid white;
+  border-radius: 10px 0px 10px 0px;
+  background-color: $colorFourth;
+  cursor: var(--device-cursor);
+  &-icon {
+    width: 60px;
+    height: 60px;
+  }
+  &-title {
+    text-align: center;
+    width: 70%;
+    line-height: 60px;
+    font-size: 1.1rem;
+    border-left: 2px solid white;
+  }
+}
