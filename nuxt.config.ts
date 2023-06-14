@@ -111,7 +111,7 @@ const config: NuxtConfig = {
       appId: process.env.APPID,
       storageBucket: process.env.STORAGEBUCKET,
       messagingSenderId: process.env.MESSAGINGSENDERID,
-      /* measurementId: process.env.MEASUREMENTID, */
+      measurementId: process.env.MEASUREMENTID,
       databaseURL: process.env.DATABASEURL,
     },
   },
