@@ -6,12 +6,12 @@
           :key="signTypeBtn"
           @click="emit('update:signUp', !signUp)"
           class="login-btn"
-          >{{ signUp ? "Back to login" : "Create an account" }}
+          >{{ signUp ? $t("account.log") : $t("account.sign") }}
         </span>
       </Transition>
     </div>
     <div class="form-item">
-      <label for="email">Email</label>
+      <label for="email">{{ $t("account.email") }}</label>
       <input
         :value="email"
         required
@@ -22,7 +22,7 @@
       />
     </div>
     <div class="form-item">
-      <label for="password">Password</label>
+      <label for="password">{{ $t("account.password") }}</label>
       <input
         :value="password"
         required
@@ -42,7 +42,7 @@
     </div>
     <Transition name="fade" mode="out-in">
       <div v-if="signUp" class="form-item">
-        <label for="name">Name</label>
+        <label for="name">{{ $t("account.name") }}</label>
         <input
           :value="name"
           required
@@ -55,8 +55,8 @@
         />
       </div>
       <div v-else>
-        <span>You forgot your password ?</span>
-        <span class="login-btn">Reset password</span>
+        <span>{{ $t("account.forget") }}</span>
+        <span class="login-btn">{{ $t("account.reset") }}</span>
       </div>
     </Transition>
     <p v-if="(accountMessage as string).length > 0" class="error-message">

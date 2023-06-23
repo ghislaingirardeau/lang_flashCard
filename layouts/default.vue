@@ -71,7 +71,7 @@
       </div>
 
       <div class="d-item">
-        <span>Memory Usage</span>
+        <span>{{ $t("settings.cacheLabel") }}</span>
         <Icon
           name="mdi:trash-can-outline"
           size="34px"
@@ -84,8 +84,10 @@
     <FormDialog
       v-model:value="account.show"
       :doOnConfirm="logUser"
-      :title="account.signUp ? 'Sign-Up' : 'Sign-In'"
-      :btnText="account.signUp ? 'Sign-Up' : 'Log-In'"
+      :title="account.signUp ? $t('account.title', 2) : $t('account.title', 1)"
+      :btnText="
+        account.signUp ? $t('account.title', 2) : $t('account.title', 1)
+      "
       :loadingBtn="account.loading"
     >
       <SignIn
@@ -212,7 +214,13 @@ const registerSettings = (payload: boolean) => {
 };
 
 const logUser = (payload: boolean) => {
-  useUserSign(payload, userStore, userData, account);
+  useUserSign(
+    payload,
+    userStore,
+    userData,
+    account,
+    account.signUp ? i18n.t("account.errorSign") : i18n.t("account.errorLog")
+  );
 };
 // SHOW ACCOUNT CONNECTION OR UNLOG
 const userAccount = () => {
@@ -220,7 +228,7 @@ const userAccount = () => {
 };
 
 const googleAuth = () => {
-  useUserSignWithGoogle(userStore, account);
+  useUserSignWithGoogle(userStore, account, i18n.t("account.errorGoogle"));
 };
 
 const backToHome = () => {

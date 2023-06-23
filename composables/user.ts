@@ -29,17 +29,18 @@ export async function useUserSign(
   payload: boolean,
   userStore: StoreInfo,
   userData: UserForm,
-  account: Account
+  account: Account,
+  error: string
 ): Promise<void> {
   account.loading = true;
   if (payload) {
     if (account.signUp) {
-      const userLoad = await userStore.signin(userData);
+      const userLoad = await userStore.signin(userData, error);
       userLoad.result
         ? (account.show = false)
         : (account.errorMessage = userLoad.message);
     } else {
-      const userLoad = await userStore.login(userData);
+      const userLoad = await userStore.login(userData, error);
       userLoad.result
         ? (account.show = false)
         : (account.errorMessage = userLoad.message);
@@ -52,11 +53,12 @@ export async function useUserSign(
 
 export async function useUserSignWithGoogle(
   userStore: StoreInfo,
-  account: Account
+  account: Account,
+  error: string
 ): Promise<void> {
   try {
     account.loading = true;
-    const userLoad = await userStore.signWithGoogle();
+    const userLoad = await userStore.signWithGoogle(error);
     userLoad.result
       ? (account.show = false)
       : (account.errorMessage = userLoad.message);

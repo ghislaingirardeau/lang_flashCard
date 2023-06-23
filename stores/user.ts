@@ -19,7 +19,7 @@ export const useUserStore = defineStore("user", {
     user: null as UserInfo | null,
   }),
   actions: {
-    async login(userData: UserForm): Promise<Resolve> {
+    async login(userData: UserForm, message: string): Promise<Resolve> {
       return new Promise(async (resolve, reject) => {
         try {
           const auth: any = useFirebaseAuth();
@@ -48,12 +48,12 @@ export const useUserStore = defineStore("user", {
         } catch (error) {
           resolve({
             result: false,
-            message: "This email or password doesn't exist",
+            message: message,
           });
         }
       });
     },
-    async signin(userData: UserForm): Promise<Resolve> {
+    async signin(userData: UserForm, message: string): Promise<Resolve> {
       return new Promise(async (resolve, reject) => {
         try {
           const auth: any = useFirebaseAuth();
@@ -79,12 +79,12 @@ export const useUserStore = defineStore("user", {
           console.log(error);
           resolve({
             result: false,
-            message: "Email already use Or not connected",
+            message: message,
           });
         }
       });
     },
-    async signWithGoogle(): Promise<Resolve> {
+    async signWithGoogle(message: string): Promise<Resolve> {
       return new Promise(async (resolve, reject) => {
         try {
           const auth: any = useFirebaseAuth();
@@ -113,7 +113,7 @@ export const useUserStore = defineStore("user", {
           console.log(error);
           resolve({
             result: false,
-            message: "auth/popup-closed-by-user",
+            message: message,
           });
         }
       });
