@@ -32,7 +32,8 @@
   }
   &__body {
     color: $colorThird;
-    border: 1px solid rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(255, 255, 255);
+    border-top: 1px solid rgb(255, 255, 255);
     & label {
       color: $colorPrimary;
     }

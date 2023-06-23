@@ -150,7 +150,7 @@ onMounted(() => {
     .style;
   innerWidth <= 1280
     ? (styleBody.marginInline = "0px")
-    : (styleBody.marginInline = "300px");
+    : (styleBody.marginInline = "400px");
 
   window.onresize = (event) => {
     innerHeight.value = window.innerHeight;

@@ -56,7 +56,7 @@ const props = defineProps({
 const innerWidth = window.innerWidth;
 
 const modalWidth = computed(() => {
-  return innerWidth >= 1280 ? "65%" : "100%";
+  return innerWidth >= 1280 ? "35%" : "100%";
 });
 
 const emit = defineEmits();
