@@ -10,6 +10,7 @@ export default {
     km: "ខ្មែរ",
     th: "ថៃ",
     id: "ឥណ្ឌូនេស៊ី",
+    vi: "Vietnamese",
   },
   account: {
     title: "ចូល | ចុះ​ឈ្មោះ",

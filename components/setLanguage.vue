@@ -57,6 +57,10 @@ const langList = computed(() => {
       label: t("languages.id"),
       value: "id-ID",
     },
+    {
+      label: t("languages.vi"),
+      value: "vi-VN",
+    },
   ];
 });
 </script>

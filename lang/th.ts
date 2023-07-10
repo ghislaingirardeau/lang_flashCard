@@ -10,6 +10,7 @@ export default {
     km: "เขมร",
     th: "แบบไทย",
     id: "ชาวอินโดนีเซีย",
+    vi: "Vietnamese",
   },
   account: {
     title: "เข้าสู่ระบบ | ลงชื่อ",

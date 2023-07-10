@@ -142,6 +142,11 @@ const config: NuxtConfig = {
         iso: "th-TH",
         file: "th.ts",
       },
+      {
+        code: "vi",
+        iso: "vi-VN",
+        file: "vi.ts",
+      },
     ],
     baseUrl: "https://my-flashcard-lang.netlify.app",
     lazy: true,

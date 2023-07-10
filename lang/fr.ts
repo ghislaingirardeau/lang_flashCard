@@ -10,6 +10,7 @@ export default {
     km: "Khmer",
     th: "Thai",
     id: "Indonésien",
+    vi: "Vietnamese",
   },
   account: {
     title: "Se connecter | S'enregistrer",

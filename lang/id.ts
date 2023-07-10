@@ -10,6 +10,7 @@ export default {
     km: "Khmer",
     th: "Thai",
     id: "Bahasa",
+    vi: "Vietnamese",
   },
   account: {
     title: "Masuk | Mendaftar",
